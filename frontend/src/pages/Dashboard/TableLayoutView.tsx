@@ -1,9 +1,8 @@
 import React, { useState, useRef, useMemo, useEffect, useCallback } from 'react';
-import { CreditCard as Edit3, Save, Users, Move, X, Grid3x3 as Grid3X3, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
+import { CreditCard as Edit3, Save, Users, Move, X, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 import { cn } from '@ury/ui';
 import { formatInvoiceTime } from '@ury/core';
 import { call } from '@ury/core';
-import { Button } from '@ury/ui';
 import { SearchableSelect } from '../../components/common/SearchableSelect';
 import { t } from '../../i18n';
 
@@ -49,7 +48,7 @@ interface Props {
   onRefresh?: () => void; // Add refresh callback
 }
 
-const LayoutView: React.FC<Props> = ({ selectedRoom, tables, onBackToGrid, onRefresh }) => {
+const LayoutView: React.FC<Props> = ({ tables, onRefresh }) => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   // Local state for optimistic updates
@@ -592,7 +591,7 @@ const LayoutView: React.FC<Props> = ({ selectedRoom, tables, onBackToGrid, onRef
                 <SearchableSelect
                   id="table-shape"
                   value={selectedTableData.table_shape || 'Rectangle'}
-                  onChange={(id, val) => handleDropdownShapeChange(val)}
+                  onChange={(_, val) => handleDropdownShapeChange(val)}
                   options={[
                     { value: 'Circle', label: t('tables.circle') || 'Circle' },
                     { value: 'Square', label: t('tables.square') || 'Square' },

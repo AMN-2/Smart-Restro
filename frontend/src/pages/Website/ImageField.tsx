@@ -36,14 +36,14 @@ export const ImageField: React.FC<ImageFieldProps> = ({
   const accept = async (file: File | undefined) => {
     if (!file || disabled) return;
     if (!file.type.startsWith('image/')) {
-      showToast({ message: t('dash.website.images.not_an_image'), type: 'error' });
+      showToast.error(t('dash.website.images.not_an_image'));
       return;
     }
     setBusy(true);
     try {
       onChange(await uploadImage(file));
     } catch {
-      showToast({ message: t('dash.website.images.upload_failed'), type: 'error' });
+      showToast.error(t('dash.website.images.upload_failed'));
     } finally {
       setBusy(false);
     }

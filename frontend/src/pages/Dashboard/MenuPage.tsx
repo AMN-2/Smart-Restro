@@ -482,7 +482,7 @@ export const MenuPage: React.FC = () => {
   const handleBulkUploadParsed = async (parsedRows: { name: string; course: string; price: number }[]) => {
     showToast.info(t('dash.menu.processing_uploaded_items'));
     const resolvedRows: MenuItemRow[] = [];
-    let updatedAllItems = [...allItems];
+    const updatedAllItems = [...allItems];
     let createdCount = 0;
     
     try {
@@ -495,7 +495,7 @@ export const MenuPage: React.FC = () => {
         const isDuplicateInForm = newMenuRows.some(r => r.item_name.toLowerCase() === row.name.toLowerCase());
         if (isDuplicateInForm) continue;
 
-        let matched = updatedAllItems.find(i => i.name.toLowerCase() === row.name.toLowerCase() || i.item_name.toLowerCase() === row.name.toLowerCase());
+        const matched = updatedAllItems.find(i => i.name.toLowerCase() === row.name.toLowerCase() || i.item_name.toLowerCase() === row.name.toLowerCase());
         
         let itemCode = '';
         let itemName = '';
@@ -504,7 +504,7 @@ export const MenuPage: React.FC = () => {
           itemCode = matched.name;
           itemName = matched.item_name || matched.name;
         } else {
-          let resolvedCourse = row.course;
+          const resolvedCourse = row.course;
           if (resolvedCourse) {
             const courseExists = availableCourses.some(c => c.name.toLowerCase() === resolvedCourse.toLowerCase());
             if (!courseExists) {

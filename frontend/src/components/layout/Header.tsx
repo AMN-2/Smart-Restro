@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useBranchContext } from '../../context/BranchContext';
 import { logout, call, getLoggedUser, getUserRoles } from '@ury/core';
 import { t } from '../../i18n';
@@ -14,7 +14,6 @@ import {
   AlertTriangle,
   Info,
   LogOut,
-  Settings,
   Store,
   Building2,
   Check,
@@ -34,8 +33,7 @@ interface NotificationItem {
 
 
 export const Header: React.FC = () => {
-  const navigate = useNavigate();
-  const { activeBranchId, setActiveBranchId, branches, activeBranch, filterContext } = useBranchContext();
+  const { activeBranchId, setActiveBranchId, branches, activeBranch } = useBranchContext();
 
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);

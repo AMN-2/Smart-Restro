@@ -30,7 +30,7 @@ export const GalleryEditor: React.FC<GalleryEditorProps> = ({ value, max, onChan
     if (!files?.length || disabled) return;
     const room = max - value.length;
     if (room <= 0) {
-      showToast({ message: t('dash.website.gallery.full'), type: 'error' });
+      showToast.error(t('dash.website.gallery.full'));
       return;
     }
 
@@ -41,7 +41,7 @@ export const GalleryEditor: React.FC<GalleryEditorProps> = ({ value, max, onChan
       try {
         added.push({ image: await uploadImage(file), caption: '' });
       } catch {
-        showToast({ message: t('dash.website.images.upload_failed'), type: 'error' });
+        showToast.error(t('dash.website.images.upload_failed'));
       }
     }
     setBusy(false);

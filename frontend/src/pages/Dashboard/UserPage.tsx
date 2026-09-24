@@ -3,7 +3,6 @@ import { useBranchContext } from '../../context/BranchContext';
 import { Users, Plus, ShieldCheck, Edit2 } from 'lucide-react';
 import { Card, Button, Badge, Input, Spinner, showToast } from '@ury/ui';
 import { SearchableSelect } from '../../components/common/SearchableSelect';
-import { Switch } from '../../components/ui/switch';
 import { dashboardService } from '../../services/dashboard';
 import { call } from '@ury/core';
 import SideDrawer from '../../components/layout/SideDrawer';
@@ -50,8 +49,6 @@ export const UserPage: React.FC = () => {
       setAllRoles([]);
     }
   };
-
-  const URY_ROLES = ['URY Manager', 'URY Waiter', 'URY Cashier'];
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -199,7 +196,9 @@ export const UserPage: React.FC = () => {
               errorMessage = lastMessage.message.replace(/<[^>]*>?/gm, '');
             }
           }
-        } catch (e) {}
+        } catch {
+          // Keep the generic message when Frappe returns malformed metadata.
+        }
       } else if (err.message) {
         errorMessage = err.message;
       } else if (err.exc) {

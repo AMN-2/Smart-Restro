@@ -219,9 +219,9 @@ export const WebsiteEditorPage: React.FC = () => {
       setForm(asForm);
       setSaved(JSON.stringify(asForm));
       setNonce(Date.now());
-      showToast({ message: t('dash.website.saved'), type: 'success' });
+      showToast.success(t('dash.website.saved'));
     } catch (error) {
-      showToast({ message: parseFrappeError(error, t('dash.website.save_failed')), type: 'error' });
+      showToast.error(parseFrappeError(error, t('dash.website.save_failed')));
     } finally {
       setSaving(false);
     }
@@ -240,15 +240,9 @@ export const WebsiteEditorPage: React.FC = () => {
       setForm(asForm);
       setSaved(JSON.stringify(asForm));
       setNonce(Date.now());
-      showToast({
-        message: next ? t('dash.website.published') : t('dash.website.unpublished'),
-        type: 'success',
-      });
+      showToast.success(next ? t('dash.website.published') : t('dash.website.unpublished'));
     } catch (error) {
-      showToast({
-        message: parseFrappeError(error, t('dash.website.publish_failed')),
-        type: 'error',
-      });
+      showToast.error(parseFrappeError(error, t('dash.website.publish_failed')));
     } finally {
       setSaving(false);
     }

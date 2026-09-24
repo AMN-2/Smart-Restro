@@ -139,7 +139,7 @@ export const ProductionUnitPage: React.FC = () => {
       });
       setItemGroupRows(rows);
       setOriginalUnit(initialForm);
-    } catch (err) {
+    } catch {
       const initialForm = {
         production_unit_name: unit.production || unit.production_unit_name || unit.name,
         branch: unit.branch || '',
@@ -238,7 +238,9 @@ export const ProductionUnitPage: React.FC = () => {
               errorMessage = lastMessage.message.replace(/<[^>]*>?/gm, '');
             }
           }
-        } catch (e) {}
+        } catch {
+          // Keep the generic message when Frappe returns malformed metadata.
+        }
       } else if (err.message) {
         errorMessage = err.message;
       }

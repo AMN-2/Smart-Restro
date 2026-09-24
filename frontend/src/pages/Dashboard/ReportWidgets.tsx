@@ -1,7 +1,6 @@
 import React from 'react';
 import { formatCurrency } from '@ury/core';
 import { Card, CardHeader, CardTitle, CardContent, Badge, Spinner } from '@ury/ui';
-import { useBranchContext } from '../../context/BranchContext';
 import { TransactionRecord } from '../../services/dashboard';
 import { t } from '../../i18n';
 
@@ -11,10 +10,6 @@ interface ReportWidgetsProps {
 }
 
 export const ReportWidgets: React.FC<ReportWidgetsProps> = ({ recentTransactions, loading }) => {
-  const { activeBranchId, activeBranch } = useBranchContext();
-
-  const activeBranchName = activeBranchId === 'all' ? 'All Branches' : (activeBranch?.name || 'Selected Branch');
-
   return (
     <div className="space-y-6">
       {/* Live POS Transactions */}

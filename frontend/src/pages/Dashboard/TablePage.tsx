@@ -27,7 +27,7 @@ interface UryTableRecord {
 }
 
 export const TablePage: React.FC = () => {
-  const { activeBranchId, activeBranch } = useBranchContext();
+  const { activeBranchId } = useBranchContext();
   const [tables, setTables] = useState<UryTableRecord[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadError, setLoadError] = useState<boolean>(false);
