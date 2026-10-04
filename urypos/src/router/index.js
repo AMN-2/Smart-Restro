@@ -15,8 +15,7 @@ import posClose from "../components/posClosing.vue";
 const routes = [
   {
     path: "/",
-    name: "Table",
-    component: Table,
+    redirect: "/Table",
   },
   {
     path: "/Table",
