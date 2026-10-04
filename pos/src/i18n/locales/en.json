@@ -33,7 +33,8 @@
     "remove": "Remove",
     "preview": "Preview",
     "close": "Close",
-    "retry": "Try again"
+    "retry": "Try again",
+    "clear": "Clear"
   },
   "header": {
     "search_placeholder_default": "Search orders, menu items, or customers...",
@@ -414,7 +415,14 @@
     "stale_data": "Couldn't refresh the tables. What you see is the last known state.",
     "reserved_now": "Reserved now",
     "reserved_for": "Reserved for {{guest}} at {{time}}",
-    "reservations": "Reservations"
+    "reservations": "Reservations",
+    "needs_attention": "Needs attention",
+    "open": "Open",
+    "seated_for": "Open for {{time}}",
+    "occupied_only": "Occupied only",
+    "show_all_tables": "Show all tables",
+    "no_occupied_tables": "No occupied tables in this room",
+    "seats_count": "{{count}} seats"
   },
   "bill_split": {
     "split_bill": "Split bill",
@@ -530,16 +538,63 @@
       "no_order_reprint": "No active order to reprint.",
       "no_order_print": "No active order to print.",
       "no_order_transfer": "No active order to transfer.",
-      "transfer_unavailable": "Unable to transfer this table."
+      "transfer_unavailable": "Unable to transfer this table.",
+      "modified_elsewhere": "This order was changed by someone else. Reopen the table and try again."
     },
     "success": {
       "kot_reprinted": "KOT reprinted.",
       "printed": "Printed successfully.",
       "table_transferred": "Table transferred.",
-      "captain_transferred": "Captain transferred."
+      "captain_transferred": "Captain transferred.",
+      "order_sent": "Order for table {{table}} sent to the kitchen.",
+      "order_updated": "Table {{table}} updated."
     },
     "feature_off_title": "Captain ordering is switched off",
-    "feature_off_body": "Ask an administrator to turn it on in the Control Center."
+    "feature_off_body": "Ask an administrator to turn it on in the Control Center.",
+    "browse_only": "You can browse the menu, but you don't have permission to add items to this order.",
+    "choose_table": "Choose a table",
+    "choose_table_to_send": "Choose a table to send",
+    "clear_new": "Clear",
+    "draft_label": "No table yet",
+    "draft_moved": "Your items were added to table {{table}}. Review and send.",
+    "empty_hint_draft": "Tap items on the menu to start. You can pick the table now or just before sending.",
+    "empty_hint_table": "Tap items on the menu to add them to this table.",
+    "just_now": "just now",
+    "merged_with": "Merged with {{tables}}",
+    "new_items": "New items",
+    "new_order": "New order",
+    "updating_order": "Adding to open order",
+    "send_to_kitchen": "Send to kitchen",
+    "sending": "Sending…",
+    "send_short": "Send",
+    "update_short": "Update",
+    "table_label": "Table {{table}}",
+    "tap_to_choose": "Tap to choose where this order goes",
+    "table_locked_draft_kept": "Table {{table}} can't take new items right now. Your items were kept — choose another table.",
+    "view_only": "View only — you don't have permission to modify this table's order right now.",
+    "view_only_other": "You can't open this table's order. It may belong to another captain or be billed already.",
+    "picker": {
+      "title": "Choose a table",
+      "search": "Search table number…",
+      "no_match": "No table matches your search.",
+      "free_count": "Free tables",
+      "current": "Current table",
+      "assigned_to": "This table is assigned to {{name}}",
+      "occupied": "This table is occupied",
+      "billed_locked_hint": "The bill for this table is already printed. Ask the cashier to settle or reopen it."
+    },
+    "status": {
+      "free": "Free",
+      "mine": "Mine",
+      "occupied": "Occupied",
+      "billed": "Billed"
+    },
+    "switch": {
+      "title": "Unsent changes",
+      "body": "Table {{from}} has changes that haven't been sent. What should happen before opening table {{to}}?",
+      "discard": "Discard changes",
+      "carry": "Move new items to {{to}}"
+    }
   },
   "auth": {
     "access_denied": "Access Denied",
@@ -722,5 +777,14 @@
   },
   "qz": {
     "print_failed": "Could not print on {{printer}}: {{reason}}"
+  },
+  "live": {
+    "order_left_list": "Order {{order}} was paid, cancelled or moved on another device.",
+    "order_refreshed": "This order was updated on another device.",
+    "changed_elsewhere_title": "Changed on another device",
+    "changed_elsewhere_by": "{{user}} changed this order while you were editing it.",
+    "changed_elsewhere_body": "This order changed while you were editing it.",
+    "reload_order": "Load latest",
+    "keep_mine": "Keep my edits"
   }
 }
