@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AlertTriangle, Layout, Loader2, RefreshCw } from 'lucide-react';
+import { AlertTriangle, Filter, Layout, Loader2, RefreshCw } from 'lucide-react';
 import { usePOSStore } from '../store/pos-store';
 import { useRootStore } from '../store/root-store';
 import { getRooms, getTableCount, getVacantTablesForBranch, mergeTablesBatch, unmergeTables, type Room, type Table } from '../lib/table-api';
@@ -25,6 +25,17 @@ import TableCard from '../components/TableCard';
 import { useRoomTables } from '../hooks/useRoomTables';
 import MergeLinkConnector from '../components/MergeLinkConnector';
 
+const OCCUPIED_ONLY_KEY = 'ury_pos_tables_occupied_only';
+
+/** Per-device convenience: storage can be blocked, and that is fine. */
+function readOccupiedOnly(): boolean {
+  try {
+    return localStorage.getItem(OCCUPIED_ONLY_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
 const TableView = () => {
   const navigate = useNavigate();
   const { posProfile, setSelectedTable, setSelectedOrderType, tableSearchQuery } = usePOSStore();
@@ -33,6 +44,30 @@ const TableView = () => {
   const isRestricted = isUserRestrictedFromTableOrders(user, posProfile);
 
   const branch = posProfile?.branch ?? null;
+  const attentionMinutes = Number(posProfile?.tableAttention) || 0;
+
+  // "Occupied only" is how a busy floor is worked: the free tables are
+  // noise while bills are being chased. Remembered per device.
+  const [occupiedOnly, setOccupiedOnly] = useState<boolean>(readOccupiedOnly);
+  const toggleOccupiedOnly = () => {
+    setOccupiedOnly((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem(OCCUPIED_ONLY_KEY, next ? '1' : '0');
+      } catch {
+        /* blocked storage: the toggle still works for this visit */
+      }
+      return next;
+    });
+  };
+
+  // A minute clock, so open times and the red "needs attention" state move
+  // while the screen is left up, without refetching the floor.
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [reservations, setReservations] = useState<ReservationsByTable>({});
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
@@ -322,15 +357,18 @@ const TableView = () => {
   const tablesToDisplay = useMemo(() => {
     // Already grouped by merge cluster when it was fetched (useRoomTables).
     const needle = tableSearchQuery.trim().toLowerCase();
-    if (!needle) return tables;
+    const scoped = occupiedOnly ? tables.filter((table) => table.occupied === 1) : tables;
+    if (!needle) return scoped;
     // Name and room both: staff say "table 12" and "the terrace", and the
     // header box gives no hint that only one of them would work.
-    return tables.filter(
+    return scoped.filter(
       (table: Table) =>
         table.name.toLowerCase().includes(needle) ||
         (table.restaurant_room || '').toLowerCase().includes(needle)
     );
-  }, [tables, tableSearchQuery]);
+  }, [tables, tableSearchQuery, occupiedOnly]);
+
+  const occupiedCount = useMemo(() => tables.filter((table) => table.occupied === 1).length, [tables]);
 
   const unmergeGroupMembers = useMemo(() => {
     if (!unmergeSourceTable) return [];
@@ -385,6 +423,8 @@ const TableView = () => {
       onPrint={(event) => handlePrintTable(table, event)}
       isPrinting={printingTable === table.name}
       isRestricted={isRestricted}
+      attentionMinutes={attentionMinutes}
+      now={now}
     />
     );
   };
@@ -460,6 +500,23 @@ const TableView = () => {
               </div>
 
               <div className="flex shrink-0 gap-2">
+                <Button
+                  variant={occupiedOnly ? 'default' : 'outline'}
+                  className="flex items-center gap-2 text-sm"
+                  aria-pressed={occupiedOnly}
+                  onClick={toggleOccupiedOnly}
+                  disabled={!selectedRoom}
+                  title={occupiedOnly ? t('tables.show_all_tables') : t('tables.occupied_only')}
+                >
+                  <Filter className="h-4 w-4" />
+                  {t('tables.occupied_only')}
+                  <Badge
+                    variant="outline"
+                    className={occupiedOnly ? 'border-white/40 bg-white/20 text-white' : 'border-amber-300 bg-amber-50 text-amber-800'}
+                  >
+                    {occupiedCount}
+                  </Badge>
+                </Button>
                 <Button variant="outline" size="icon" disabled={loadingRooms || loadingTables || refreshingTables}
                   aria-label={t('common.refresh')}
                   onClick={() => selectedRoom ? loadTables(selectedRoom) : fetchRooms()}>
@@ -518,7 +575,18 @@ const TableView = () => {
           ) : showGridSkeleton ? (
             <Spinner message={t('common.loading_tables')} />
           ) : tablesToDisplay.length === 0 ? (
-            <EmptyState className="h-full" illustration="tables" title={t('tables.no_tables_found')} />
+            <EmptyState
+              className="h-full"
+              illustration="tables"
+              title={t(occupiedOnly && tables.length > 0 ? 'tables.no_occupied_tables' : 'tables.no_tables_found')}
+              action={
+                occupiedOnly && tables.length > 0 ? (
+                  <Button variant="outline" onClick={toggleOccupiedOnly}>
+                    {t('tables.show_all_tables')}
+                  </Button>
+                ) : undefined
+              }
+            />
           ) : (
             <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,13rem),1fr))] gap-4 pb-10">
               {tableRenderGroups.map((group, groupIndex) =>
@@ -601,13 +669,19 @@ const TableView = () => {
         <div className="max-w-screen-xl mx-auto">
           <div className="flex items-center justify-center gap-6 text-sm">
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-emerald-50 border border-emerald-300 rounded"></div>
+              <div className="h-3 w-3 rounded-full bg-emerald-500"></div>
               <span>{t('tables.available')}</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-amber-50 border border-amber-400 rounded"></div>
+              <div className="h-3 w-3 rounded-full bg-amber-400"></div>
               <span>{t('tables.occupied')}</span>
             </div>
+            {attentionMinutes > 0 && (
+              <div className="flex items-center gap-2">
+                <div className="h-3 w-3 rounded-full bg-red-500"></div>
+                <span>{t('tables.needs_attention')}</span>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-blue-50/40 border border-blue-200/70 rounded"></div>
               <span>{t('tables.merged')}</span>
