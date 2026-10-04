@@ -1,0 +1,1997 @@
+[
+{
+"file": "pos/src/captain/components/CaptainMenu.tsx",
+"errorCount": 0,
+"warningCount": 8,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 72,
+"column": 22,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 74,
+"column": 29,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 75,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 80,
+"column": 23,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 83,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 87,
+"column": 25,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 95,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 99,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/captain/components/CaptainOrderLine.tsx",
+"errorCount": 0,
+"warningCount": 6,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 46,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 77,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 86,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 99,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 112,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 125,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/captain/components/CaptainOrderPanel.tsx",
+"errorCount": 0,
+"warningCount": 20,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 154,
+"column": 9,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 156,
+"column": 13,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 160,
+"column": 22,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 164,
+"column": 31,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 171,
+"column": 31,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 174,
+"column": 29,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 182,
+"column": 24,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 183,
+"column": 27,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 192,
+"column": 27,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 203,
+"column": 27,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 211,
+"column": 29,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 223,
+"column": 28,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 224,
+"column": 40,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 226,
+"column": 26,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 227,
+"column": 26,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 240,
+"column": 31,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 266,
+"column": 21,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 270,
+"column": 33,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 316,
+"column": 24,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 325,
+"column": 65,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/captain/components/CaptainTableCard.tsx",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 89,
+"column": 5,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 96,
+"column": 23,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 104,
+"column": 27,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/captain/components/CaptainTablePicker.tsx",
+"errorCount": 0,
+"warningCount": 18,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 214,
+"column": 22,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 217,
+"column": 31,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 218,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 223,
+"column": 25,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 226,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 230,
+"column": 27,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 236,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 242,
+"column": 23,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 253,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 260,
+"column": 25,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 261,
+"column": 25,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 280,
+"column": 24,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 282,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 288,
+"column": 45,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 288,
+"column": 83,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 307,
+"column": 26,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 312,
+"column": 26,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 342,
+"column": 22,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/captain/pages/CaptainWorkspace.tsx",
+"errorCount": 0,
+"warningCount": 18,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 455,
+"column": 20,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 457,
+"column": 25,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 458,
+"column": 9,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 464,
+"column": 17,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 465,
+"column": 17,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 472,
+"column": 23,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 472,
+"column": 40,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 478,
+"column": 29,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 481,
+"column": 29,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 485,
+"column": 34,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 490,
+"column": 29,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 537,
+"column": 24,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 538,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 543,
+"column": 29,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 546,
+"column": 33,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 552,
+"column": 31,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 555,
+"column": 31,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 557,
+"column": 34,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/components/BillMergeDialog.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 209,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 267,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/BillSplitDialog.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 253,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/CaptainTransferDialog.tsx",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 141,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 148,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 170,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/ChecklistGateDialog.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 160,
+"column": 21,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/CommentDialog.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 52,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/CustomerPicker.tsx",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 242,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 270,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 287,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/Footer.tsx",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 23,
+"column": 20,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 32,
+"column": 19,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 33,
+"column": 31,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/components/Header.tsx",
+"errorCount": 1,
+"warningCount": 6,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 110,
+"column": 14,
+"message": "'error' is defined but never used."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 130,
+"column": 23,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 138,
+"column": 113,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 145,
+"column": 31,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 169,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 178,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 188,
+"column": 30,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/components/KitchenMessageDialog.tsx",
+"errorCount": 0,
+"warningCount": 5,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 116,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 132,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 159,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 184,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 198,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/LayoutView.tsx",
+"errorCount": 2,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 318,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 322,
+"column": 62,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "pos/src/components/MenuCard.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 61,
+"column": 5,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 126,
+"column": 9,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/OfflineBanner.tsx",
+"errorCount": 0,
+"warningCount": 4,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 61,
+"column": 19,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 65,
+"column": 9,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 90,
+"column": 17,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 97,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/OrderPanel.tsx",
+"errorCount": 0,
+"warningCount": 14,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 235,
+"column": 9,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 237,
+"column": 13,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 242,
+"column": 22,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 245,
+"column": 29,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 250,
+"column": 29,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 253,
+"column": 26,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 260,
+"column": 24,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 261,
+"column": 27,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 267,
+"column": 25,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 277,
+"column": 25,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 297,
+"column": 19,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 304,
+"column": 37,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 388,
+"column": 26,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 397,
+"column": 67,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/components/OrderSummaryBar.tsx",
+"errorCount": 0,
+"warningCount": 6,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 32,
+"column": 5,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 35,
+"column": 17,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 38,
+"column": 25,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 45,
+"column": 27,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 51,
+"column": 25,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 54,
+"column": 30,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/components/OrderTabs.tsx",
+"errorCount": 0,
+"warningCount": 5,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 89,
+"column": 22,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 132,
+"column": 21,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 133,
+"column": 21,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 159,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 167,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/POSOpeningScreen.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 75,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'loadContext'. Either include it or remove the dependency array."
+}
+]
+},
+{
+"file": "pos/src/components/PaymentDialog.tsx",
+"errorCount": 4,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 140,
+"column": 17,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 146,
+"column": 50,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 165,
+"column": 5,
+"message": "React Hook useEffect has a missing dependency: 'paymentInputs'. Either include it or remove the dependency array."
+},
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 171,
+"column": 22,
+"message": "'_' is defined but never used."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 426,
+"column": 40,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 632,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/ProductDialog.tsx",
+"errorCount": 14,
+"warningCount": 4,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 51,
+"column": 42,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 66,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 81,
+"column": 22,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 82,
+"column": 55,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 100,
+"column": 22,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 101,
+"column": 57,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 155,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 158,
+"column": 26,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 165,
+"column": 15,
+"message": "'_err' is defined but never used."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 165,
+"column": 21,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 187,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'handleClose'. Either include it or remove the dependency array."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 201,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'handleClose'. Either include it or remove the dependency array."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 303,
+"column": 44,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 417,
+"column": 47,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 418,
+"column": 58,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 420,
+"column": 21,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 452,
+"column": 45,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 453,
+"column": 21,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/RemoteChangeBanner.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 48,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/SearchBar.tsx",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 31,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 56,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 68,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/ServiceRequestBell.tsx",
+"errorCount": 1,
+"warningCount": 5,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 168,
+"column": 14,
+"message": "'error' is defined but never used."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 182,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 192,
+"column": 15,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 200,
+"column": 27,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 222,
+"column": 35,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 242,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/Sidebar.tsx",
+"errorCount": 0,
+"warningCount": 5,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 52,
+"column": 27,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 72,
+"column": 60,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 78,
+"column": 26,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 99,
+"column": 33,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 103,
+"column": 66,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/components/SlideOverPanel.tsx",
+"errorCount": 0,
+"warningCount": 6,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 118,
+"column": 11,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 120,
+"column": 11,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 124,
+"column": 24,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 125,
+"column": 25,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 126,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 130,
+"column": 23,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/components/TableCard.tsx",
+"errorCount": 0,
+"warningCount": 4,
+"messages": [
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 14,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 110,
+"column": 9,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 214,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 223,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/TableMergeDialog.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 129,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 148,
+"column": 23,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/components/TableSelectionDialog.tsx",
+"errorCount": 2,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 69,
+"column": 16,
+"message": "'e' is defined but never used."
+},
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 95,
+"column": 16,
+"message": "'e' is defined but never used."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 111,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'selectedRoom'. Either include it or remove the dependency array."
+}
+]
+},
+{
+"file": "pos/src/components/TableTransferDialog.tsx",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 118,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 125,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 151,
+"column": 25,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/data/order-types.ts",
+"errorCount": 1,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "prefer-const",
+"severity": 2,
+"line": 83,
+"column": 9,
+"message": "'statusTypes' is never reassigned. Use 'const' instead."
+}
+]
+},
+{
+"file": "pos/src/hooks/useRoomTables.ts",
+"errorCount": 1,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 24,
+"column": 5,
+"message": "'_options' is defined but never used."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 72,
+"column": 28,
+"message": "The ref value 'request.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'request.current' to a variable inside the effect, and use that variable in the cleanup function."
+}
+]
+},
+{
+"file": "pos/src/i18n/resolve-language.ts",
+"errorCount": 1,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 22,
+"column": 53,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "pos/src/lib/aggregator-api.ts",
+"errorCount": 1,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 17,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "pos/src/lib/category-icons.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 143,
+"column": 17,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+}
+]
+},
+{
+"file": "pos/src/lib/checklist-api.ts",
+"errorCount": 1,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 68,
+"column": 35,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "pos/src/lib/customer-api.ts",
+"errorCount": 6,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 26,
+"column": 14,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 27,
+"column": 18,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 28,
+"column": 13,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 29,
+"column": 15,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 30,
+"column": 17,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 131,
+"column": 26,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "pos/src/lib/invoice-api.ts",
+"errorCount": 1,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 340,
+"column": 16,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "pos/src/lib/menu-api.ts",
+"errorCount": 2,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 43,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 62,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "pos/src/lib/promotions-api.ts",
+"errorCount": 1,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 35,
+"column": 26,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "pos/src/lib/table-api.ts",
+"errorCount": 1,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 50,
+"column": 25,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "pos/src/pages/Orders.tsx",
+"errorCount": 4,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 118,
+"column": 21,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 259,
+"column": 36,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 317,
+"column": 52,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 391,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 537,
+"column": 25,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 548,
+"column": 27,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "pos/src/pages/POS.tsx",
+"errorCount": 0,
+"warningCount": 10,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 79,
+"column": 5,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 84,
+"column": 13,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 85,
+"column": 13,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 134,
+"column": 20,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 142,
+"column": 24,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 147,
+"column": 31,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 149,
+"column": 30,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 150,
+"column": 32,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 154,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 159,
+"column": 21,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "pos/src/pages/Table.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 124,
+"column": 32,
+"message": "The ref value 'roomRequest.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'roomRequest.current' to a variable inside the effect, and use that variable in the cleanup function."
+}
+]
+},
+{
+"file": "pos/src/store/pos-store.ts",
+"errorCount": 10,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 294,
+"column": 59,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 386,
+"column": 14,
+"message": "'error' is defined but never used."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 455,
+"column": 54,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 493,
+"column": 54,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 566,
+"column": 14,
+"message": "'error' is defined but never used."
+},
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 600,
+"column": 14,
+"message": "'error' is defined but never used."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 738,
+"column": 34,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 750,
+"column": 33,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 2,
+"line": 835,
+"column": 135,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 852,
+"column": 14,
+"message": "'error' is defined but never used."
+}
+]
+},
+{
+"file": "pos/src/store/slices/auth-slice.ts",
+"errorCount": 1,
+"warningCount": 0,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-unused-vars",
+"severity": 2,
+"line": 30,
+"column": 63,
+"message": "'_get' is defined but never used."
+}
+]
+}
+]

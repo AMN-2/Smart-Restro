@@ -1,0 +1,29 @@
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 526 files tracked by git with 50 Code rules:
+                                                                                                                        
+  Language   Rules   Files          Origin   Rules                                                                      
+ ──────────────────────────        ────────────────                                                                     
+  python        41     328          Custom      50                                                                      
+  json           6     131                                                                                              
+  js            10      35                                                                                              
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 772 (772 blocking)
+ • Rules run: 49
+ • Targets scanned: 494
+ • Parsed lines: ~100.0%
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 49 rules on 494 files: 772 findings.
+
+📢 Too many findings? Try Semgrep Pro for more powerful queries and less noise.
+   See https://sg.run/false-positives.

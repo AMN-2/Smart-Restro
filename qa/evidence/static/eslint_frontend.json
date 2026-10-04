@@ -1,0 +1,3047 @@
+[
+{
+"file": "frontend/src/App.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 71,
+"column": 32,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/components/common/Drawer.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 79,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/common/MenuBulkUpload.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 103,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/common/SearchableSelect.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 313,
+"column": 9,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/layout/DashboardLayout.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 65,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 76,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/layout/Header.tsx",
+"errorCount": 0,
+"warningCount": 9,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 84,
+"column": 23,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 90,
+"column": 29,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 98,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 115,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 136,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 163,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 182,
+"column": 35,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 193,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 204,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/layout/LanguageSwitcher.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 24,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/layout/NotificationMenu.tsx",
+"errorCount": 0,
+"warningCount": 4,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 72,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 137,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 171,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 196,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/layout/Sidebar.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 72,
+"column": 18,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 195,
+"column": 9,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/menu/QuickItemForm.tsx",
+"errorCount": 0,
+"warningCount": 12,
+"messages": [
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 15,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 45,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 153,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 237,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 251,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 256,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 278,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 301,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 323,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 331,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 335,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 340,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/setup/ConfigureSidebar.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 43,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/setup/DatePicker.tsx",
+"errorCount": 0,
+"warningCount": 8,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 247,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 280,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 292,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 346,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 515,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 535,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 548,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 560,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/setup/InstallationTypeCard.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 6,
+"column": 9,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/components/setup/WizardLayout.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 31,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/components/setup/sections/MenuSection.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 27,
+"column": 36,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/components/setup/sections/PaymentSection.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 18,
+"column": 10,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 23,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/components/setup/sections/TableSection.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 133,
+"column": 9,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/components/setup/sections/UserSection.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 8,
+"column": 65,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 52,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/context/BranchContext.tsx",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 59,
+"column": 32,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 103,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 111,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+}
+]
+},
+{
+"file": "frontend/src/context/ConfigureContext.tsx",
+"errorCount": 0,
+"warningCount": 5,
+"messages": [
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 4,
+"column": 10,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 61,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 67,
+"column": 17,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 207,
+"column": 32,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 543,
+"column": 17,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+}
+]
+},
+{
+"file": "frontend/src/lib/realtimeClient.ts",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 20,
+"column": 36,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 22,
+"column": 23,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 41,
+"column": 40,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/lib/uploadImage.ts",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 13,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 37,
+"column": 43,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 58,
+"column": 26,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/AggregatorPage.tsx",
+"errorCount": 0,
+"warningCount": 12,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 56,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 73,
+"column": 14,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 74,
+"column": 14,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 90,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'fetchBranchAggregators'. Either include it or remove the dependency array."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 112,
+"column": 20,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 130,
+"column": 20,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 147,
+"column": 20,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 158,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 188,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 250,
+"column": 20,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 260,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 288,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/BranchPage.tsx",
+"errorCount": 0,
+"warningCount": 33,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 34,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 35,
+"column": 21,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 52,
+"column": 63,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 54,
+"column": 71,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 64,
+"column": 46,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 68,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 79,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 88,
+"column": 40,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 91,
+"column": 39,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 104,
+"column": 36,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 111,
+"column": 36,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 152,
+"column": 36,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 166,
+"column": 43,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 177,
+"column": 44,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 231,
+"column": 36,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 240,
+"column": 37,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 293,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 319,
+"column": 70,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 326,
+"column": 74,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 344,
+"column": 69,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 351,
+"column": 73,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 424,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 589,
+"column": 64,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 590,
+"column": 59,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 612,
+"column": 75,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 652,
+"column": 35,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 653,
+"column": 92,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 706,
+"column": 62,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 707,
+"column": 57,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 738,
+"column": 77,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 767,
+"column": 35,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 768,
+"column": 94,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 895,
+"column": 38,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/DeliveryPage.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 410,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/MenuPage.tsx",
+"errorCount": 0,
+"warningCount": 9,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 49,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 158,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 168,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 212,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 228,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 236,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 250,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 254,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 264,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/PosProfilePage.tsx",
+"errorCount": 0,
+"warningCount": 41,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 54,
+"column": 65,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 55,
+"column": 81,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 62,
+"column": 42,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 89,
+"column": 14,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 90,
+"column": 14,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 91,
+"column": 14,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 92,
+"column": 14,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 113,
+"column": 38,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 126,
+"column": 39,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 162,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 172,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 192,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 224,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'fetchProfiles'. Either include it or remove the dependency array."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 244,
+"column": 60,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 259,
+"column": 23,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 260,
+"column": 20,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 262,
+"column": 23,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 263,
+"column": 20,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 301,
+"column": 79,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 310,
+"column": 55,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 318,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 374,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 383,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 392,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 421,
+"column": 56,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 435,
+"column": 57,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 553,
+"column": 73,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 567,
+"column": 56,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 585,
+"column": 27,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 586,
+"column": 97,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 613,
+"column": 61,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 627,
+"column": 59,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 645,
+"column": 27,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 646,
+"column": 85,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 787,
+"column": 48,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 801,
+"column": 41,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 819,
+"column": 49,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 858,
+"column": 50,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 874,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 911,
+"column": 53,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 927,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/PrintersPage.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 255,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/ProductionUnitPage.tsx",
+"errorCount": 0,
+"warningCount": 9,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 17,
+"column": 17,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 46,
+"column": 52,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 63,
+"column": 32,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 68,
+"column": 26,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 93,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'fetchUnits'. Either include it or remove the dependency array."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 108,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 116,
+"column": 42,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 229,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 302,
+"column": 61,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/QuickActions.tsx",
+"errorCount": 0,
+"warningCount": 11,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 190,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 238,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 263,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 287,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 297,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 334,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 372,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 381,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 389,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 412,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 422,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/ReportSettingsPage.tsx",
+"errorCount": 0,
+"warningCount": 51,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 59,
+"column": 27,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 60,
+"column": 29,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 61,
+"column": 25,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 62,
+"column": 20,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 63,
+"column": 28,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 64,
+"column": 17,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 112,
+"column": 39,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 118,
+"column": 37,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 122,
+"column": 40,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 126,
+"column": 42,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 138,
+"column": 61,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 145,
+"column": 63,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 152,
+"column": 59,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 160,
+"column": 54,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 167,
+"column": 62,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 174,
+"column": 51,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 209,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'fetchReportSettings'. Either include it or remove the dependency array."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 265,
+"column": 69,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 266,
+"column": 83,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 267,
+"column": 92,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 269,
+"column": 45,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 271,
+"column": 96,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 273,
+"column": 45,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 275,
+"column": 88,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 277,
+"column": 47,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 280,
+"column": 78,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 282,
+"column": 45,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 284,
+"column": 94,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 286,
+"column": 45,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 288,
+"column": 72,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 290,
+"column": 59,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 298,
+"column": 50,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 299,
+"column": 63,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 302,
+"column": 45,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 306,
+"column": 45,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 310,
+"column": 47,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 315,
+"column": 45,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 319,
+"column": 45,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 323,
+"column": 59,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 335,
+"column": 24,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 401,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 445,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 474,
+"column": 23,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 505,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 566,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 638,
+"column": 31,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 703,
+"column": 31,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 786,
+"column": 31,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 851,
+"column": 31,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 916,
+"column": 31,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 981,
+"column": 31,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/ReportWidgets.tsx",
+"errorCount": 0,
+"warningCount": 5,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 166,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 200,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 205,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 211,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 314,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/ReservationPage.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 85,
+"column": 6,
+"message": "React Hook useCallback has an unnecessary dependency: 'activeBranchId'. Either exclude it or remove the dependency array."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/RoomPage.tsx",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 69,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'fetchRooms'. Either include it or remove the dependency array."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 84,
+"column": 33,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 174,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/TableLayoutView.tsx",
+"errorCount": 0,
+"warningCount": 13,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 23,
+"column": 57,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 37,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 38,
+"column": 54,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 39,
+"column": 41,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 432,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 436,
+"column": 62,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 450,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 470,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 477,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 484,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 548,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 559,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 570,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/TablePage.tsx",
+"errorCount": 0,
+"warningCount": 10,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 71,
+"column": 5,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 224,
+"column": 6,
+"message": "React Hook useEffect has missing dependencies: 'fetchRooms' and 'fetchTables'. Either include them or remove the dependency array."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 275,
+"column": 61,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 276,
+"column": 69,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 285,
+"column": 57,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 286,
+"column": 65,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 329,
+"column": 40,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 404,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 410,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 486,
+"column": 31,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/UserPage.tsx",
+"errorCount": 0,
+"warningCount": 6,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 39,
+"column": 52,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 44,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 69,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'fetchUsers'. Either include it or remove the dependency array."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 93,
+"column": 40,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 159,
+"column": 44,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 187,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/pages/Dashboard/WaitlistPage.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 102,
+"column": 79,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 400,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Inventory/InventoryCharts.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 136,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Inventory/InventoryPage.tsx",
+"errorCount": 0,
+"warningCount": 15,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 113,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 127,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 240,
+"column": 9,
+"message": "The 'warehouses' logical expression could make the dependencies of useMemo Hook (at line 241) change on every render. To fix this, wrap the initialization of 'warehouses' in its own useMemo() Hook."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 398,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 419,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 430,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 509,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 547,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 584,
+"column": 23,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 607,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 660,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 665,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 672,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 772,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 852,
+"column": 3,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Inventory/WarehouseScene.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 726,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 752,
+"column": 24,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+}
+]
+},
+{
+"file": "frontend/src/pages/Inventory/stockStatus.tsx",
+"errorCount": 0,
+"warningCount": 7,
+"messages": [
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 15,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 37,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 64,
+"column": 17,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 76,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 77,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 81,
+"column": 14,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 83,
+"column": 17,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+}
+]
+},
+{
+"file": "frontend/src/pages/Purchases/PurchaseDetailPage.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 376,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Purchases/PurchaseFormPage.tsx",
+"errorCount": 0,
+"warningCount": 9,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 144,
+"column": 9,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 194,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 207,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 349,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 679,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 747,
+"column": 29,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 853,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 865,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 881,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Purchases/PurchasesPage.tsx",
+"errorCount": 0,
+"warningCount": 7,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 206,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 283,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 338,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 346,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 356,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 362,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 470,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Recipes/RecipeEditorPage.tsx",
+"errorCount": 0,
+"warningCount": 4,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 151,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 464,
+"column": 46,
+"message": "Arbitrary hex color in a Tailwind class bypasses the design-system tokens in packages/ui/src/styles/theme.css. Use a token class (primary, gray-*, etc.) or extend the shared preset instead."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 485,
+"column": 29,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 575,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Recipes/RecipesPage.tsx",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 48,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 158,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 341,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Reports/CustomerData.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 110,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 125,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Reports/DailyPnl.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 61,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Reports/DaywiseCustomerDetails.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 89,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Reports/EmployeeItemWiseSales.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 104,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 119,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Reports/ItemWiseSales.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 91,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Setup/ConfigurePage.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 205,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Setup/SetupPage.tsx",
+"errorCount": 0,
+"warningCount": 10,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 72,
+"column": 36,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 75,
+"column": 20,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 85,
+"column": 57,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 90,
+"column": 59,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 95,
+"column": 57,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 107,
+"column": 56,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 118,
+"column": 6,
+"message": "React Hook useEffect has a missing dependency: 'handleCountryChange'. Either include it or remove the dependency array."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 126,
+"column": 53,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 196,
+"column": 19,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 261,
+"column": 56,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/pages/Website/DesignPicker.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 74,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 114,
+"column": 13,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Website/GalleryEditor.tsx",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 84,
+"column": 17,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 108,
+"column": 9,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 128,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Website/HoursEditor.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 23,
+"column": 17,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 60,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Website/ImageField.tsx",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 100,
+"column": 11,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 116,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Website/LivePreview.tsx",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 56,
+"column": 15,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/pages/Website/WebsiteEditorPage.tsx",
+"errorCount": 0,
+"warningCount": 7,
+"messages": [
+{
+"ruleId": "react-refresh/only-export-components",
+"severity": 1,
+"line": 55,
+"column": 17,
+"message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 107,
+"column": 15,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 108,
+"column": 64,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 108,
+"column": 86,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 201,
+"column": 9,
+"message": "The 'missing' logical expression could make the dependencies of useMemo Hook (at line 210) change on every render. To fix this, wrap the initialization of 'missing' in its own useMemo() Hook."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 273,
+"column": 7,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+},
+{
+"ruleId": "no-restricted-syntax",
+"severity": 1,
+"line": 409,
+"column": 19,
+"message": "Use the @ury/ui Button/Input/Textarea/Select component instead of the raw HTML element, so styling stays on the design system."
+}
+]
+},
+{
+"file": "frontend/src/services/dashboard.ts",
+"errorCount": 0,
+"warningCount": 3,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 83,
+"column": 21,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 119,
+"column": 30,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 121,
+"column": 48,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/services/delivery.ts",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 62,
+"column": 26,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/services/feedback.ts",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 35,
+"column": 26,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/services/setup.ts",
+"errorCount": 0,
+"warningCount": 7,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 39,
+"column": 28,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 43,
+"column": 28,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 47,
+"column": 28,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 54,
+"column": 28,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 57,
+"column": 35,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 57,
+"column": 49,
+"message": "Unexpected any. Specify a different type."
+},
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 58,
+"column": 28,
+"message": "Unexpected any. Specify a different type."
+}
+]
+},
+{
+"file": "frontend/src/services/waitlist.ts",
+"errorCount": 0,
+"warningCount": 1,
+"messages": [
+{
+"ruleId": "@typescript-eslint/no-explicit-any",
+"severity": 1,
+"line": 50,
+"column": 26,
+"message": "Unexpected any. Specify a different type."
+}
+]
+}
+]

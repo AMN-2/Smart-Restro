@@ -1,0 +1,602 @@
+ury/config/desktop.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/hooks.py:248:3: W291 [*] Trailing whitespace
+ury/install.py:10:1: W293 [*] Blank line contains whitespace
+ury/install.py:13:1: W293 [*] Blank line contains whitespace
+ury/patches/v2_0/admin_permissions.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/patches/v2_0/admin_permissions.py:14:1: W293 [*] Blank line contains whitespace
+ury/patches/v2_0/default_permissions.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/patches/v2_0/default_permissions.py:14:1: W293 [*] Blank line contains whitespace
+ury/patches/v2_0/default_permissions.py:174:43: W292 [*] No newline at end of file
+ury/permission.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/permission.py:5:14: W292 [*] No newline at end of file
+ury/role_permissions.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/role_permissions.py:214:1: W293 [*] Blank line contains whitespace
+ury/setup/arabic_demo.py:1:1: UP009 [*] UTF-8 encoding declaration is unnecessary
+ury/setup/arabic_demo.py:366:1: W293 Blank line contains whitespace
+ury/setup/arabic_demo.py:631:11: F541 [*] f-string without any placeholders
+ury/setup/demo.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/setup/demo.py:21:36: F811 [*] Redefinition of unused `capture` from line 8: `capture` redefined here
+ury/setup/demo.py:33:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:35:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:37:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:45:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:48:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:50:25: F841 [*] Local variable `e` is assigned to but never used
+ury/setup/demo.py:74:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:88:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:101:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:108:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:143:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:223:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:260:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:281:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:539:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:551:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:554:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:558:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:564:33: F841 [*] Local variable `e` is assigned to but never used
+ury/setup/demo.py:566:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:573:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:576:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:601:1: W293 [*] Blank line contains whitespace
+ury/setup/demo.py:651:76: W292 [*] No newline at end of file
+ury/setup/pos_demo.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/setup/pos_demo.py:8:1: W293 [*] Blank line contains whitespace
+ury/setup/pos_demo.py:9:5: F841 Local variable `user` is assigned to but never used
+ury/setup/pos_demo.py:10:1: W293 [*] Blank line contains whitespace
+ury/setup/pos_demo.py:15:1: W293 [*] Blank line contains whitespace
+ury/setup/pos_demo.py:49:33: W291 [*] Trailing whitespace
+ury/setup/pos_demo.py:75:9: B007 Loop control variable `i` not used within loop body
+ury/setup/pos_demo.py:97:1: W293 [*] Blank line contains whitespace
+ury/setup/pos_demo.py:103:1: W293 [*] Blank line contains whitespace
+ury/setup/pos_demo.py:108:1: W293 [*] Blank line contains whitespace
+ury/setup/pos_demo.py:117:19: W292 [*] No newline at end of file
+ury/setup/setup_wizard.py:4:1: I001 [*] Import block is un-sorted or un-formatted
+ury/setup_customizations.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/setup_customizations.py:20:1: W293 [*] Blank line contains whitespace
+ury/setup_customizations.py:23:1: W293 [*] Blank line contains whitespace
+ury/setup_customizations.py:226:6: F601 Dictionary key literal `"options"` repeated
+ury/setup_customizations.py:342:45: W291 [*] Trailing whitespace
+ury/setup_customizations.py:364:1: W293 [*] Blank line contains whitespace
+ury/setup_customizations.py:385:5: W291 [*] Trailing whitespace
+ury/setup_customizations.py:404:1: W293 [*] Blank line contains whitespace
+ury/setup_customizations.py:446:1: W293 [*] Blank line contains whitespace
+ury/setup_customizations.py:448:1: W293 [*] Blank line contains whitespace
+ury/setup_customizations.py:458:1: W293 [*] Blank line contains whitespace
+ury/setup_customizations.py:460:1: W293 [*] Blank line contains whitespace
+ury/setup_customizations.py:461:1: W293 [*] Blank line contains whitespace
+ury/setup_customizations.py:462:1: W293 [*] Blank line contains whitespace
+ury/uninstall.py:12:5: E722 Do not use bare `except`
+ury/uninstall.py:27:51: W292 [*] No newline at end of file
+ury/ury/api/delivery.py:11:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/driver_app.py:18:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/feedback.py:12:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/floor_events.py:182:16: RUF005 Consider `[doc.name, *_split_tables(doc.get("merged_with"))]` instead of concatenation
+ury/ury/api/inventory.py:113:12: RUF005 Consider `[*groups[:GROUP_LIMIT - 1], (_("Other"), rest)]` instead of concatenation
+ury/ury/api/invoice_browser.py:9:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/loyalty.py:22:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/minimal/business_setup.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/minimal/business_setup.py:19:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:38:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:50:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:52:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:71:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:75:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:77:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:80:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:94:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:101:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:121:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:127:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:139:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:143:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:178:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:269:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:323:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:358:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:381:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:385:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:391:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:399:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:416:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:420:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:423:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:431:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:433:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:443:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:479:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:496:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:500:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/business_setup.py:554:53: W292 [*] No newline at end of file
+ury/ury/api/minimal/setup_organization.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/minimal/setup_organization.py:14:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:23:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:26:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:29:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:32:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:34:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:35:9: B007 Loop control variable `c_name` not used within loop body
+ury/ury/api/minimal/setup_organization.py:45:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:61:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:63:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:66:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:68:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:75:1: W293 [*] Blank line contains whitespace
+ury/ury/api/minimal/setup_organization.py:112:5: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/pos_extend.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/pos_extend.py:56:38: UP032 [*] Use f-string instead of `format` call
+ury/ury/api/pos_extend.py:63:39: UP032 [*] Use f-string instead of `format` call
+ury/ury/api/purchases.py:288:14: RUF005 Consider iterable unpacking instead of concatenation
+ury/ury/api/purchases.py:296:17: RUF005 Consider iterable unpacking instead of concatenation
+ury/ury/api/purchases.py:307:11: RUF005 Consider iterable unpacking instead of concatenation
+ury/ury/api/purchases.py:677:18: B905 `zip()` without an explicit `strict=` parameter
+ury/ury/api/qz_printing.py:22:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/recipes.py:74:2: RUF059 Unpacked variable `company` is never used
+ury/ury/api/recipes.py:74:11: RUF059 Unpacked variable `default_wh` is never used
+ury/ury/api/recipes.py:432:12: RUF005 Consider `[group, *_ancestors(group)]` instead of concatenation
+ury/ury/api/reservations.py:12:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/self_ordering.py:25:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/self_ordering.py:393:24: RUF059 Unpacked variable `session` is never used
+ury/ury/api/self_ordering.py:412:14: RUF059 Unpacked variable `existing_table` is never used
+ury/ury/api/self_ordering.py:433:24: RUF059 Unpacked variable `session` is never used
+ury/ury/api/self_ordering.py:647:18: RUF059 Unpacked variable `invoice_name` is never used
+ury/ury/api/service_requests.py:31:12: UP032 [*] Use f-string instead of `format` call
+ury/ury/api/test_dashboard.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_delivery.py:2:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_driver_app.py:2:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_food_cost.py:9:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_invoice_browser.py:103:30: RUF001 String contains ambiguous `×` (MULTIPLICATION SIGN). Did you mean `x` (LATIN SMALL LETTER X)?
+ury/ury/api/test_invoice_browser.py:110:30: RUF001 String contains ambiguous `×` (MULTIPLICATION SIGN). Did you mean `x` (LATIN SMALL LETTER X)?
+ury/ury/api/test_invoice_browser.py:111:28: RUF001 String contains ambiguous `×` (MULTIPLICATION SIGN). Did you mean `x` (LATIN SMALL LETTER X)?
+ury/ury/api/test_loyalty.py:8:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_recipes.py:171:8: RUF059 Unpacked variable `inserted` is never used
+ury/ury/api/test_restaurant_website.py:51:3: RUF059 Unpacked variable `start` is never used
+ury/ury/api/test_self_ordering.py:11:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_self_ordering.py:202:9: F841 Local variable `result` is assigned to but never used
+ury/ury/api/test_self_ordering_qr.py:9:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_ury_dashboard.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_ury_kitchen_ops.py:9:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_ury_kot_display.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_ury_kot_display.py:17:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:30:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:34:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:37:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:39:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:54:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:57:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:59:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:72:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:76:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:79:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:92:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:96:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:99:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_display.py:101:1: W293 [*] Blank line contains whitespace
+ury/ury/api/test_ury_kot_reprint.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_ury_service_line.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_waitlist.py:2:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/test_website_editor.py:2:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/ury_dashboard.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/ury_kitchen_message.py:20:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/ury_kot_display.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/ury_kot_display.py:22:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_kot_display.py:24:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_kot_display.py:235:9: UP032 [*] Use f-string instead of `format` call
+ury/ury/api/ury_kot_generate.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/ury_kot_generate.py:67:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_kot_generate.py:132:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_kot_generate.py:187:13: UP031 Use format specifiers instead of percent format
+ury/ury/api/ury_kot_generate.py:258:55: W291 [*] Trailing whitespace
+ury/ury/api/ury_kot_generate.py:310:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_kot_generate.py:340:19: B006 Do not use mutable data structures for argument defaults
+ury/ury/api/ury_kot_generate.py:341:20: B006 Do not use mutable data structures for argument defaults
+ury/ury/api/ury_kot_generate.py:365:13: UP031 Use format specifiers instead of percent format
+ury/ury/api/ury_kot_generate.py:411:9: B007 Loop control variable `index` not used within loop body
+ury/ury/api/ury_kot_notification.py:35:5: F841 Local variable `items` is assigned to but never used
+ury/ury/api/ury_kot_notification.py:48:1: W293 Blank line contains whitespace
+ury/ury/api/ury_kot_notification.py:49:1: W293 Blank line contains whitespace
+ury/ury/api/ury_kot_order_number.py:75:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_kot_order_number.py:82:35: W291 [*] Trailing whitespace
+ury/ury/api/ury_kot_order_number.py:92:5: E722 Do not use bare `except`
+ury/ury/api/ury_kot_order_number.py:93:13: W291 [*] Trailing whitespace
+ury/ury/api/ury_kot_order_number.py:99:5: E722 Do not use bare `except`
+ury/ury/api/ury_kot_order_number.py:100:13: W292 [*] No newline at end of file
+ury/ury/api/ury_kot_reprint.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/ury_kot_reprint.py:50:22: RUF059 Unpacked variable `restaurant_table` is never used
+ury/ury/api/ury_kot_reprint.py:61:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_kot_reprint.py:67:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_kot_reprint.py:73:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_kot_reprint.py:80:76: RUF010 [*] Use explicit conversion flag
+ury/ury/api/ury_kot_reprint.py:89:87: W292 [*] No newline at end of file
+ury/ury/api/ury_kot_validation.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/ury_kot_validation.py:46:13: RUF034 Useless `if`-`else` condition
+ury/ury/api/ury_kot_validation.py:150:25: UP032 [*] Use f-string instead of `format` call
+ury/ury/api/ury_menu_course_validation.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/ury_menu_course_validation.py:6:27: W291 [*] Trailing whitespace
+ury/ury/api/ury_print.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/ury_print.py:18:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/ury_print.py:50:57: RUF010 [*] Use explicit conversion flag
+ury/ury/api/ury_print.py:88:40: RUF010 [*] Use explicit conversion flag
+ury/ury/api/ury_print.py:93:38: RUF010 [*] Use explicit conversion flag
+ury/ury/api/ury_print.py:144:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_print.py:145:21: E711 Comparison to `None` should be `cond is None`
+ury/ury/api/ury_print.py:151:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_print.py:155:45: W291 [*] Trailing whitespace
+ury/ury/api/ury_print.py:170:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_print.py:173:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_print.py:175:1: W293 [*] Blank line contains whitespace
+ury/ury/api/ury_print.py:178:56: W291 [*] Trailing whitespace
+ury/ury/api/ury_service_line.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/waitlist.py:12:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/api/waitlist.py:94:14: UP034 [*] Avoid extraneous parentheses
+ury/ury/doctype/aggregator_settings/aggregator_settings.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/menu_for_room/menu_for_room.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/multiple_rooms/multiple_rooms.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/order_type_menu/order_type_menu.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/role_permitted/role_permitted.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:2:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:9:22: F811 [*] Redefinition of unused `datetime` from line 5: `datetime` redefined here
+ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:11:27: F811 [*] Redefinition of unused `get_datetime` from line 4: `get_datetime` redefined here
+ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:36:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:47:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:49:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:69:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:75:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:167:16: W292 [*] No newline at end of file
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:4:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:34:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:36:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:38:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:55:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:71:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:88:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:90:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:92:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:109:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:111:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing/test_sub_pos_closing.py:113:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/sub_pos_closing_payment/sub_pos_closing_payment.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/sub_pos_invoices/sub_pos_invoices.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_audit_log/test_ury_audit_log.py:8:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_cost_of_goods/ury_cost_of_goods.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:4:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:18:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:92:9: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:94:47: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:104:12: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:106:12: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:129:9: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:131:47: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:141:12: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:143:12: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:160:9: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:162:47: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:171:12: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:173:12: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:176:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:194:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:247:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:260:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:273:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:278:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:281:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:303:9: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:305:47: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:375:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:376:28: W291 [*] Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:395:32: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:397:9: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:402:65: W291 [*] Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:409:50: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:416:63: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:417:8: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:421:9: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:425:22: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:430:53: UP030 Use implicit references for positional format fields
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:430:53: UP032 [*] Use f-string instead of `format` call
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:440:9: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:443:40: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:464:9: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:466:36: W291 Trailing whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:491:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:539:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:550:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:557:4: W292 [*] No newline at end of file
+ury/ury/doctype/ury_fixed_expenses/ury_fixed_expenses.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_kot/ury_kot.py:4:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_kot/ury_kot.py:32:13: E722 Do not use bare `except`
+ury/ury/doctype/ury_kot/ury_kot.py:35:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_kot/ury_kot.py:38:78: W291 [*] Trailing whitespace
+ury/ury/doctype/ury_kot/ury_kot.py:42:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_kot/ury_kot.py:47:110: W291 [*] Trailing whitespace
+ury/ury/doctype/ury_kot/ury_kot.py:74:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_kot/ury_kot.py:81:24: E712 Avoid equality comparisons to `True`; use `pos_print_flag:` for truth checks
+ury/ury/doctype/ury_kot/ury_kot.py:109:21: UP032 [*] Use f-string instead of `format` call
+ury/ury/doctype/ury_kot_error_log/ury_kot_error_log.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_kot_items/ury_kot_items.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_materials/ury_materials.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_menu/ury_menu.py:43:9: F811 Redefinition of unused `clear_item_price` from line 37: `clear_item_price` redefined here
+ury/ury/doctype/ury_menu_course/ury_menu_course.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_notification_recipient/ury_notification_recipient.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_order/test_close_table.py:8:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_order/test_make_invoice_idempotency.py:9:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_order/test_sync_order_idempotency.py:10:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_order/test_ury_order.py:4:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_order/test_ury_order.py:13:27: F811 [*] Redefinition of unused `patch` from line 9: `patch` redefined here
+ury/ury/doctype/ury_order/test_ury_order.py:13:34: F811 [*] Redefinition of unused `MagicMock` from line 9: `MagicMock` redefined here
+ury/ury/doctype/ury_order/test_ury_order.py:29:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/test_ury_order.py:35:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/test_ury_order.py:134:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/test_ury_order.py:162:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/test_ury_order.py:164:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/test_ury_order.py:169:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/test_ury_order.py:171:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/test_ury_order.py:172:76: F841 Local variable `mock_sql` is assigned to but never used
+ury/ury/doctype/ury_order/test_ury_order.py:187:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:4:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_order/ury_order.py:60:14: RUF059 Unpacked variable `table_map` is never used
+ury/ury/doctype/ury_order/ury_order.py:1141:14: RUF059 Unpacked variable `invoice_name` is never used
+ury/ury/doctype/ury_order/ury_order.py:1634:42: RUF001 String contains ambiguous `×` (MULTIPLICATION SIGN). Did you mean `x` (LATIN SMALL LETTER X)?
+ury/ury/doctype/ury_order/ury_order.py:1739:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:1861:21: UP030 Use implicit references for positional format fields
+ury/ury/doctype/ury_order/ury_order.py:1861:21: UP032 [*] Use f-string instead of `format` call
+ury/ury/doctype/ury_order/ury_order.py:1889:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:1894:56: W291 Trailing whitespace
+ury/ury/doctype/ury_order/ury_order.py:1896:43: W291 Trailing whitespace
+ury/ury/doctype/ury_order/ury_order.py:1910:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:1928:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:1931:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:1954:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2002:57: W291 [*] Trailing whitespace
+ury/ury/doctype/ury_order/ury_order.py:2012:44: RUF010 [*] Use explicit conversion flag
+ury/ury/doctype/ury_order/ury_order.py:2012:52: W291 [*] Trailing whitespace
+ury/ury/doctype/ury_order/ury_order.py:2088:5: RUF059 Unpacked variable `restaurant` is never used
+ury/ury/doctype/ury_order/ury_order.py:2139:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2149:80: W291 [*] Trailing whitespace
+ury/ury/doctype/ury_order/ury_order.py:2150:16: W291 [*] Trailing whitespace
+ury/ury/doctype/ury_order/ury_order.py:2151:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2155:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2164:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2168:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2170:52: W291 Trailing whitespace
+ury/ury/doctype/ury_order/ury_order.py:2172:39: W291 Trailing whitespace
+ury/ury/doctype/ury_order/ury_order.py:2179:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2180:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2194:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2335:5: F841 Local variable `current_captain_doc` is assigned to but never used
+ury/ury/doctype/ury_order/ury_order.py:2433:25: F841 [*] Local variable `e` is assigned to but never used
+ury/ury/doctype/ury_order/ury_order.py:2543:19: F841 Local variable `invoice_name` is assigned to but never used
+ury/ury/doctype/ury_order/ury_order.py:2577:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2582:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2586:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2608:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2616:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2619:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2621:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2625:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2631:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2637:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2639:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2645:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2682:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2703:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_order/ury_order.py:2704:1: W293 [*] Blank line contains whitespace
+ury/ury/doctype/ury_p_and_l_breakup/ury_p_and_l_breakup.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_p_and_l_materials/ury_p_and_l_materials.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_pos_checklist_log/ury_pos_checklist_log.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_production_item_groups/ury_production_item_groups.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_production_unit/ury_production_unit.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_report_settings/ury_report_settings.py:4:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_table/ury_table.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_variable_expenses/ury_variable_expenses.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_waitlist_entry/ury_waitlist_entry.py:107:9: UP032 [*] Use f-string instead of `format` call
+ury/ury/doctype/ury_waste_log/test_ury_waste_log.py:9:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/doctype/ury_website/ury_website.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/hooks/ury_item.py:7:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_item.py:8:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_closing_entry.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/hooks/ury_pos_closing_entry.py:32:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_closing_entry.py:39:25: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_pos_closing_entry.py:47:28: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_pos_closing_entry.py:73:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_closing_entry.py:73:5: W292 [*] No newline at end of file
+ury/ury/hooks/ury_pos_invoice.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/hooks/ury_pos_invoice.py:33:22: E711 Comparison to `None` should be `cond is None`
+ury/ury/hooks/ury_pos_invoice.py:38:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:42:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:45:70: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_pos_invoice.py:49:70: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_pos_invoice.py:52:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:55:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:59:47: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_pos_invoice.py:65:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:70:54: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_pos_invoice.py:76:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:78:17: UP030 Use implicit references for positional format fields
+ury/ury/hooks/ury_pos_invoice.py:84:29: E711 Comparison to `None` should be `cond is None`
+ury/ury/hooks/ury_pos_invoice.py:86:13: F523 [*] `.format` call has unused arguments at position(s): 0
+ury/ury/hooks/ury_pos_invoice.py:86:13: UP032 [*] Use f-string instead of `format` call
+ury/ury/hooks/ury_pos_invoice.py:96:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:98:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:100:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:104:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:143:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:148:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:161:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:170:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:172:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:188:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:194:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:197:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:199:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:201:93: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_pos_invoice.py:206:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_invoice.py:239:13: UP030 Use implicit references for positional format fields
+ury/ury/hooks/ury_pos_invoice.py:239:13: UP032 [*] Use f-string instead of `format` call
+ury/ury/hooks/ury_pos_invoice.py:355:54: W292 [*] No newline at end of file
+ury/ury/hooks/ury_pos_opening_entry.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury/hooks/ury_pos_opening_entry.py:3:40: F811 [*] Redefinition of unused `today` from line 2: `today` redefined here
+ury/ury/hooks/ury_pos_opening_entry.py:7:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_opening_entry.py:11:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_opening_entry.py:12:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_opening_entry.py:17:44: W291 Trailing whitespace
+ury/ury/hooks/ury_pos_opening_entry.py:19:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_opening_entry.py:25:17: B020 Loop control variable `room` overrides iterable it iterates
+ury/ury/hooks/ury_pos_opening_entry.py:60:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_pos_profile.py:20:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:9:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:13:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:16:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:18:23: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_sales_invoice.py:19:25: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_sales_invoice.py:20:45: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_sales_invoice.py:26:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:31:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:34:34: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_sales_invoice.py:35:28: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_sales_invoice.py:38:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:39:41: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_sales_invoice.py:41:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:42:18: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_sales_invoice.py:43:97: W291 [*] Trailing whitespace
+ury/ury/hooks/ury_sales_invoice.py:45:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:51:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:52:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:56:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:57:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:59:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:63:1: W293 [*] Blank line contains whitespace
+ury/ury/hooks/ury_sales_invoice.py:71:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury_pos/api.py:209:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:234:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:237:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:242:10: W291 [*] Trailing whitespace
+ury/ury_pos/api.py:268:23: RUF005 Consider `[primary, *sorted(partners)]` instead of concatenation
+ury/ury_pos/api.py:326:9: B007 Loop control variable `group` not used within loop body
+ury/ury_pos/api.py:360:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:363:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:454:19: W291 Trailing whitespace
+ury/ury_pos/api.py:456:58: W291 Trailing whitespace
+ury/ury_pos/api.py:457:74: W291 Trailing whitespace
+ury/ury_pos/api.py:458:56: W291 Trailing whitespace
+ury/ury_pos/api.py:459:34: W291 Trailing whitespace
+ury/ury_pos/api.py:470:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:474:19: W291 Trailing whitespace
+ury/ury_pos/api.py:476:58: W291 Trailing whitespace
+ury/ury_pos/api.py:477:74: W291 Trailing whitespace
+ury/ury_pos/api.py:478:56: W291 Trailing whitespace
+ury/ury_pos/api.py:479:34: W291 Trailing whitespace
+ury/ury_pos/api.py:493:19: W291 Trailing whitespace
+ury/ury_pos/api.py:495:58: W291 Trailing whitespace
+ury/ury_pos/api.py:497:103: W291 Trailing whitespace
+ury/ury_pos/api.py:498:34: W291 Trailing whitespace
+ury/ury_pos/api.py:506:37: W291 [*] Trailing whitespace
+ury/ury_pos/api.py:508:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:511:19: W291 Trailing whitespace
+ury/ury_pos/api.py:513:58: W291 Trailing whitespace
+ury/ury_pos/api.py:516:34: W291 Trailing whitespace
+ury/ury_pos/api.py:530:25: W291 [*] Trailing whitespace
+ury/ury_pos/api.py:597:19: W291 Trailing whitespace
+ury/ury_pos/api.py:599:58: W291 Trailing whitespace
+ury/ury_pos/api.py:600:74: W291 Trailing whitespace
+ury/ury_pos/api.py:605:34: W291 Trailing whitespace
+ury/ury_pos/api.py:606:46: W291 Trailing whitespace
+ury/ury_pos/api.py:616:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:620:19: W291 Trailing whitespace
+ury/ury_pos/api.py:622:58: W291 Trailing whitespace
+ury/ury_pos/api.py:623:74: W291 Trailing whitespace
+ury/ury_pos/api.py:628:34: W291 Trailing whitespace
+ury/ury_pos/api.py:629:46: W291 Trailing whitespace
+ury/ury_pos/api.py:642:19: W291 Trailing whitespace
+ury/ury_pos/api.py:644:58: W291 Trailing whitespace
+ury/ury_pos/api.py:649:34: W291 Trailing whitespace
+ury/ury_pos/api.py:650:46: W291 Trailing whitespace
+ury/ury_pos/api.py:706:19: RUF005 Consider `[*params, limit, limit_start]` instead of concatenation
+ury/ury_pos/api.py:711:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:714:19: W291 Trailing whitespace
+ury/ury_pos/api.py:716:58: W291 Trailing whitespace
+ury/ury_pos/api.py:721:34: W291 Trailing whitespace
+ury/ury_pos/api.py:722:46: W291 Trailing whitespace
+ury/ury_pos/api.py:782:25: W291 [*] Trailing whitespace
+ury/ury_pos/api.py:812:29: W291 [*] Trailing whitespace
+ury/ury_pos/api.py:815:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:817:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:866:52: W291 Trailing whitespace
+ury/ury_pos/api.py:868:39: W291 Trailing whitespace
+ury/ury_pos/api.py:880:19: W291 [*] Trailing whitespace
+ury/ury_pos/api.py:881:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:939:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:958:42: W291 [*] Trailing whitespace
+ury/ury_pos/api.py:962:60: W291 Trailing whitespace
+ury/ury_pos/api.py:964:47: W291 Trailing whitespace
+ury/ury_pos/api.py:981:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:985:49: W291 [*] Trailing whitespace
+ury/ury_pos/api.py:986:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:995:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1001:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1005:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1013:14: E712 Avoid equality comparisons to `True`; use `bill_present:` for truth checks
+ury/ury_pos/api.py:1052:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1055:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1152:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1167:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1255:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1259:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1262:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1265:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1275:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1278:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1280:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1650:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/api.py:1859:10: W292 [*] No newline at end of file
+ury/ury_pos/test_api.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury_pos/test_api.py:7:27: F811 [*] Redefinition of unused `patch` from line 2: `patch` redefined here
+ury/ury_pos/test_api.py:7:34: F811 [*] Redefinition of unused `MagicMock` from line 2: `MagicMock` redefined here
+ury/ury_pos/test_api.py:69:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:72:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:75:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:85:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:88:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:91:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:107:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:109:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:114:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:116:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:131:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:138:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:146:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:149:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:151:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:180:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:182:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:184:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:200:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:202:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:219:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:222:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:226:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:265:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:271:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:278:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:286:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:292:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:299:1: I001 [*] Import block is un-sorted or un-formatted
+ury/ury_pos/test_api.py:299:8: F811 [*] Redefinition of unused `frappe` from line 3: `frappe` redefined here
+ury/ury_pos/test_api.py:301:29: F811 [*] Redefinition of unused `create_customer` from line 5: `create_customer` redefined here
+ury/ury_pos/test_api.py:331:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:338:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:341:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:346:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_api.py:348:1: W293 [*] Blank line contains whitespace
+ury/ury_pos/test_e2e_p0_p1_flow.py:16:1: I001 [*] Import block is un-sorted or un-formatted
+ury/www/feedback.py:9:1: I001 [*] Import block is un-sorted or un-formatted
+ury/www/pos.py:69:18: W292 [*] No newline at end of file
+ury/www/restaurant.py:19:35: RUF001 String contains ambiguous `’` (RIGHT SINGLE QUOTATION MARK). Did you mean ``` (GRAVE ACCENT)?
+ury/www/restaurant.py:43:73: RUF001 String contains ambiguous `’` (RIGHT SINGLE QUOTATION MARK). Did you mean ``` (GRAVE ACCENT)?
+ury/www/restaurant.py:46:103: RUF001 String contains ambiguous `’` (RIGHT SINGLE QUOTATION MARK). Did you mean ``` (GRAVE ACCENT)?
+ury/www/restaurant.py:48:78: RUF001 String contains ambiguous `’` (RIGHT SINGLE QUOTATION MARK). Did you mean ``` (GRAVE ACCENT)?
+ury/www/restaurant.py:50:80: RUF001 String contains ambiguous `’` (RIGHT SINGLE QUOTATION MARK). Did you mean ``` (GRAVE ACCENT)?
+ury/www/restaurant.py:59:15: B905 `zip()` without an explicit `strict=` parameter
+Found 600 errors.
+[*] 466 fixable with the `--fix` option (116 hidden fixes can be enabled with the `--unsafe-fixes` option).

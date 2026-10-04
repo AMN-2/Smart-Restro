@@ -1,0 +1,23 @@
+[
+{
+"file": "self-order/src/hooks/useOrderingSession.ts",
+"errorCount": 0,
+"warningCount": 2,
+"messages": [
+{
+"ruleId": null,
+"severity": 1,
+"line": 148,
+"column": 5,
+"message": "Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')."
+},
+{
+"ruleId": "react-hooks/exhaustive-deps",
+"severity": 1,
+"line": 153,
+"column": 31,
+"message": "The ref value 'generation.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'generation.current' to a variable inside the effect, and use that variable in the cleanup function."
+}
+]
+}
+]

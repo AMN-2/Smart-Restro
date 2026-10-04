@@ -1,0 +1,14 @@
+dynamic frappe.db.sql call sites: 53
+with parameter-derived fragments (review by hand): 12
+  ury/ury/api/dashboard.py:56	get_dashboard_summary	['branch_clause']
+  ury/ury/api/dashboard.py:118	get_dashboard_charts	['branch_clause']
+  ury/ury/api/dashboard.py:132	get_dashboard_charts	['branch_clause']
+  ury/ury/api/dashboard.py:147	get_dashboard_charts	['branch_clause']
+  ury/ury/api/dashboard.py:160	get_dashboard_charts	['branch_clause']
+  ury/ury/api/dashboard.py:172	get_dashboard_charts	['branch_clause']
+  ury/ury/api/dashboard.py:187	get_dashboard_charts	['branch_clause']
+  ury/ury/api/dashboard.py:201	get_dashboard_charts	['branch_clause']
+  ury/ury/api/restaurant_website.py:114	table_availability	['suffix']
+  ury/ury/api/restaurant_website.py:118	table_availability	['suffix']
+  ury/ury/api/ury_dashboard.py:89	get_needs_attention	['branch']
+  ury/ury/report_api/employees.py:61	get_employee_sales	['sort_by']

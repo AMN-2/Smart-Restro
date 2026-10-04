@@ -1,0 +1,1307 @@
+Run started:2026-10-04 20:38:13.725925+00:00
+
+Test results:
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:164:11
+163	    weights = [w for _, w in ORDER_TYPE_WEIGHTS]
+164	    return random.choices(population, weights=weights, k=1)[0]
+165	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:389:20
+388	        busy = 1.6 if weekday in (3, 4) else 1.0
+389	        count = int(random.randint(*per_day) * busy)
+390	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:395:20
+394	            aggregator = order_type == "Aggregators"
+395	            lines = random.sample(MENU, k=random.randint(1, 4))
+396	            # The validation hook overrides selling_price_list per order type,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:395:42
+394	            aggregator = order_type == "Aggregators"
+395	            lines = random.sample(MENU, k=random.randint(1, 4))
+396	            # The validation hook overrides selling_price_list per order type,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:404:28
+403	                "company": company,
+404	                "customer": random.choice(AGGREGATORS if aggregator else CUSTOMERS),
+405	                "pos_profile": profile.name,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:410:35
+409	                "posting_date": day,
+410	                "posting_time": f"{random.randint(11, 22):02d}:{random.randint(0, 59):02d}:00",
+411	                "branch": profile.branch,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:410:64
+409	                "posting_date": day,
+410	                "posting_time": f"{random.randint(11, 22):02d}:{random.randint(0, 59):02d}:00",
+411	                "branch": profile.branch,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:413:36
+412	                "restaurant": profile.restaurant,
+413	                "restaurant_table": random.choice(tables) if dine_in and tables else None,
+414	                "order_type": order_type,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:415:26
+414	                "order_type": order_type,
+415	                "waiter": random.choice(WAITERS),
+416	                "no_of_pax": str(random.randint(1, 6)) if dine_in else None,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:416:33
+415	                "waiter": random.choice(WAITERS),
+416	                "no_of_pax": str(random.randint(1, 6)) if dine_in else None,
+417	                "items": [
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:420:31
+419	                        "item_code": name,
+420	                        "qty": random.randint(1, 3),
+421	                        "rate": round(rate * markup),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:539:13
+538	
+539	    chosen = random.sample(tables, min(seated, len(tables)))
+540	    kots = 0
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:544:16
+543	    def build(table, order_type):
+544	        lines = random.sample(MENU, k=random.randint(2, 4))
+545	        # Staggered through the last couple of hours, so the dashboard's
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:544:38
+543	    def build(table, order_type):
+544	        lines = random.sample(MENU, k=random.randint(2, 4))
+545	        # Staggered through the last couple of hours, so the dashboard's
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:547:22
+546	        # service-line chart shows tables at different stages of their meal.
+547	        minutes_ago = random.randint(5, 115)
+548	        placed = now - timedelta(minutes=minutes_ago)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:552:24
+551	            "company": company,
+552	            "customer": random.choice(CUSTOMERS),
+553	            "pos_profile": profile.name,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:563:22
+562	            "order_type": order_type,
+563	            "waiter": random.choice(WAITERS),
+564	            "no_of_pax": str(random.randint(1, 6)) if table else None,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:564:29
+563	            "waiter": random.choice(WAITERS),
+564	            "no_of_pax": str(random.randint(1, 6)) if table else None,
+565	            "items": [
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:566:40
+565	            "items": [
+566	                {"item_code": n, "qty": random.randint(1, 3), "rate": r,
+567	                 "warehouse": profile.warehouse}
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/arabic_demo.py:591:34
+590	    for _ in range(takeaway):
+591	        invoice, _m = build(None, random.choice(["Take Away", "Delivery"]))
+592	        if production:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/demo.py:231:23
+230	
+231	                mode = randint(1, 3)
+232	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/demo.py:306:39
+305	def get_random_date(start_date, start_range, end_range):
+306	    random_date = add_days(start_date, randint(start_range, end_range))
+307	    if getdate(random_date) > getdate():
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/demo.py:526:22
+525	    warehouses = demo_cache[key]
+526	    return warehouses[randint(0, len(warehouses) - 1)].name
+527	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/demo.py:533:21
+532	    suppliers = demo_cache[key]
+533	    return suppliers[randint(0, len(suppliers) - 1)]
+534	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/pos_demo.py:27:11
+26	    )
+27	    return choice(profiles)
+28	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/pos_demo.py:37:11
+36	    customers = frappe.get_all("Customer", pluck="name")
+37	    return choice(customers)
+38	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/pos_demo.py:77:15
+76	
+77	        item = choice(items)
+78	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/pos_demo.py:90:27
+89	                    "item_code": item.name,
+90	                    "qty": randint(1, 5),
+91	                    "warehouse": warehouse,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ury/setup/pos_demo.py:92:28
+91	                    "warehouse": warehouse,
+92	                    "rate": randint(50, 200)
+93	                }
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/audit.py:95:12
+94	    return frappe.db.sql(
+95	        f"""
+96	        SELECT event, COUNT(*) AS count, COALESCE(SUM(amount), 0) AS total
+97	        FROM `tabURY Audit Log`
+98	        {where}
+99	        GROUP BY event
+100	        ORDER BY total DESC
+101	        """,
+102	        values,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/consumption.py:288:6
+287		status = {r.status: r for r in frappe.db.sql(
+288			f"""select status, count(*) as count, sum(total_cost) as cost
+289			from `tabURY Consumption Log` log where {where} group by status""",
+290			values, as_dict=True,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/consumption.py:293:6
+292		ingredients = frappe.db.sql(
+293			f"""select item.item_code, max(item.item_name) as item_name, max(item.stock_uom) as stock_uom,
+294				sum(item.qty) as qty, sum(item.amount) as cost
+295			from `tabURY Consumption Log Item` item join `tabURY Consumption Log` log on log.name = item.parent
+296			where {where} and log.status = 'Done'
+297			group by item.item_code order by cost desc limit 50""",
+298			values, as_dict=True,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/consumption.py:301:6
+300		products = frappe.db.sql(
+301			f"""select item.sold_item, sum(item.amount) as cost, count(distinct log.name) as invoices
+302			from `tabURY Consumption Log Item` item join `tabURY Consumption Log` log on log.name = item.parent
+303			where {where} and log.status = 'Done'
+304			group by item.sold_item order by cost desc limit 50""",
+305			values, as_dict=True,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/consumption.py:313:6
+312		problems = frappe.db.sql(
+313			f"""select log.name, log.pos_invoice, log.status, log.posting_date, log.error, log.attempts, log.modified
+314			from `tabURY Consumption Log` log
+315			where {where} and log.status in ('Failed', 'Pending')
+316			order by log.posting_date desc, log.modified desc limit 100""",
+317			values, as_dict=True,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/dashboard.py:57:12
+56	    result = frappe.db.sql(
+57	        f"""
+58	        SELECT
+59	            COUNT(b.`name`) AS total_invoices,
+60	            ROUND(SUM(b.`grand_total`), 2) AS grand_total
+61	        FROM `tabPOS Invoice` b
+62	        WHERE
+63	            b.`docstatus` = 1
+64	            AND b.`status` IN %(statuses)s
+65	            AND b.`posting_date` = CURDATE()
+66	            {branch_clause}
+67	        """,
+68	        {"branch": branch, "statuses": REVENUE_STATUSES},
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/dashboard.py:119:12
+118	    sales_trend = frappe.db.sql(
+119	        f"""
+120	        SELECT `posting_date` AS `date`, ROUND(SUM(`grand_total`), 2) AS sales
+121	        FROM `tabPOS Invoice`
+122	        WHERE `docstatus` = 1 AND `status` IN %(statuses)s
+123	            AND `posting_date` BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND CURDATE()
+124	            {branch_clause}
+125	        GROUP BY `posting_date`
+126	        ORDER BY `posting_date`
+127	        """,
+128	        params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/dashboard.py:133:12
+132	    hourly_sales = frappe.db.sql(
+133	        f"""
+134	        SELECT HOUR(`posting_time`) AS `hour`, ROUND(SUM(`grand_total`), 2) AS sales
+135	        FROM `tabPOS Invoice`
+136	        WHERE `docstatus` = 1 AND `status` IN %(statuses)s AND `posting_date` = CURDATE()
+137	            {branch_clause}
+138	        GROUP BY HOUR(`posting_time`)
+139	        ORDER BY `hour`
+140	        """,
+141	        params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/dashboard.py:148:12
+147	    payment_methods = frappe.db.sql(
+148	        f"""
+149	        SELECT p.`mode_of_payment` AS method, ROUND(SUM(p.`amount`), 2) AS total
+150	        FROM `tabSales Invoice Payment` p
+151	        INNER JOIN `tabPOS Invoice` b ON b.`name` = p.`parent` AND p.`parenttype` = 'POS Invoice'
+152	        WHERE b.`docstatus` = 1 AND b.`status` IN %(statuses)s AND b.`posting_date` = CURDATE()
+153	            {branch_clause.replace('`branch`', 'b.`branch`')}
+154	        GROUP BY p.`mode_of_payment`
+155	        """,
+156	        params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/dashboard.py:161:12
+160	    order_types = frappe.db.sql(
+161	        f"""
+162	        SELECT `order_type`, COUNT(`name`) AS count, ROUND(SUM(`grand_total`), 2) AS total
+163	        FROM `tabPOS Invoice`
+164	        WHERE `docstatus` = 1 AND `status` IN %(statuses)s AND `posting_date` = CURDATE()
+165	            {branch_clause}
+166	        GROUP BY `order_type`
+167	        """,
+168	        params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/dashboard.py:173:12
+172	    top_items = frappe.db.sql(
+173	        f"""
+174	        SELECT i.`item_name` AS item_name, SUM(i.`qty`) AS total_qty, ROUND(SUM(i.`amount`), 2) AS total_amount
+175	        FROM `tabPOS Invoice Item` i
+176	        INNER JOIN `tabPOS Invoice` b ON b.`name` = i.`parent`
+177	        WHERE b.`docstatus` = 1 AND b.`status` IN %(statuses)s AND b.`posting_date` = CURDATE()
+178	            {branch_clause.replace('`branch`', 'b.`branch`')}
+179	        GROUP BY i.`item_code`, i.`item_name`
+180	        ORDER BY total_qty DESC
+181	        LIMIT 5
+182	        """,
+183	        params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/dashboard.py:188:12
+187	    revenue_by_branch = frappe.db.sql(
+188	        f"""
+189	        SELECT `branch`, ROUND(SUM(`grand_total`), 2) AS total
+190	        FROM `tabPOS Invoice`
+191	        WHERE `docstatus` = 1 AND `status` IN %(statuses)s AND `posting_date` = CURDATE()
+192	            {branch_clause}
+193	        GROUP BY `branch`
+194	        """,
+195	        params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/dashboard.py:202:12
+201	    sales_by_course = frappe.db.sql(
+202	        f"""
+203	        SELECT COALESCE(NULLIF(i.`item_group`, ''), 'Uncategorized') AS course, ROUND(SUM(i.`amount`), 2) AS total
+204	        FROM `tabPOS Invoice Item` i
+205	        INNER JOIN `tabPOS Invoice` b ON b.`name` = i.`parent`
+206	        WHERE b.`docstatus` = 1 AND b.`status` IN %(statuses)s AND b.`posting_date` = CURDATE()
+207	            {branch_clause.replace('`branch`', 'b.`branch`')}
+208	        GROUP BY course
+209	        """,
+210	        params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/food_cost.py:139:12
+138	    by_reason = frappe.db.sql(
+139	        f"""
+140	        SELECT reason, COUNT(*) AS entries, COALESCE(SUM(total_value), 0) AS total
+141	        FROM `tabURY Waste Log`
+142	        WHERE {" AND ".join(conditions)}
+143	        GROUP BY reason
+144	        ORDER BY total DESC
+145	        """,
+146	        values,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/food_cost.py:151:12
+150	    top_items = frappe.db.sql(
+151	        f"""
+152	        SELECT child.item_code, child.item_name,
+153	               SUM(child.qty) AS qty, SUM(child.amount) AS total
+154	        FROM `tabURY Waste Log Item` child
+155	        INNER JOIN `tabURY Waste Log` parent ON parent.name = child.parent
+156	        WHERE {" AND ".join("parent." + c if c.startswith(("docstatus", "branch", "posting_date")) else c for c in conditions)}
+157	        GROUP BY child.item_code, child.item_name
+158	        ORDER BY total DESC
+159	        LIMIT 10
+160	        """,
+161	        values,
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/api/minimal/business_setup.py:364:8
+363	                b_doc.save(ignore_permissions=True)
+364	        except Exception:
+365	            pass
+366	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/restaurant_website.py:114:24
+113		suffix = " FOR UPDATE" if lock else ""
+114		tables = frappe.db.sql("""SELECT name, no_of_seats, minimum_seating, restaurant_room,
+115			table_shape, occupied, merged_with FROM `tabURY Table`
+116			WHERE restaurant = %s AND branch = %s AND is_take_away = 0
+117			ORDER BY no_of_seats, name""" + suffix, (doc.restaurant, branch), as_dict=True)
+118		reservations = frappe.db.sql("""SELECT `table` FROM `tabURY Table Reservation`
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/restaurant_website.py:118:30
+117			ORDER BY no_of_seats, name""" + suffix, (doc.restaurant, branch), as_dict=True)
+118		reservations = frappe.db.sql("""SELECT `table` FROM `tabURY Table Reservation`
+119			WHERE branch = %(branch)s AND status IN %(statuses)s
+120			AND reserved_from < %(end)s AND reserved_to > %(start)s""" + suffix,
+121			{"branch": branch, "statuses": BLOCKING_STATUSES, "start": start, "end": end}, as_dict=True)
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ury/ury/api/self_ordering_qr.py:113:42
+112	
+113	    if host in ("localhost", "127.0.0.1", "0.0.0.0"):
+114	        return _(
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/api/service_requests.py:68:8
+67	            frappe.log_error(frappe.get_traceback(), "Service request notification failed")
+68	        except Exception:
+69	            # No site/db context (unit tests, background edge cases): losing
+70	            # the log entry must still not fail the customer's request.
+71	            pass
+72	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/api/service_requests.py:104:8
+103	            frappe.log_error(frappe.get_traceback(), "Service request auto-resolve failed")
+104	        except Exception:
+105	            pass
+106	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/ury_dashboard.py:90:2
+89		pending = frappe.db.sql(
+90			"""SELECT name, creation FROM `tabPOS Invoice`
+91			   WHERE docstatus = 0 AND creation < %(threshold)s AND creation >= %(shift_start)s""" +
+92			(" AND branch = %(branch)s" if branch else ""),
+93			{"threshold": threshold, "shift_start": shift_start, "branch": branch},
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/ury_dashboard.py:180:6
+179		row = frappe.db.sql(
+180			f"""
+181			SELECT
+182				COUNT(b.`name`) AS invoice_count,
+183				ROUND(SUM(b.`grand_total`), 2) AS sales,
+184				SUM(b.`no_of_pax`) AS covers
+185			FROM `tabPOS Invoice` b
+186			WHERE {conditions}
+187			""",
+188			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/ury_dashboard.py:203:6
+202		ticket_row = frappe.db.sql(
+203			f"""
+204			SELECT AVG(TIMESTAMPDIFF(MINUTE, k.`start_time_prep`, k.`start_time_serv`)) AS avg_ticket_minutes
+205			FROM `tabURY KOT` k
+206			WHERE {kot_conditions}
+207			""",
+208			kot_params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/ury_dashboard.py:251:6
+250		rows = frappe.db.sql(
+251			f"""
+252			SELECT b.`posting_date` AS d, SUM(b.`grand_total`) AS sales, COUNT(b.`name`) AS covers
+253			FROM `tabPOS Invoice` b
+254			WHERE {conditions}
+255			GROUP BY b.`posting_date`
+256			ORDER BY b.`posting_date`
+257			""",
+258			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/ury_dashboard.py:298:6
+297		rows = frappe.db.sql(
+298			f"""
+299			SELECT i.`waiter` AS waiter, COUNT(DISTINCT t.`name`) AS table_count
+300			FROM `tabURY Table` t
+301			JOIN `tabPOS Invoice` i ON (
+302				i.`restaurant_table` = t.`name`
+303				AND i.`docstatus` = 0
+304				AND i.`creation` = (
+305					SELECT MAX(i2.`creation`) FROM `tabPOS Invoice` i2
+306					WHERE i2.`restaurant_table` = t.`name` AND i2.`docstatus` = 0
+307				)
+308			)
+309			WHERE {conditions}
+310			GROUP BY i.`waiter`
+311			ORDER BY table_count DESC
+312			""",
+313			params,
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/api/ury_kot_order_number.py:92:4
+91	        doc.custom_ury_last_invoice = invoice.name
+92	    except:
+93	        pass 
+94	    try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/api/ury_kot_order_number.py:99:4
+98	        doc.custom_ury_last_aggregator_invoice = aggregator_invoice.name
+99	    except:
+100	        pass
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/api/ury_service_line.py:100:6
+99		sold_rows = frappe.db.sql(
+100			f"""
+101			SELECT ii.`item_code` AS item_code, ii.`item_name` AS item_name, SUM(ii.`qty`) AS qty_sold
+102			FROM `tabPOS Invoice Item` ii
+103			JOIN `tabPOS Invoice` inv ON inv.`name` = ii.`parent`
+104			JOIN `tabItem` item ON item.`name` = ii.`item_code`
+105			WHERE {sold_conditions}
+106			GROUP BY ii.`item_code`, ii.`item_name`
+107			HAVING qty_sold > 0
+108			ORDER BY qty_sold DESC
+109			LIMIT 20
+110			""",
+111			sold_params,
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/api/waitlist.py:342:2
+341				frappe.log_error(frappe.get_traceback(), "Waitlist table announcement failed")
+342			except Exception:
+343				pass
+344	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/doctype/ury_audit_log/ury_audit_log.py:104:2
+103				frappe.log_error(frappe.get_traceback(), "Could not write audit entry")
+104			except Exception:
+105				pass
+106			return None
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/doctype/ury_kot/ury_kot.py:32:12
+31	                print_by_server("URY KOT", self.name, printer, kot_print_format)
+32	            except:
+33	                pass
+34	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/doctype/ury_order/ury_order.py:2265:4
+2264	        )
+2265	    except Exception:
+2266	        pass
+2267	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/doctype/ury_order/ury_order.py:2433:4
+2432	
+2433	    except Exception as e:
+2434	        # If an exception occurs (e.g., "kot" app not found), it will be caught here without effecting execution
+2435	        pass
+2436	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/doctype/ury_waitlist_entry/ury_waitlist_entry.py:132:2
+131				frappe.log_error(frappe.get_traceback(), "Waitlist notification failed")
+132			except Exception:
+133				# No site or database context (unit tests): losing the log entry
+134				# must still not fail the host's save.
+135				pass
+136	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ury/ury/doctype/ury_website/ury_website.py:133:3
+132					doc.append(table, {column: row.get(column) for column in columns})
+133				except Exception:
+134					continue
+135	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ury/ury/hooks/ury_pos_invoice.py:331:8
+330	            )
+331	        except Exception:
+332	            pass
+333	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/customers.py:85:6
+84		total_count = frappe.db.sql(
+85			f"""
+86			SELECT COUNT(*) AS total
+87			FROM `tabPOS Invoice` b
+88			{join}
+89			WHERE {base_where}
+90			""",
+91			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/customers.py:96:6
+95		summary_row = frappe.db.sql(
+96			f"""
+97			SELECT
+98				COUNT(*) AS visit_count,
+99				ROUND(SUM(b.`grand_total`), 2) AS total_spend,
+100				MAX(b.`posting_date`) AS last_purchase_date,
+101				MAX(b.`mobile_number`) AS mobile_number
+102			FROM `tabPOS Invoice` b
+103			{join}
+104			WHERE {base_where}
+105			""",
+106			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/customers.py:111:6
+110		rows = frappe.db.sql(
+111			f"""
+112			SELECT
+113				b.`posting_date` AS date,
+114				b.`name` AS invoice,
+115				b.`grand_total` AS amount
+116			FROM `tabPOS Invoice` b
+117			{join}
+118			WHERE {base_where}
+119			ORDER BY b.`posting_date` DESC, b.`posting_time` DESC
+120			LIMIT %(limit)s OFFSET %(offset)s
+121			""",
+122			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/customers.py:183:6
+182		rows = frappe.db.sql(
+183			f"""
+184			SELECT
+185				b.`customer` AS customer_id,
+186				b.`customer_name` AS customer_name,
+187				b.`mobile_number` AS mobile_number,
+188				COUNT(b.`name`) AS visit_count,
+189				MIN(b.`posting_date`) AS first_visit,
+190				MAX(b.`posting_date`) AS last_visit
+191			FROM `tabPOS Invoice` b
+192			{join}
+193			WHERE {invoice_join} AND {condition}
+194			GROUP BY b.`customer`
+195			ORDER BY b.`customer_name` ASC
+196			""",
+197			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/customers.py:258:6
+257		rows = frappe.db.sql(
+258			f"""
+259			SELECT
+260				date_list.`date` AS date,
+261				COUNT(d.`customer`) AS total_customers,
+262				COUNT(DISTINCT CASE WHEN NOT EXISTS (
+263					SELECT 1 FROM `tabPOS Invoice` c
+264					WHERE {prior_condition}
+265						AND c.`customer` = d.`customer`
+266						{prior_branch_filter}
+267						AND c.`status` IN ("Consolidated", "Paid")
+268						AND c.`docstatus` = 1
+269				) THEN d.`customer` END) AS new_customers
+270			FROM {date_list}
+271			LEFT JOIN `tabPOS Invoice` d ON ({invoice_filter})
+272			{join}
+273			WHERE {day_condition}
+274			GROUP BY date_list.`date`
+275			ORDER BY date_list.`date` ASC
+276			""",
+277			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/employees.py:62:6
+61		rows = frappe.db.sql(
+62			f"""
+63			SELECT
+64				e.`name` AS employee_id,
+65				e.`full_name` AS employee_name,
+66				COUNT(b.`name`) AS total_invoices,
+67				ROUND(SUM(b.`grand_total`), 2) AS sales_amount
+68			FROM {date_list}
+69			LEFT JOIN `tabPOS Invoice` b ON ({invoice_join})
+70			INNER JOIN `tabUser` e ON (e.`name` = b.`waiter`)
+71			{join}
+72			WHERE {condition}
+73			GROUP BY e.`name`
+74			ORDER BY {sort_by} DESC
+75			""",
+76			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/employees.py:131:6
+130		rows = frappe.db.sql(
+131			f"""
+132			SELECT
+133				b.`item_code` AS item_code,
+134				b.`item_name` AS item_name,
+135				i.`item_group` AS item_group,
+136				ROUND(SUM(b.`qty`), 2) AS qty,
+137				ROUND(SUM(b.`amount`), 2) AS amount
+138			FROM {date_list}
+139			LEFT JOIN `tabPOS Invoice` a ON ({invoice_join})
+140			INNER JOIN `tabPOS Invoice Item` b ON (a.`name` = b.`parent`)
+141			LEFT JOIN `tabItem` i ON (b.`item_code` = i.`item_code`)
+142			{join}
+143			WHERE {condition}
+144			GROUP BY b.`item_code`
+145			ORDER BY amount DESC
+146			""",
+147			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/items.py:63:4
+62		total_count = frappe.db.sql(
+63			f"SELECT COUNT(*) AS total FROM (SELECT 1 {base_sql}) AS sub",
+64			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/items.py:159:4
+158		total_count = frappe.db.sql(
+159			f"SELECT COUNT(*) AS total FROM (SELECT 1 {base_sql}) AS sub",
+160			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:43:6
+42		row = frappe.db.sql(
+43			f"""
+44			SELECT
+45				COUNT(b.`name`) AS total_invoices,
+46				ROUND(SUM(b.`net_total`), 2) AS item_total,
+47				ROUND(SUM(b.`total_taxes_and_charges`), 2) AS total_taxes_and_charges,
+48				ROUND(SUM(b.`grand_total`), 2) AS grand_total,
+49				ROUND(SUM(b.`grand_total` - b.`rounded_total`), 2) AS round_off,
+50				ROUND(SUM(b.`rounded_total` - b.`paid_amount` + b.`change_amount`), 2) AS cash_discounts
+51			FROM `tabPOS Invoice` b
+52			{join}
+53			WHERE
+54				{branch_filter}
+55				b.`docstatus` = 1
+56				AND b.`status` IN ("Consolidated", "Paid")
+57				AND {condition}
+58			""",
+59			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:110:6
+109		rows = frappe.db.sql(
+110			f"""
+111			SELECT
+112				date_list.`date` AS date,
+113				COUNT(b.`name`) AS total_invoices,
+114				ROUND(SUM(b.`net_total`), 2) AS item_total,
+115				ROUND(SUM(b.`total_taxes_and_charges`), 2) AS total_taxes,
+116				ROUND(SUM(b.`grand_total`), 2) AS grand_total,
+117				ROUND(SUM(b.`grand_total` - b.`rounded_total`), 2) AS round_off,
+118				ROUND(SUM(b.`rounded_total` - b.`paid_amount` + b.`change_amount`), 2) AS cash_discount
+119			FROM {date_list}
+120			LEFT JOIN `tabPOS Invoice` b ON ({invoice_join})
+121			{join}
+122			WHERE {condition}
+123			GROUP BY date_list.`date`
+124			ORDER BY date_list.`date` ASC
+125			""",
+126			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:197:6
+196		total_count = frappe.db.sql(
+197			f"""
+198			SELECT COUNT(*) AS total
+199			FROM `tabPOS Invoice` b
+200			{join}
+201			WHERE {base_where}
+202			""",
+203			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:208:6
+207		rows = frappe.db.sql(
+208			f"""
+209			SELECT
+210				b.`posting_date` AS date,
+211				CONCAT(
+212					LPAD(IF(HOUR(b.`posting_time`) > 12, HOUR(b.`posting_time`) - 12, HOUR(b.`posting_time`)), 2, '0'),
+213					':',
+214					SUBSTRING_INDEX(SUBSTRING_INDEX(b.`posting_time`, ':', 2), ':', -1),
+215					CASE WHEN HOUR(b.`posting_time`) >= 12 THEN ' PM' ELSE ' AM' END
+216				) AS time,
+217				b.`name` AS invoice,
+218				b.`net_total` AS item_total,
+219				b.`total_taxes_and_charges` AS total_taxes,
+220				b.`grand_total` AS grand_total,
+221				(b.`grand_total` - b.`rounded_total`) AS round_off,
+222				b.`rounded_total` AS rounded_total,
+223				CASE WHEN b.`customer_group` = 'Aggregators' THEN 0 ELSE b.`paid_amount` END AS received_amount,
+224				CASE WHEN b.`customer_group` = 'Aggregators' THEN 0 ELSE b.`change_amount` END AS change_amount,
+225				IFNULL(
+226					CASE
+227						WHEN b.`rounded_total` > 0 THEN (b.`rounded_total` - b.`paid_amount` + b.`change_amount`)
+228						ELSE (b.`grand_total` - b.`paid_amount` + b.`change_amount`)
+229					END,
+230					0
+231				) AS cash_discounts,
+232				GROUP_CONCAT(
+233					CASE WHEN c.`amount` != 0 THEN c.`mode_of_payment` END
+234					ORDER BY c.`amount`
+235					SEPARATOR ', '
+236				) AS payment_mode
+237			FROM `tabPOS Invoice` b
+238			LEFT JOIN `tabSales Invoice Payment` c ON (c.`parent` = b.`name`)
+239			{join}
+240			WHERE {base_where}
+241			GROUP BY b.`name`
+242			ORDER BY b.`posting_date` ASC, b.`posting_time` ASC
+243			LIMIT %(limit)s OFFSET %(offset)s
+244			""",
+245			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:295:6
+294		rows = frappe.db.sql(
+295			f"""
+296			SELECT
+297				YEAR(date_list.`date`) AS year,
+298				MONTH(date_list.`date`) AS month_number,
+299				MONTHNAME(date_list.`date`) AS month_name,
+300				ROUND(SUM(b.`net_total`), 2) AS item_total,
+301				ROUND(SUM(b.`total_taxes_and_charges`), 2) AS taxes,
+302				ROUND(SUM(b.`grand_total`), 2) AS grand_total
+303			FROM {date_list}
+304			LEFT JOIN `tabPOS Invoice` b ON ({invoice_join})
+305			{join}
+306			WHERE {condition}
+307			GROUP BY YEAR(date_list.`date`), MONTH(date_list.`date`)
+308			ORDER BY YEAR(date_list.`date`) ASC, MONTH(date_list.`date`) ASC
+309			""",
+310			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:380:6
+379		rows = frappe.db.sql(
+380			f"""
+381			SELECT `posting_time` AS posting_time, `grand_total` AS grand_total
+382			FROM `tabPOS Invoice`
+383			WHERE `posting_date` = %(target_date)s
+384				{branch_filter}
+385				AND `docstatus` = 1
+386				AND `status` IN ("Consolidated", "Paid")
+387			""",
+388			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:470:6
+469		rows = frappe.db.sql(
+470			f"""
+471			SELECT
+472				b.`order_type` AS order_type,
+473				ROUND(SUM(b.`grand_total`), 2) AS revenue,
+474				COUNT(b.`name`) AS order_count
+475			FROM {date_list}
+476			LEFT JOIN `tabPOS Invoice` b ON ({invoice_join})
+477			{join}
+478			WHERE {condition} AND b.`order_type` IS NOT NULL
+479			GROUP BY b.`order_type`
+480			ORDER BY revenue DESC
+481			""",
+482			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:545:6
+544		total_count = frappe.db.sql(
+545			f"""
+546			SELECT COUNT(*) AS total
+547			FROM `tabPOS Invoice` b
+548			{join}
+549			WHERE {base_where}
+550			""",
+551			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:556:6
+555		summary_row = frappe.db.sql(
+556			f"""
+557			SELECT
+558				COUNT(*) AS total_count,
+559				ROUND(SUM(b.`grand_total`), 2) AS total_amount,
+560				COUNT(DISTINCT b.`modified_by`) AS unique_cancellers,
+561				ROUND(AVG(b.`grand_total`), 2) AS avg_amount
+562			FROM `tabPOS Invoice` b
+563			{join}
+564			WHERE {base_where}
+565			""",
+566			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:571:6
+570		rows = frappe.db.sql(
+571			f"""
+572			SELECT
+573				b.`posting_date` AS date,
+574				CONCAT(
+575					LPAD(IF(HOUR(b.`posting_time`) > 12, HOUR(b.`posting_time`) - 12, HOUR(b.`posting_time`)), 2, '0'),
+576					':',
+577					SUBSTRING_INDEX(SUBSTRING_INDEX(b.`posting_time`, ':', 2), ':', -1),
+578					CASE WHEN HOUR(b.`posting_time`) >= 12 THEN ' PM' ELSE ' AM' END
+579				) AS time,
+580				b.`name` AS invoice,
+581				b.`grand_total` AS amount,
+582				b.`modified_by` AS cancelled_by,
+583				b.`cancel_reason` AS cancellation_reason
+584			FROM `tabPOS Invoice` b
+585			{join}
+586			WHERE {base_where}
+587			ORDER BY b.`posting_date` DESC, b.`posting_time` DESC
+588			LIMIT %(limit)s OFFSET %(offset)s
+589			""",
+590			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/sales.py:646:6
+645		rows = frappe.db.sql(
+646			f"""
+647			SELECT
+648				date_list.`date` AS date,
+649				COUNT(b.`name`) AS bill_count,
+650				ROUND(SUM(b.`grand_total`), 2) AS total_sales
+651			FROM {date_list}
+652			LEFT JOIN `tabPOS Invoice` b ON ({invoice_join})
+653			{join}
+654			WHERE {condition}
+655			GROUP BY date_list.`date`
+656			ORDER BY date_list.`date` ASC
+657			""",
+658			params,
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury/report_api/utils.py:78:12
+77		"""
+78		return f"""(
+79			SELECT %({start_param})s AS `date`
+80			UNION
+81			SELECT DATE_ADD(%({start_param})s, INTERVAL n DAY) AS `date`
+82			FROM (
+83				SELECT a.N + b.N * 10 + c.N * 100 + 1 AS n
+84				FROM (SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS a
+85				CROSS JOIN (SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS b
+86				CROSS JOIN (SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS c
+87				ORDER BY n
+88			) AS nums
+89			WHERE DATE_ADD(%({start_param})s, INTERVAL n DAY) < %({end_param})s
+90			UNION
+91			SELECT %({end_param})s AS `date`
+92		) AS date_list"""
+93	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ury/ury_pos/api.py:696:12
+695	        invoices = frappe.db.sql(
+696	            """
+697	            SELECT {fields}
+698	            FROM `tabPOS Invoice`
+699	            WHERE branch = %s AND ({conditions})
+700	            ORDER BY modified DESC
+701	            LIMIT %s OFFSET %s
+702	            """.format(
+703	                fields=POS_INVOICE_LOG_FIELDS,
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 20211
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 42
+		Medium: 46
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 45
+		Medium: 1
+		High: 42
+Files skipped (0):
