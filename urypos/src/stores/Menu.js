@@ -88,7 +88,8 @@ export const useMenuStore = defineStore("menu", {
       return Math.ceil(this.filteredItems.length / this.perPage);
     },
     paginatedItems() {
-      const startIndex = (this.currentPage - 1) * this.perPage;
+      const page = Math.min(Math.max(1, this.currentPage), Math.max(1, this.totalPages));
+      const startIndex = (page - 1) * this.perPage;
       const endIndex = startIndex + this.perPage;
       return this.filteredItems.slice(startIndex, endIndex);
     },
@@ -135,7 +136,8 @@ export const useMenuStore = defineStore("menu", {
       this.call
         .get("ury.ury_pos.api.getRestaurantMenu", getMenu)
         .then((result) => {
-          if (!this.auth.cashier && this.table.tableMenu) {
+          // The room's menu, for cashiers too now that orders are table-only.
+          if (this.table.tableMenu && this.table.tableMenu.length) {
             this.items = this.table.tableMenu;
           } else {
             this.defautlMenu = result.message.items;
@@ -273,7 +275,7 @@ export const useMenuStore = defineStore("menu", {
             if (result.message) {
               this.items = result.message;
             } else {
-              this.items = defautlMenu;
+              this.items = this.defautlMenu;
             }
           })
           .catch((error) => {
@@ -298,7 +300,7 @@ export const useMenuStore = defineStore("menu", {
       this.currentPage = 1;
     },
     getFullImagePath(relativePath) {
-      return `${frappe.url}${relativePath}`;
+      try { return new URL(relativePath, window.location.origin).href; } catch { return ""; }
     },
 
     handleSearchInput(event) {
@@ -315,6 +317,7 @@ export const useMenuStore = defineStore("menu", {
       this.displayAll = true;
       this.searchTerm = "";
       this.selectedCourse = "";
+      this.currentPage = 1;
     },
     showSpecialItems() {
       this.priority = true;
@@ -330,22 +333,19 @@ export const useMenuStore = defineStore("menu", {
 
     addToCartAndUpdateQty() {
       const item = this.item;
+      const quantity = Number(this.quantity);
 
-      if (
-        this.quantity !== null &&
-        this.quantity !== undefined &&
-        this.quantity !== "" &&
-        this.quantity > 0
-      ) {
-        if (!item.qty) {
-          this.$set(item, "qty", this.quantity);
-        } else {
-          item.qty = this.quantity;
-          item.comment = this.itemComments;
-        }
+      // `this.$set` was Vue 2 API and threw here under Vue 3; a plain
+      // assignment is reactive. The note is saved whether or not the
+      // quantity changed, and the quantity is stored as a number so the
+      // steppers and totals never concatenate a string.
+      if (Number.isFinite(quantity) && quantity > 0) {
+        item.qty = quantity;
       }
+      item.comment = this.itemComments || "";
 
       this.showDialog = false;
+      this.showDialogCart = false;
     },
 
     getitemQty(item) {
@@ -358,17 +358,17 @@ export const useMenuStore = defineStore("menu", {
       if (!itemIndexExists) {
         item.qty = 1;
         item.comment = "";
+        // No toast: the card's count badge and the order bar confirm it,
+        // and a toast per tap buried the screen during a long order.
         this.cart.push(item);
-
-        let message = `Added ${item.item} to Cart`;
-        this.notification.createNotification(message);
       }
     },
     incrementItemQuantity(item) {
       const itemIndex = this.cart.findIndex((obj) => obj.item === item.item);
       const itemIndexExists = itemIndex !== -1;
       const posProfile = this.invoiceData.posProfile;
-      let previousOrderItem = this.table.previousOrderdItem;
+      // A table opened from the log, or a failed lookup, can leave this unset.
+      let previousOrderItem = this.table.previousOrderdItem || [];
       // Check if item exists in previous orders
       const previousItem = previousOrderItem.find(
         (previous_item) => previous_item.item_code === item.item
@@ -381,9 +381,7 @@ export const useMenuStore = defineStore("menu", {
       }
       if (itemIndexExists) {
         item.comment = "";
-        this.cart[itemIndex].qty++;
-        let message = `${item.item}'s Qty updated to ${item.qty} in Cart`;
-        this.notification.createNotification(message);
+        this.cart[itemIndex].qty = Number(this.cart[itemIndex].qty) + 1;
       } else {
         item.comment = "";
         this.cart.push({ item: item.item, qty: 1 });
@@ -393,13 +391,8 @@ export const useMenuStore = defineStore("menu", {
       const itemIndex = this.cart.findIndex((obj) => obj.item === item.item);
       const itemIndexExists = itemIndex !== -1;
       if (itemIndexExists) {
-        this.cart[itemIndex].qty--;
+        this.cart[itemIndex].qty = Number(this.cart[itemIndex].qty) - 1;
         this.cart = this.cart.filter((obj) => obj.qty > 0);
-        let message =
-          item.qty > 0
-            ? `${item.item}'s Qty Reduced from Cart Total Qty=${item.qty}`
-            : `${item.item} has been removed from Cart`;
-        this.notification.createNotification(message);
       }
     },
     removeItemFromCart(index) {
