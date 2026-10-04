@@ -751,7 +751,16 @@
       "enable_self_ordering_hint": "When off, this table's QR code stops working. Staff can still take its orders on the POS.",
       "self_ordering": "Self ordering",
       "self_ordering_on": "On",
-      "self_ordering_off": "Off"
+      "self_ordering_off": "Off",
+      "occupied_only": "Occupied only",
+      "show_all_tables": "Show all tables",
+      "no_occupied_tables": "No occupied tables right now",
+      "all_rooms": "All rooms",
+      "open_for": "Open for {{time}}",
+      "seats_count": "{{count}} seats",
+      "free_count": "{{count}} free",
+      "occupied_count": "{{count}} occupied",
+      "edit_table": "Edit table"
     },
     "table_layout_view": {
       "reset_zoom_pan": "Reset Zoom & Pan",
