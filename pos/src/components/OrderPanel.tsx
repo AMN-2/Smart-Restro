@@ -9,6 +9,7 @@ import ProductDialog from './ProductDialog';
 import OrderTypeSelect from './OrderTypeSelect';
 import CommentDialog from './CommentDialog';
 import OrderTabs from './OrderTabs';
+import RemoteChangeBanner from './RemoteChangeBanner';
 import { Button } from '@ury/ui';
 import { Spinner } from '@ury/ui';
 import { syncOrder } from '../lib/order-api';
@@ -237,6 +238,7 @@ const OrderPanel = ({ docked = true }: OrderPanelProps) => {
           : 'w-full flex-1 min-h-0'
       )}
     >
+      <RemoteChangeBanner />
       <div className="p-5 border-b border-[#eadfce] flex-shrink-0 bg-[#fffaf0]">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2.5">
