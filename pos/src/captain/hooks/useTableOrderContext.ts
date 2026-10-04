@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePOSStore, OrderItem } from '../../store/pos-store';
 import {
   getTableOrderContext,
@@ -41,7 +41,11 @@ export interface UseTableOrderContextResult {
   permissions: TableOrderPermissions | null;
   isContextLoading: boolean;
   contextError: string | null;
-  /** True once the initial table order (baseline) has finished loading into the store. */
+  /**
+   * True once the table's baseline order has loaded into the store — or
+   * immediately when no table is picked yet, where the whole cart is a
+   * draft with no baseline.
+   */
   isOrderReady: boolean;
   /** Delta lines for items still at (or above) their originally-sent quantity. */
   alreadyOrderedLines: OrderDeltaLine[];
@@ -49,81 +53,73 @@ export interface UseTableOrderContextResult {
   newOrChangedLines: OrderDeltaLine[];
   /** Delta lines for quantity reductions/removals against the baseline (`delta < 0`). */
   reductionPendingLines: OrderDeltaLine[];
-  /** Re-fetches the per-table permission context (does not reload the order). */
-  refetchContext: () => Promise<void>;
+  /**
+   * Re-read the table's context and order from the server and take a fresh
+   * baseline — used when the order changed on another device.
+   */
+  reload: () => void;
 }
+
+const toBaseline = (items: OrderItem[]): BaselineItem[] =>
+  items.map((item) => ({
+    uniqueId: item.uniqueId!,
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity,
+    comment: item.comment,
+  }));
 
 /**
  * Fetches `get_table_order_context(table)` — the server-authoritative
  * permission map + order snapshot for THIS Captain on THIS table (PLAN.md
- * §8) — and, when viewing is allowed, wires the table into the existing
- * Cashier `pos-store` (`setSelectedTable`) so `loadTableOrder()`/menu
- * fetching are reused rather than reimplemented.
+ * §8) — and, when viewing is allowed, loads the table's order into the
+ * Cashier `pos-store` so menu/cart logic is reused rather than reimplemented.
+ *
+ * The Captain workspace switches tables in place (no route remount), so
+ * every piece of state here is tagged with the table it belongs to and only
+ * read back when that tag matches the current `table`. A response for a
+ * table the captain has already left is ignored instead of leaking into the
+ * next one.
  *
  * Delta grouping (PLAN.md §7/§8: baselineItems / workingItems / pendingChanges)
- * is computed here, locally, from a snapshot of `pos-store`'s `activeOrders`
- * taken right after the initial load completes ("baseline"), diffed against
- * the live `activeOrders` ("working"). This deliberately does NOT change
- * `pos-store`'s `activeOrders` shape — Cashier `OrderPanel` keeps its flat
- * cart model unchanged. See CaptainOrder.tsx's report notes for why this
- * was kept local instead of adding baseline/working state to the store.
+ * diffs a snapshot of `activeOrders` taken right after the load ("baseline")
+ * against the live `activeOrders` ("working"). With no table picked the
+ * baseline is empty, so everything in the cart is a new line.
  */
 export const useTableOrderContext = (table: string | undefined): UseTableOrderContextResult => {
-  const [context, setContext] = useState<TableOrderContext | null>(null);
-  const [isContextLoading, setIsContextLoading] = useState(true);
-  const [contextError, setContextError] = useState<string | null>(null);
-  const [baselineItems, setBaselineItems] = useState<BaselineItem[] | null>(null);
+  const [loaded, setLoaded] = useState<{ table: string; context: TableOrderContext } | null>(null);
+  const [failure, setFailure] = useState<{ table: string; message: string } | null>(null);
+  const [baseline, setBaseline] = useState<{ table: string; items: BaselineItem[] } | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
+  const reload = useCallback(() => setReloadKey((k) => k + 1), []);
 
-  const orderLoading = usePOSStore((s) => s.orderLoading);
   const activeOrders = usePOSStore((s) => s.activeOrders);
-  const setSelectedTable = usePOSStore((s) => s.setSelectedTable);
   const clearTableOrder = usePOSStore((s) => s.clearTableOrder);
 
-  const prevOrderLoadingRef = useRef(true);
-  const baselineCapturedForRef = useRef<string | null>(null);
-
-  const fetchContext = useCallback(async () => {
-    if (!table) return;
-    try {
-      setIsContextLoading(true);
-      setContextError(null);
-      const result = await getTableOrderContext(table);
-      setContext(result);
-    } catch (err) {
-      setContextError((err as Error).message || 'Failed to load table order context.');
-      setContext(null);
-    } finally {
-      setIsContextLoading(false);
-    }
-  }, [table]);
-
-  // Fetch the permission context whenever the table changes, and wire the
-  // table into pos-store (loadTableOrder + menu fetch) only once we know
-  // viewing is actually allowed.
   useEffect(() => {
     if (!table) return;
-    baselineCapturedForRef.current = null;
-    prevOrderLoadingRef.current = true;
-    setBaselineItems(null);
+
+    // A reload of the same table: the old baseline would otherwise be diffed
+    // against the emptied cart and show phantom reductions until it loads.
+    setBaseline((current) => (current && current.table === table ? null : current));
 
     let cancelled = false;
     (async () => {
-      setIsContextLoading(true);
-      setContextError(null);
       try {
         const result = await getTableOrderContext(table);
         if (cancelled) return;
-        setContext(result);
-        if (result.permissions.view) {
-          const room = result.table?.restaurant_room ?? null;
-          setSelectedTable(table, room);
-        }
+        setLoaded({ table, context: result });
+        if (!result.permissions.view) return;
+
+        const store = usePOSStore.getState();
+        store.setSelectedTable(table, result.table?.restaurant_room ?? null, true);
+        await store.loadTableOrder(table);
+        if (cancelled) return;
+        setBaseline({ table, items: toBaseline(usePOSStore.getState().activeOrders) });
       } catch (err) {
         if (cancelled) return;
-        setContextError((err as Error).message || 'Failed to load table order context.');
-        setContext(null);
-      } finally {
-        if (!cancelled) setIsContextLoading(false);
+        setFailure({ table, message: (err as Error).message || 'Failed to load table order context.' });
       }
     })();
 
@@ -132,33 +128,19 @@ export const useTableOrderContext = (table: string | undefined): UseTableOrderCo
       clearTableOrder();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [table]);
+  }, [table, reloadKey]);
 
-  // Capture the baseline snapshot on the falling edge of orderLoading, i.e.
-  // right after loadTableOrder() (triggered by setSelectedTable above)
-  // finishes populating activeOrders.
-  useEffect(() => {
-    const wasLoading = prevOrderLoadingRef.current;
-    prevOrderLoadingRef.current = orderLoading;
+  const context = table && loaded?.table === table ? loaded.context : null;
+  const contextError = table && failure?.table === table ? failure.message : null;
+  const isContextLoading = Boolean(table) && !context && !contextError;
 
-    if (!context?.permissions.view) return;
-    if (!(wasLoading && !orderLoading)) return;
-    if (baselineCapturedForRef.current === table) return;
+  const baselineItems: BaselineItem[] | null = !table
+    ? []
+    : baseline?.table === table
+      ? baseline.items
+      : null;
 
-    baselineCapturedForRef.current = table ?? null;
-    setBaselineItems(
-      activeOrders.map((item: OrderItem) => ({
-        uniqueId: item.uniqueId!,
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        comment: item.comment,
-      }))
-    );
-  }, [orderLoading, activeOrders, context, table]);
-
-  const isOrderReady = baselineItems !== null;
+  const isOrderReady = baselineItems !== null || Boolean(context && !context.permissions.view);
 
   const deltaLines: OrderDeltaLine[] = [];
   if (baselineItems) {
@@ -195,7 +177,7 @@ export const useTableOrderContext = (table: string | undefined): UseTableOrderCo
     alreadyOrderedLines: deltaLines.filter((l) => l.confirmedQty > 0),
     newOrChangedLines: deltaLines.filter((l) => l.delta > 0),
     reductionPendingLines: deltaLines.filter((l) => l.delta < 0),
-    refetchContext: fetchContext,
+    reload,
   };
 };
 
