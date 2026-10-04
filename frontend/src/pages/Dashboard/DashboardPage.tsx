@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useFloorUpdates } from '../../lib/floorSync';
 import { ErrorState } from '@ury/ui';
 import { parseFrappeError } from '@ury/core';
 import { useBranchContext } from '../../context/BranchContext';
@@ -16,11 +17,15 @@ export const DashboardPage: React.FC = () => {
 
   const requestId = useRef(0);
 
-  const fetchDashboardData = useCallback(async () => {
+  const fetchDashboardData = useCallback(async (options: { silent?: boolean } = {}) => {
     const currentRequest = ++requestId.current;
-    setLoading(true);
-    setError(null);
-    setSummary(null);
+    // A live refresh keeps the figures on screen while new ones load; a
+    // first load or a branch switch clears them.
+    if (!options.silent) {
+      setLoading(true);
+      setError(null);
+      setSummary(null);
+    }
     try {
       const sumRes = await dashboardService.getSummary(activeBranchId);
       if (currentRequest !== requestId.current) return;
@@ -41,6 +46,11 @@ export const DashboardPage: React.FC = () => {
     void fetchDashboardData();
     return () => { requestId.current += 1; };
   }, [fetchDashboardData]);
+
+  // Live: sales and occupancy move with every order, payment and table change.
+  useFloorUpdates(() => {
+    void fetchDashboardData({ silent: true });
+  }, { branch: activeBranchId, debounceMs: 2_000 });
 
   // Failure replaces the figures rather than colouring them. A dashboard
   // showing stale or zeroed numbers beside an error banner invites reading
