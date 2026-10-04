@@ -12,6 +12,7 @@ import { usePOSStore, type MenuItem } from '../store/pos-store';
 import { cn, ErrorState } from '@ury/ui';
 import { Spinner } from '@ury/ui';
 import InitialLoader from '../components/InitialLoader';
+import LiveOrderSync from '../components/LiveOrderSync';
 
 export default function POS() {
   const {
@@ -131,6 +132,7 @@ export default function POS() {
 
   return (
     <div className="flex flex-1 min-h-0 overflow-hidden bg-[#f8f4eb]">
+      <LiveOrderSync />
       {docked && <Sidebar disabled={isMenuInteractionDisabled()} />}
       <div
         className={cn(
