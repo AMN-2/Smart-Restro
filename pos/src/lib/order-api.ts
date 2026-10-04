@@ -1,4 +1,5 @@
 import { call } from '@ury/core';
+import { trackLocalWrite } from './floor-sync';
 
 export interface POSInvoiceItem {
   name: string;
@@ -105,7 +106,11 @@ export interface SyncOrderRequest {
 export type SyncOrderResponse = POSInvoice | { status: 'Failure' };
 
 export const syncOrder = async (data: SyncOrderRequest) => {
-  return call.post('ury.ury.doctype.ury_order.ury_order.sync_order', data) as Promise<{ message: SyncOrderResponse }>;
+  // Tracked so this tab's own save is not mistaken for someone else's change
+  // when its realtime echo arrives (see lib/floor-sync.ts).
+  return trackLocalWrite(
+    () => call.post('ury.ury.doctype.ury_order.ury_order.sync_order', data) as Promise<{ message: SyncOrderResponse }>
+  );
 };
 
 export interface SplitBillItemMove {
@@ -123,11 +128,11 @@ export async function splitBill(
   itemsToMove: SplitBillItemMove[],
   customer?: string | null
 ): Promise<SplitBillResponse> {
-  const res = await call.post('ury.ury.doctype.ury_order.ury_order.split_bill', {
+  const res = await trackLocalWrite(() => call.post('ury.ury.doctype.ury_order.ury_order.split_bill', {
     source_invoice: sourceInvoice,
     items_to_move: itemsToMove,
     customer: customer || undefined,
-  });
+  }));
   return res.message as SplitBillResponse;
 }
 
@@ -136,11 +141,11 @@ export async function tableTransfer(
   newTable: string,
   invoice: string
 ): Promise<void> {
-  await call.post('ury.ury.doctype.ury_order.ury_order.table_transfer', {
+  await trackLocalWrite(() => call.post('ury.ury.doctype.ury_order.ury_order.table_transfer', {
     table,
     newTable,
     invoice,
-  });
+  }));
 }
 
 export async function captainTransfer(
@@ -148,11 +153,11 @@ export async function captainTransfer(
   newCaptain: string,
   invoice: string
 ): Promise<void> {
-  await call.post('ury.ury.doctype.ury_order.ury_order.captain_transfer', {
+  await trackLocalWrite(() => call.post('ury.ury.doctype.ury_order.ury_order.captain_transfer', {
     currentCaptain,
     newCaptain,
     invoice,
-  });
+  }));
 }
 
 /**
@@ -229,10 +234,10 @@ export async function closeTable(params: {
   table?: string;
   reason?: string;
 }): Promise<CloseTableResponse> {
-  const res = await call.post('ury.ury.doctype.ury_order.ury_order.close_table', {
+  const res = await trackLocalWrite(() => call.post('ury.ury.doctype.ury_order.ury_order.close_table', {
     ...(params.invoice ? { invoice: params.invoice } : {}),
     ...(params.table ? { table: params.table } : {}),
     ...(params.reason ? { reason: params.reason } : {}),
-  });
+  }));
   return res.message as CloseTableResponse;
 }
