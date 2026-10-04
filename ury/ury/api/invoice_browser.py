@@ -7,6 +7,7 @@ and a reprint for the bill someone forgot to print.
 """
 
 import frappe
+from ury.ury.api.floor_events import notify_floor_change
 from frappe import _
 from frappe.utils import cint, flt, getdate
 
@@ -211,6 +212,7 @@ def print_invoice(invoice, channel="browser"):
     already = cint(doc.get("invoice_printed"))
     if not already:
         frappe.db.set_value("POS Invoice", doc.name, "invoice_printed", 1, update_modified=False)
+        notify_floor_change(invoices=[doc.name], branch=doc.get("branch"), reason="printed")
     where = _("on the branch printer") if channel == "printer" else _("from the dashboard")
     log_activity(doc.name, (_("Bill reprinted {0}") if already else _("Bill printed {0}")).format(where))
     return {"printed": True}
