@@ -116,10 +116,9 @@ export const usetoggleRecentOrder = defineStore("recentOrders", {
           limit_start: startLimit,
           cashier:this.invoiceData.cashier
         };
-        this.call
+        return this.call
           .get("ury.ury_pos.api.getInvoiceForCashier", recentOrder)
           .then((result) => {
-            console.log(result.message.data,"result.message.data")
             this.recentOrderList = result.message.data;
             this.next = result.message.next;
             return this.recentOrderList, this.next;
@@ -132,7 +131,7 @@ export const usetoggleRecentOrder = defineStore("recentOrders", {
         limit: limit,
         limit_start: startLimit,
       };
-      this.call
+      return this.call
         .get("ury.ury_pos.api.getPosInvoice", recentOrder)
         .then((result) => {
           this.recentOrderList = result.message.data;
@@ -142,6 +141,31 @@ export const usetoggleRecentOrder = defineStore("recentOrders", {
         .catch((error) => console.error(error));
       }
     },
+    /**
+     * Live update (see src/realtime/liveFloor.js): re-read the page on screen
+     * and the open order, quietly. Returns "closed" when the open order has
+     * left this list (paid, cancelled, moved) and was closed here.
+     */
+    async refreshLive(update) {
+      const query = (this.searchOrder || "").trim();
+      if (query) {
+        await this.searchPosInvoice(query);
+      } else {
+        const limit = this.selectedStatus === "Recently Paid" ? this.invoiceData.paidLimit : 10;
+        await this.getPosInvoice(this.selectedStatus, limit, (this.currentPage - 1) * 10);
+      }
+      const open = this.showOrder && this.selectedOrder && this.selectedOrder.name;
+      if (!open || !(update.resync || update.invoices.includes(open))) return "refreshed";
+      const fresh = (this.recentOrderList || []).find((o) => o.name === open);
+      if (!fresh) {
+        this.showOrder = false;
+        this.setBackground = null;
+        return "closed";
+      }
+      this.viewRecentOrder(fresh);
+      return "refreshed";
+    },
+
     async handleStatusChange() {
       this.currentPage = 1;
       let limit = 0;
@@ -164,7 +188,7 @@ export const usetoggleRecentOrder = defineStore("recentOrders", {
         query: query,
         status:this.selectedStatus
       };
-      this.call
+      return this.call
         .get("ury.ury_pos.api.searchPosInvoice", searchParams)
         .then((result) => {
           this.recentOrderList = result.message.data;
@@ -207,10 +231,12 @@ export const usetoggleRecentOrder = defineStore("recentOrders", {
       this.getPosInvoice(this.selectedStatus, limit, startLimit);
     },
     matchesSearchOrder(order) {
-      const query = this.searchOrder.toLowerCase();
-      const name = order.name.toLowerCase();
-      const customer = order.customer.toLowerCase();
-      const mobileNumber = order.mobile_number.toLowerCase();
+      // Walk-in and table-billed orders have no customer or mobile number;
+      // reading `.toLowerCase()` off null threw and blanked the whole log.
+      const query = (this.searchOrder || "").toLowerCase();
+      const name = (order.name || "").toLowerCase();
+      const customer = (order.customer || "").toLowerCase();
+      const mobileNumber = String(order.mobile_number || "").toLowerCase();
 
       return name.includes(query) || customer.includes(query) || mobileNumber.includes(query);
     },
@@ -428,18 +454,9 @@ export const usetoggleRecentOrder = defineStore("recentOrders", {
           }
 
           this.table = this.pastOrder.restaurant_table;
-          if (this.invoicePrinted === 0) {
-            this.alert.createAlert(
-              "Alert",
-              "Please Print Invoice before Payment",
-              "OK"
-            );
-            this.isLoading = false;
-            this.showPayment = false;
-
-          } else {
-            this.showPayment = true;
-          }
+          // This interface prints nothing, so a bill is settled straight
+          // from the order: `make_invoice` frees the table on payment.
+          this.showPayment = true;
         })
         .catch((error) => console.error(error));
     },
