@@ -562,7 +562,7 @@ def clear_demo_data():
                 clear_masters(company)
                 delete_company(company)
             except Exception as e:
-                frappe.log_error(f"Failed to erase demo data for company {company}")
+                frappe.log_error(title="Demo data cleanup failed", message=f"Failed to erase demo data for company {company}")
                 
         default_company = frappe.db.get_single_value("Global Defaults", "default_company")
         if default_company in demo_companies:
