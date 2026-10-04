@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useFloorUpdates } from '../../lib/floorSync';
 import { useBranchContext } from '../../context/BranchContext';
-import { Grid, Plus, Users, Square, List, Edit2, LayoutTemplate } from 'lucide-react';
-import { Card, Button, Badge, Input, Spinner, showToast, Illustration } from '@ury/ui';
+import { Grid, Plus, Users, List, Edit2, LayoutTemplate, Clock, Filter, Link2 } from 'lucide-react';
+import { Card, Button, Badge, Input, Spinner, showToast, Illustration, TableScene, cn } from '@ury/ui';
 import { SearchableSelect } from '../../components/common/SearchableSelect';
 import { Switch } from '../../components/ui/switch';
 import { dashboardService } from '../../services/dashboard';
-import { call } from '@ury/core';
+import { call, compareNatural, formatElapsed, minutesSince } from '@ury/core';
 import SideDrawer from '../../components/layout/SideDrawer';
 import TableLayoutView from './TableLayoutView';
 import { tableStatusLabel } from '../../lib/statusLabels';
@@ -24,8 +25,115 @@ interface UryTableRecord {
   is_take_away?: boolean;
   // Frappe returns Check fields as 0/1, not booleans.
   enable_self_ordering?: number | boolean;
-  status?: string;
+  occupied?: number;
+  latest_invoice_time?: string | null;
+  merged_with?: string | null;
 }
+
+const VIEW_MODE_KEY = 'ury_dash_tables_view';
+const OCCUPIED_ONLY_KEY = 'ury_dash_tables_occupied_only';
+
+/** Per-device conveniences; blocked storage just means the defaults. */
+function readStored(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function writeStored(key: string, value: string) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* blocked storage: the choice still holds for this visit */
+  }
+}
+
+const isOccupied = (table: UryTableRecord) => table.occupied === 1;
+
+/**
+ * The floor card, in the same design as the cashier and waiter screens:
+ * a status rail, the 3D table painted in the state's colour, and the name
+ * as the largest thing on it. Clicking opens the editor.
+ */
+const ManagerTableCard: React.FC<{
+  table: UryTableRecord;
+  index: number;
+  now: Date;
+  onEdit: () => void;
+}> = ({ table, index, now, onEdit }) => {
+  const occupied = isOccupied(table);
+  const elapsed = occupied ? formatElapsed(minutesSince(table.latest_invoice_time, now)) : null;
+  const seats = table.no_of_seats || 0;
+
+  return (
+    <button
+      type="button"
+      onClick={onEdit}
+      style={{ '--i': index } as React.CSSProperties}
+      aria-label={`${t('dash.table.edit_table')}: ${table.table_name || table.name}`}
+      className={cn(
+        'group relative flex min-h-[16rem] flex-col rounded-2xl border border-gray-200 bg-white text-start shadow-sm',
+        'animate-fade-in-up stagger-fast transition-[box-shadow,transform] duration-200 ease-out',
+        'hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2'
+      )}
+    >
+      <span
+        aria-hidden="true"
+        className={cn('absolute inset-y-0 start-0 w-1.5 rounded-s-2xl', occupied ? 'bg-amber-400' : 'bg-emerald-500')}
+      />
+
+      <div className="flex w-full items-start justify-between gap-2 pe-3 ps-4 pt-3">
+        <span
+          className={cn(
+            'inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-xs font-semibold',
+            occupied ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800'
+          )}
+        >
+          <span aria-hidden="true" className={cn('h-1.5 w-1.5 rounded-full bg-current', occupied && 'animate-pulse-soft')} />
+          {tableStatusLabel(occupied ? 'Occupied' : 'Available')}
+        </span>
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+          <Edit2 className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </div>
+
+      <div className="flex w-full flex-1 flex-col px-4 pt-1 text-center">
+        <TableScene state={occupied ? 'occupied' : 'free'} />
+        <h3 className="flex items-center justify-center gap-1.5 text-2xl font-bold leading-tight tracking-tight text-gray-900">
+          <span className="truncate">{table.table_name || table.name}</span>
+          {table.merged_with ? <Link2 className="h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" /> : null}
+        </h3>
+        {occupied ? (
+          <p className="mt-1 flex items-center justify-center gap-1 text-sm font-semibold tabular-nums text-gray-500">
+            <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+            <bdi>{elapsed}</bdi>
+          </p>
+        ) : (
+          <p className="mt-1 flex items-center justify-center gap-1 text-sm text-gray-500">
+            <Users className="h-3.5 w-3.5" aria-hidden="true" />
+            {t('dash.table.seats_count', { count: seats })}
+          </p>
+        )}
+      </div>
+
+      <div className="mt-3 flex w-full items-center justify-between gap-2 border-t border-gray-100 px-4 py-2.5 text-xs font-medium text-gray-500">
+        <span className="truncate">{table.restaurant_room || '—'}</span>
+        <span className="flex shrink-0 items-center gap-1.5">
+          {table.is_take_away ? (
+            <Badge variant="outline" size="sm" className="border-sky-200 bg-sky-50 text-sky-800">
+              {t('dash.table.is_take_away_table')}
+            </Badge>
+          ) : null}
+          <Badge variant="outline" size="sm" className="border-gray-200 bg-gray-50 text-gray-600">
+            {table.table_shape || 'Square'}
+          </Badge>
+        </span>
+      </div>
+    </button>
+  );
+};
 
 export const TablePage: React.FC = () => {
   const { activeBranchId } = useBranchContext();
@@ -33,7 +141,27 @@ export const TablePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [loadError, setLoadError] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const [viewMode, setViewMode] = useState<'grid' | 'list' | 'layout'>('list');
+  // The floor cards are the default: the manager reads this page as "how is
+  // the floor right now" first and as a settings list second.
+  const [viewMode, setViewModeState] = useState<'grid' | 'list' | 'layout'>(() =>
+    readStored(VIEW_MODE_KEY) === 'list' ? 'list' : 'grid'
+  );
+  const setViewMode = (mode: 'grid' | 'list' | 'layout') => {
+    setViewModeState(mode);
+    if (mode !== 'layout') writeStored(VIEW_MODE_KEY, mode);
+  };
+  const [occupiedOnly, setOccupiedOnly] = useState<boolean>(() => readStored(OCCUPIED_ONLY_KEY) === '1');
+  const toggleOccupiedOnly = () => {
+    setOccupiedOnly((prev) => {
+      writeStored(OCCUPIED_ONLY_KEY, prev ? '0' : '1');
+      return !prev;
+    });
+  };
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
   const [editingTable, setEditingTable] = useState<UryTableRecord | null>(null);
   const [saving, setSaving] = useState<boolean>(false);
 
@@ -74,8 +202,8 @@ export const TablePage: React.FC = () => {
     }
   };
 
-  const fetchTables = async () => {
-    setLoading(true);
+  const fetchTables = async (options: { silent?: boolean } = {}) => {
+    if (!options.silent) setLoading(true);
     try {
       const records = await dashboardService.getModuleRecords<UryTableRecord>('URY Table', activeBranchId);
       setTables(records);
@@ -94,6 +222,11 @@ export const TablePage: React.FC = () => {
     fetchRooms();
     fetchTables();
   }, [activeBranchId]);
+
+  // Live: occupancy and merges change on the floor while this page is open.
+  useFloorUpdates(() => {
+    void fetchTables({ silent: true });
+  }, { branch: activeBranchId });
 
   const openAddDrawer = () => {
     setEditingTable(null);
@@ -244,6 +377,22 @@ export const TablePage: React.FC = () => {
 
   // Resolved out here because the row loop below binds `t` to the table
   // record, shadowing the translation function.
+  // Room, then table, in counting order: "T2" before "T10".
+  const sortedTables = useMemo(
+    () =>
+      [...tables].sort(
+        (a, b) =>
+          compareNatural(a.restaurant_room, b.restaurant_room) ||
+          compareNatural(a.table_name || a.name, b.table_name || b.name)
+      ),
+    [tables]
+  );
+  const occupiedCount = useMemo(() => tables.filter(isOccupied).length, [tables]);
+  const visibleTables = useMemo(
+    () => (occupiedOnly ? sortedTables.filter(isOccupied) : sortedTables),
+    [sortedTables, occupiedOnly]
+  );
+
   const selfOrderingOnLabel = t('dash.table.self_ordering_on');
   const selfOrderingOffLabel = t('dash.table.self_ordering_off');
 
@@ -265,7 +414,34 @@ export const TablePage: React.FC = () => {
             <Grid className="w-4 h-4" />
           </button>
         </div>
-        <div className="flex items-center gap-3 w-full md:w-auto">
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          {tables.length > 0 && (
+            <div className="hidden items-center gap-3 text-xs font-semibold text-gray-500 lg:flex">
+              <span className="flex items-center gap-1.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" aria-hidden="true" />
+                {t('dash.table.free_count', { count: tables.length - occupiedCount })}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-amber-400" aria-hidden="true" />
+                {t('dash.table.occupied_count', { count: occupiedCount })}
+              </span>
+            </div>
+          )}
+          {viewMode !== 'layout' && (
+            <Button
+              variant="outline"
+              aria-pressed={occupiedOnly}
+              onClick={toggleOccupiedOnly}
+              className={cn(
+                'border-gray-300 text-gray-700 font-semibold flex items-center gap-1.5',
+                occupiedOnly && 'border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100'
+              )}
+            >
+              <Filter className="w-4 h-4" />
+              <span>{t('dash.table.occupied_only')}</span>
+              <span className="rounded-full bg-amber-100 px-1.5 text-xs tabular-nums text-amber-800">{occupiedCount}</span>
+            </Button>
+          )}
           <Button
             variant="outline"
             onClick={() => setViewMode('layout')}
@@ -312,34 +488,18 @@ export const TablePage: React.FC = () => {
             onRefresh={fetchTables}
           />
         </div>
+      ) : visibleTables.length === 0 ? (
+        <Card className="p-12 flex flex-col items-center justify-center text-center rounded-lg border border-gray-200 shadow-sm bg-white">
+          <Illustration name="tables" size="sm" className="mb-3" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('dash.table.no_occupied_tables')}</h3>
+          <Button variant="outline" onClick={toggleOccupiedOnly}>
+            {t('dash.table.show_all_tables')}
+          </Button>
+        </Card>
       ) : viewMode === 'grid' ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {tables.map((t) => (
-            <Card key={t.name} className="p-5 rounded-lg border border-gray-200 bg-white shadow-xs hover:shadow-md transition-all hover:border-primary/20 flex flex-col justify-between relative group cursor-pointer" onClick={() => openEditDrawer(t)}>
-              <div>
-                <div className="flex items-center justify-between">
-                  <Badge variant="outline" className="border-primary/20 bg-primary/10 text-primary text-[10px]">
-                    <Square className="w-3 h-3 me-1" />
-                    {t.table_shape || 'Square'}
-                  </Badge>
-                  <Badge variant={t.status === 'Occupied' ? 'warning' : 'success'} size="sm">
-                    {tableStatusLabel(t.status || 'Available')}
-                  </Badge>
-                </div>
-                <h3 className="mt-3 text-xl font-bold text-gray-900 tracking-tight">{t.table_name || t.name}</h3>
-                <p className="text-xs text-gray-500 mt-1 font-medium">{t.restaurant_room || 'Main Hall'}</p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-600 font-semibold">
-                <span className="flex items-center">
-                  <Users className="w-3.5 h-3.5 me-1 text-primary" />
-                  {t.no_of_seats || 4} Seats
-                </span>
-                <span className="text-gray-400">Branch: {t.branch || 'Main'}</span>
-              </div>
-              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
-                <Edit2 className="w-6 h-6 text-primary" />
-              </div>
-            </Card>
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,13rem),1fr))] gap-5">
+          {visibleTables.map((table, index) => (
+            <ManagerTableCard key={table.name} table={table} index={index} now={now} onEdit={() => openEditDrawer(table)} />
           ))}
         </div>
       ) : (
@@ -357,7 +517,7 @@ export const TablePage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {tables.map((t) => (
+              {visibleTables.map((t) => (
                 <tr key={t.name} className="hover:bg-primary/10 transition-colors">
                   <td className="px-6 py-4 font-semibold text-gray-900">{t.table_name || t.name}</td>
                   <td className="px-6 py-4">{t.restaurant_room || 'Main Hall'}</td>
@@ -368,8 +528,8 @@ export const TablePage: React.FC = () => {
                     </Badge>
                   </td>
                   <td className="px-6 py-4">
-                    <Badge variant={t.status === 'Occupied' ? 'warning' : 'success'} size="sm">
-                      {tableStatusLabel(t.status || 'Available')}
+                    <Badge variant={isOccupied(t) ? 'warning' : 'success'} size="sm">
+                      {tableStatusLabel(isOccupied(t) ? 'Occupied' : 'Available')}
                     </Badge>
                   </td>
                   <td className="px-6 py-4">
