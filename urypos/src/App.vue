@@ -8,19 +8,24 @@
     bottom chrome had no equivalent and every screen padded itself by hand.
   -->
   <main class="pos-shell">
-    <div class="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 sm:py-6">
+    <div class="mx-auto w-full max-w-[96rem] px-4 py-4 sm:px-6 sm:py-6">
       <NotificationModal />
 
-      <!-- The step strip belongs to the order-taking flow, not to the order
-           log or the opening/closing screens, so it is placed here and asks
-           the route whether it applies. -->
-      <OrderSteps v-if="showSteps" />
-
-      <router-view></router-view>
+      <div v-if="auth.sessionLoading" role="status" aria-live="polite" class="flex min-h-[60vh] items-center justify-center gap-3 text-muted-foreground">
+        <span class="h-6 w-6 animate-spin rounded-full border-2 border-border border-t-primary" aria-hidden="true"></span>
+        {{ $t('login.checking_session') }}
+      </div>
+      <router-view v-else v-slot="{ Component }">
+        <transition name="route-fade" mode="out-in">
+          <div :key="$route.path" class="min-w-0">
+            <component :is="Component" />
+          </div>
+        </transition>
+      </router-view>
     </div>
   </main>
 
-  <Tabs />
+  <Tabs v-if="!auth.sessionLoading" />
 </template>
 
 <script>
@@ -28,7 +33,7 @@ import { useAuthStore } from "@/stores/Auth.js";
 import Tabs from "./components/bottomTabs.vue";
 import Header from "./components/Header.vue";
 import NotificationModal from "./components/NotificationModal.vue";
-import OrderSteps from "./components/OrderSteps.vue";
+import { startLiveFloor } from "./realtime/liveFloor.js";
 
 export default {
   name: "App",
@@ -36,15 +41,6 @@ export default {
     Tabs,
     Header,
     NotificationModal,
-    OrderSteps,
-  },
-  computed: {
-    /** The four screens that make up taking one order. */
-    showSteps() {
-      return ["/", "/Table", "/Customer", "/Menu", "/Cart"].includes(
-        this.$route.path
-      );
-    },
   },
   setup() {
     const auth = useAuthStore();
@@ -52,6 +48,8 @@ export default {
   },
   mounted() {
     this.auth.fetchUserDetails();
+    // Live floor updates for the whole session (tables, open order, log).
+    startLiveFloor();
   },
 };
 </script>
