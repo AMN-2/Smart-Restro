@@ -27,7 +27,8 @@
     "loading_ury_pos": "Chargement de URY POS...",
     "please_wait_setup": "Veuillez patienter pendant que nous préparons tout",
     "close": "Fermer",
-    "retry": "Réessayer"
+    "retry": "Réessayer",
+    "clear": "Effacer"
   },
   "header": {
     "search_placeholder_default": "Rechercher commandes, articles ou clients...",
@@ -352,7 +353,14 @@
     "order_already_billed": "Cette commande a déjà été facturée",
     "no_captains_found": "Aucun capitaine trouvé",
     "open_table": "Ouvrir la table {{table}}",
-    "refreshing": "Vérification des changements…"
+    "refreshing": "Vérification des changements…",
+    "needs_attention": "À surveiller",
+    "open": "Ouvrir",
+    "seated_for": "Ouverte depuis {{time}}",
+    "occupied_only": "Occupées uniquement",
+    "show_all_tables": "Toutes les tables",
+    "no_occupied_tables": "Aucune table occupée dans cette salle",
+    "seats_count": "{{count}} places"
   },
   "bill_split": {
     "split_bill": "Diviser l'addition",
@@ -448,13 +456,69 @@
       "no_order_reprint": "Aucune commande active à réimprimer.",
       "no_order_print": "Aucune commande active à imprimer.",
       "no_order_transfer": "Aucune commande active à transférer.",
-      "transfer_unavailable": "Impossible de transférer cette table."
+      "transfer_unavailable": "Impossible de transférer cette table.",
+      "modified_elsewhere": "Cette commande a été modifiée par quelqu'un d'autre. Rouvrez la table et réessayez."
     },
     "success": {
       "kot_reprinted": "Bon de cuisine réimprimé.",
       "printed": "Impression réussie.",
       "table_transferred": "Table transférée.",
-      "captain_transferred": "Capitaine transféré."
+      "captain_transferred": "Capitaine transféré.",
+      "order_sent": "Commande de la table {{table}} envoyée en cuisine.",
+      "order_updated": "Table {{table}} mise à jour."
+    },
+    "browse_only": "Vous pouvez parcourir le menu, mais vous n'avez pas l'autorisation d'ajouter des articles à cette commande.",
+    "choose_table": "Choisir une table",
+    "choose_table_to_send": "Choisir une table pour envoyer",
+    "clear_new": "Effacer",
+    "draft_label": "Pas encore de table",
+    "draft_moved": "Vos articles ont été ajoutés à la table {{table}}. Vérifiez puis envoyez.",
+    "empty_hint_draft": "Touchez des articles du menu pour commencer. Choisissez la table maintenant ou juste avant l'envoi.",
+    "empty_hint_table": "Touchez des articles du menu pour les ajouter à cette table.",
+    "just_now": "à l'instant",
+    "merged_with": "Fusionnée avec {{tables}}",
+    "new_items": "Nouveaux articles",
+    "new_order": "Nouvelle commande",
+    "updating_order": "Ajout à une commande ouverte",
+    "send_to_kitchen": "Envoyer en cuisine",
+    "sending": "Envoi…",
+    "send_short": "Envoyer",
+    "update_short": "Mettre à jour",
+    "table_label": "Table {{table}}",
+    "tap_to_choose": "Touchez pour choisir la table de cette commande",
+    "table_locked_draft_kept": "La table {{table}} ne peut pas recevoir d'articles pour le moment. Vos articles sont conservés — choisissez une autre table.",
+    "view_only": "Lecture seule — vous ne pouvez pas modifier la commande de cette table pour l'instant.",
+    "view_only_other": "Vous ne pouvez pas ouvrir la commande de cette table. Elle appartient peut-être à un autre capitaine ou est déjà facturée.",
+    "picker": {
+      "title": "Choisir une table",
+      "search": "Rechercher un numéro de table…",
+      "no_match": "Aucune table ne correspond à la recherche.",
+      "free_count": "Tables libres",
+      "current": "Table actuelle",
+      "assigned_to": "Cette table est attribuée à {{name}}",
+      "occupied": "Cette table est occupée",
+      "billed_locked_hint": "L'addition de cette table est déjà imprimée. Demandez au caissier de la régler ou de la rouvrir."
+    },
+    "status": {
+      "free": "Libre",
+      "mine": "Les miennes",
+      "occupied": "Occupée",
+      "billed": "Facturée"
+    },
+    "switch": {
+      "title": "Modifications non envoyées",
+      "body": "La table {{from}} a des modifications non envoyées. Que faire avant d'ouvrir la table {{to}} ?",
+      "discard": "Abandonner les modifications",
+      "carry": "Déplacer les nouveaux articles vers {{to}}"
     }
+  },
+  "live": {
+    "order_left_list": "La commande {{order}} a été payée, annulée ou déplacée depuis un autre appareil.",
+    "order_refreshed": "Cette commande a été mise à jour depuis un autre appareil.",
+    "changed_elsewhere_title": "Modifiée sur un autre appareil",
+    "changed_elsewhere_by": "{{user}} a modifié cette commande pendant votre saisie.",
+    "changed_elsewhere_body": "Cette commande a changé pendant votre saisie.",
+    "reload_order": "Charger la dernière version",
+    "keep_mine": "Garder mes modifications"
   }
 }
