@@ -182,6 +182,29 @@ All frontends are served as Frappe web pages. Route rules in `hooks.py` (`websit
 - KOT updates are broadcast via Frappe's Socket.io to the `mosaic` kitchen display.
 - Channel format: `kot_update_{branch}_{production_unit}`
 
+#### Live floor updates (`ury_floor_update`)
+Every change to an order or a table reaches every open screen (`/pos` cashier,
+captain workspace, `/urypos`, `/ury` dashboard and tables) without a reload.
+
+- **Server:** `ury/ury/api/floor_events.py`. `notify_floor_change(invoices, tables, branch, reason)`
+  queues a change; it is published **once per branch, after commit** (nothing on
+  rollback) to the permission-checked room `doctype:POS Invoice`. Payload:
+  `{branch, invoices[], tables[], reasons[], by, at}` — names only, never order data.
+- **Sources:** `doc_events` on POS Invoice (insert/update/submit/cancel/trash/
+  update-after-submit) and URY Table, plus explicit calls wherever code writes
+  with `frappe.db.set_value` (no doc events): `release_merge_cluster_tables`,
+  merge/unmerge, `close_table`, `cancel_order`, and every path that sets
+  `invoice_printed`. **A new code path that changes an order or a table with
+  `set_value` must call `notify_floor_change`.**
+- **Clients:** `@ury/core` `createFloorSync` (React apps; `pos/src/lib/floor-sync.ts`,
+  `frontend/src/lib/floorSync.ts`) and its Vue port `urypos/src/realtime/floorSync.js`.
+  They re-join the room on every reconnect, raise a `resync` after a reconnect or
+  wake-up, debounce bursts, and filter by branch. Screens re-fetch through their
+  normal APIs. An open order with unsent edits is never overwritten: a
+  "changed on another device" banner offers *Load latest* / *Keep my edits*.
+  Mutations are wrapped in `trackLocalWrite` so a device's own save is not
+  mistaken for someone else's change.
+
 ### QZ Tray
 - Thermal printing uses QZ Tray (desktop app). The POS sends signed print jobs.
 - Signing keys: `public/js/sign-message.js` + `jsrsasign-all-min.js`
