@@ -47,8 +47,8 @@ def execute():
             group = ensure_category(row.course)
         except frappe.ValidationError:
             frappe.clear_messages()
-            frappe.log_error(f"Kept {row.item} in {row.item_group}: course {row.course!r} cannot be an item group",
-                             "Course to item group")
+            frappe.log_error(title="Course to item group",
+                             message=f"Kept {row.item} in {row.item_group}: course {row.course!r} cannot be an item group")
             continue
 
         frappe.db.set_value("Item", row.item, "item_group", group, update_modified=False)
