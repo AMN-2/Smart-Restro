@@ -24,7 +24,12 @@ router.beforeEach((to, from, next) => {
 	const auth = useAuthStore();
 	const isAuthenticated = auth.userAuth
 
-	if (to.name !== 'Login' && !isAuthenticated) {
+	if (auth.sessionLoading && to.name !== 'Login') {
+		// The session check in App.vue has not answered yet and owns the first
+		// redirect. Bouncing to Login here flashed the sign-in screen (and
+		// `/login` in the address bar) on every full page load.
+		next();
+	} else if (to.name !== 'Login' && !isAuthenticated) {
 		next({ name: 'Login' });
 	} else if (to.name === 'Login' && isAuthenticated) {
 		next({ name: 'Table' });
