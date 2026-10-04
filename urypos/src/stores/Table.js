@@ -8,7 +8,15 @@ import { useNotifications } from "./Notification.js";
 import { useAlert } from "./Alert.js";
 import frappe from "./frappeSdk.js";
 import { usetoggleRecentOrder } from "./recentOrder.js";
+import { t } from "../i18n";
 
+
+/** Counting order, "T2" before "T10", for every table list on the floor. */
+function sortTablesByName(tables) {
+  return [...(tables || [])].sort((a, b) =>
+    String(a.name).localeCompare(String(b.name), undefined, { numeric: true, sensitivity: "base" })
+  );
+}
 
 export const useTableStore = defineStore("table", {
   state: () => ({
@@ -36,6 +44,9 @@ export const useTableStore = defineStore("table", {
     transferTable: [],
     menu: useMenuStore(),
     tableMenu: [],
+    menuRoom: null,
+    openingTable: false,
+    roomRequest: 0,
     activeDropdown: null,
     currentCaptain: null,
     tableName: "",
@@ -57,7 +68,10 @@ export const useTableStore = defineStore("table", {
     orderModified: null,
     menuName: null,
     rooms: [],
-    recentOrders: usetoggleRecentOrder()
+    recentOrders: usetoggleRecentOrder(),
+    // The open order changed on another device while this one holds unsent
+    // edits; drives RemoteChangeBanner. See refreshOpenOrder().
+    remoteChange: null,
   }),
   getters: {
     filteredTables(state) {
@@ -157,7 +171,8 @@ export const useTableStore = defineStore("table", {
       });
     },
     fetchTable() {
-      this.db
+      const room = this.selectedRoom;
+      return this.db
         .getDocList("URY Table", {
           fields: [
             "name",
@@ -176,34 +191,29 @@ export const useTableStore = defineStore("table", {
           limit: 0,
         })
         .then((tables) => {
-          this.tables = tables.sort((a, b) => {
-            return a.name.localeCompare(b.name, undefined, {
-              numeric: true,
-              sensitivity: "base",
-            });
-          });
+          if (room !== this.selectedRoom) return;
+          this.tables = sortTablesByName(tables);
         });
     },
     async getMenu() {
-      const getMenuIem = {
-        room: this.selectedRoom,
-        pos_profile: this.invoiceData.posProfile,
-      };
+      const room = this.selectedRoom;
+      const request = ++this.roomRequest;
       try {
-        await this.call
-          .get("ury.ury_pos.api.getRestaurantMenu", getMenuIem)
-          .then((result) => {
-            this.tableMenu = result.message.items;
-            this.menuName = result.message.name;
-            this.orderModified = result.message.modified;
-            this.menu.fetchItems();
-          });
+        const result = await this.call.get("ury.ury_pos.api.getRestaurantMenu", {
+          room, pos_profile: this.invoiceData.posProfile,
+        });
+        if (request !== this.roomRequest || room !== this.selectedRoom) return false;
+        this.tableMenu = Array.isArray(result.message?.items) ? result.message.items : [];
+        this.menuRoom = room;
+        this.menuName = result.message?.name;
+        this.orderModified = result.message?.modified_time;
+        this.menu.items = this.tableMenu;
+        this.menu.showPriority = this.tableMenu.some(item => Number(item.special_dish) === 1);
+        this.menu.course = [...new Set(this.tableMenu.map(item => item.course).filter(Boolean))].map(name => ({ name }));
+        return true;
       } catch (error) {
-        if (error._server_messages) {
-          const messages = JSON.parse(error._server_messages);
-          const message = JSON.parse(messages[0])
-          this.alert.createAlert("Message", message.message, "OK");
-        }
+        this.notification.createNotification(t("menu.load_failed"), "error");
+        return false;
       }
     },
     toggleTableTypeSwitch() {
@@ -216,7 +226,7 @@ export const useTableStore = defineStore("table", {
           limit: 0,
         })
         .then((table) => {
-          this.transferTable = table;
+          this.transferTable = sortTablesByName(table);
         })
         .catch((error) => {
           console.error(error);
@@ -235,7 +245,7 @@ export const useTableStore = defineStore("table", {
           limit: 0,
         })
         .then((tableList) => {
-          this.transferTable = tableList;
+          this.transferTable = sortTablesByName(tableList);
         })
         .catch((error) => {
           console.error(error);
@@ -341,122 +351,167 @@ export const useTableStore = defineStore("table", {
         }
       }
     },
-    async addToSelectedTables(table) {
-      this.selectedTable = table.name;
-      this.takeAwayTable = 0;
-
-      if (table.is_take_away === 1) {
-        this.isTakeAway = "Take Away";
-        this.takeAwayTable = 1;
+    /**
+     * Open a table and load its order into the cart. `silent` is the live
+     * reload from another device: no "order loaded" toast and no jump to the
+     * menu — the waiter stays on the screen they are on.
+     */
+    async addToSelectedTables(table, { silent = false, destination = "/Menu" } = {}) {
+      if (this.openingTable || this.invoiceData.invoiceUpdating || this.auth.restrictTableOrder) return false;
+      this.openingTable = true;
+      try {
+        // Load both resources before changing the current ticket. Failure must
+        // not clear an unsent cart or route to an empty/stale order.
+        const room = table.restaurant_room || this.selectedRoom;
+        const [menuResult, orderResult] = await Promise.all([
+          this.call.get("ury.ury_pos.api.getRestaurantMenu", {
+            room, pos_profile: this.invoiceData.posProfile,
+          }),
+          this.call.get("ury.ury.doctype.ury_order.ury_order.get_order_invoice", { table: table.name }),
+        ]);
+        const order = orderResult.message || {};
+        if (order.name && !this.auth.hasAccess && !this.auth.cashier && this.auth.sessionUser !== order.waiter) {
+          await this.alert.createAlert(t("common.notice"), t("tables.assigned_to", { name: order.waiter || "" }), t("common.ok"));
+          return false;
+        }
+        const items = (menuResult.message?.items || []).map(item => ({ ...item, qty: 0 }));
+        const previousItems = Array.isArray(order.items) ? order.items : [];
+        const cart = previousItems.map(previous => {
+          const item = items.find(row => row.item === previous.item_code) || {
+            item: previous.item_code, item_name: previous.item_name, rate: previous.rate,
+          };
+          Object.assign(item, { rate: previous.rate, qty: Number(previous.qty), comment: previous.comment || "" });
+          return item;
+        });
+        this.remoteChange = null;
+        this.selectedTable = table.name;
+        this.selectedRoom = room;
+        this.menuRoom = room;
+        this.takeAwayTable = Number(table.is_take_away) === 1 ? 1 : 0;
+        this.isTakeAway = this.takeAwayTable ? "Take Away" : "Dine In";
+        this.previousOrder = order;
+        this.invoiceNo = order.name || "";
+        this.invoicePrinted = Number(order.invoice_printed || 0);
+        this.modifiedTime = order.modified;
+        this.previousWaiter = order.waiter;
+        this.grandTotal = order.grand_total || 0;
+        this.mobileNumber = order.mobile_number || "";
+        this.previousOrderdItem = previousItems;
+        this.previousOrderdCustomer = order.customer || "";
+        this.tableMenu = items;
+        this.menuName = menuResult.message?.name;
+        this.orderModified = menuResult.message?.modified_time;
+        this.menu.items = items;
+        this.menu.cart = cart;
+        this.menu.comments = order.custom_comments || "";
+        this.menu.selectedOrderType = order.order_type || this.isTakeAway;
+        this.menu.selectedAggregator = null;
+        this.menu.showPriority = items.some(item => Number(item.special_dish) === 1);
+        this.menu.course = [...new Set(items.map(item => item.course).filter(Boolean))].map(name => ({ name }));
+        if (!silent) this.menu.showAllItems();
+        this.menu.currentPage = 1;
+        // The previous invoice from the log must never leak into this table.
+        this.invoiceData.invoiceNumber = this.invoiceNo;
+        this.recentOrders.invoiceNumber = "";
+        this.recentOrders.draftInvoice = "";
+        this.recentOrders.restaurantTable = "";
+        this.recentOrders.previousOrderdCustomer = "";
+        this.recentOrders.pastOrderType = "";
+        this.recentOrders.pastOrderdItem = [];
+        this.recentOrders.modifiedTime = "";
+        this.recentOrders.editPrintedInvoice = this.invoicePrinted;
+        this.customers.search = order.customer || "";
+        this.customers.numberOfPax = order.no_of_pax || "";
+        this.customers.newCustomerMobileNo = order.mobile_number || "";
+        this.customers.customerFavouriteItems = [];
+        if (order.customer) this.customers.fectchCustomerFavouriteItem();
+        if (!silent) {
+          if (order.name) this.notification.createNotification(t("order.past_order_loaded"), "info");
+          await router.push(destination);
+        }
+        return true;
+      } catch (error) {
+        this.notification.createNotification(t("menu.load_failed"), "error");
+        return false;
+      } finally {
+        this.openingTable = false;
       }
-      let previousOrderdNumberOfPax = "";
-      this.previousOrderdItem = [];
-      this.recentOrders.modifiedTime = ""
-      this.recentOrders.pastOrderdItem = []
-      this.invoiceNo = "";
-      let items = this.tableMenu;
-      items.forEach((item) => {
-        item.qty = "";
-      });
-      let cart = this.menu.cart;
-      cart.splice(0, cart.length);
-      const getPreviousOrder = {
-        table: this.selectedTable,
-      };
-      this.call
-        .get(
-          "ury.ury.doctype.ury_order.ury_order.get_order_invoice",
-          getPreviousOrder
-        )
-        .then((result) => {
-          this.previousOrder = result.message;
-          this.invoicePrinted = this.previousOrder.invoice_printed;
-          this.menu.comments = this.previousOrder.custom_comments;
-          this.modifiedTime = this.previousOrder.modified;
-          this.grandTotal = this.previousOrder.grand_total;
-          this.mobileNumber = this.previousOrder.mobile_number;
-          this.invoiceNo = this.previousOrder.name;
-          this.previousWaiter = this.previousOrder.waiter;
-          if (this.invoiceNo) {
-            if (
-              !this.auth.hasAccess &&
-              !this.auth.cashier &&
-              this.auth.sessionUser !== this.previousOrder.waiter
-            ) {
-              this.alert
-                .createAlert(
-                  "Message",
-                  "Table is assigned to " + this.previousOrder.waiter,
-                  "OK"
-                )
-                .then(() => {
-                  router.push("/Table").then(() => {
-                    window.location.reload();
-                  });
-                });
-            } else {
-              this.notification.createNotification("Past Order Fetched");
-            }
-          } else {
-            router.push("/Menu");
-          }
-          this.previousOrderdItem = this.previousOrder.items;
-          this.previousOrderdCustomer = this.previousOrder.customer;
-          previousOrderdNumberOfPax = this.previousOrder.no_of_pax;
-          if (this.previousOrderdCustomer) {
-            this.customers.search = this.previousOrderdCustomer;
-            this.customers.numberOfPax = previousOrderdNumberOfPax;
-            this.customers.fectchCustomerFavouriteItem();
-          } else {
-            this.customers.search = "";
-            this.customers.numberOfPax = "";
-            this.customers.customerFavouriteItems = "";
-            this.customers.newCustomerMobileNo = ""
-          }
-
-          items.forEach((item) => {
-            const previousItem =
-              this.previousOrderdItem &&
-              this.previousOrderdItem.find(
-                (previousItem) => previousItem.item_code === item.item
-              );
-            if (previousItem && !item.qty) {
-              const itemIndex = cart.findIndex((obj) => obj.item === item.item);
-              const itemIndexExists = itemIndex !== -1;
-              if (!itemIndexExists) {
-                item.qty = previousItem.qty;
-                item.comment = previousItem.comment;
-                cart.push(item);
-              }
-            }
-          });
-          if (this.previousOrderdItem && this.previousOrderdItem.length > 0) {
-            this.previousOrderdItem.forEach((previousItem) => {
-              const existsInMenu = items.some(item => item.item === previousItem.item_code);
-              const existsInCart = cart.some(item => item.item === previousItem.item_code);
-
-              if (!existsInMenu && !existsInCart) {
-                // Item no longer in menu but was in previous order - add it to cart
-                cart.push({
-                  item: previousItem.item_code,
-                  item_name: previousItem.item_name,
-                  rate: previousItem.rate,
-                  qty: previousItem.qty,
-                  comment: previousItem.comment
-                });
-              }
-            });
-          }
-        })
-        .catch((error) => console.error(error));
     },
+    /** Does the cart hold anything not yet sent for the open table? */
+    isOpenOrderDirty() {
+      const cart = this.menu.cart || [];
+      if (!this.invoiceNo) return cart.length > 0;
+      const totals = (rows, key) =>
+        rows.reduce((acc, row) => {
+          const code = row[key];
+          if (code) acc[code] = (acc[code] || 0) + Number(row.qty || 0);
+          return acc;
+        }, {});
+      const now = totals(cart, "item");
+      const sent = totals(this.previousOrderdItem || [], "item_code");
+      const codes = new Set([...Object.keys(now), ...Object.keys(sent)]);
+      for (const code of codes) {
+        if ((now[code] || 0) !== (sent[code] || 0)) return true;
+      }
+      if ((this.menu.comments || "") !== (this.previousOrder?.custom_comments || "")) return true;
+      for (const line of cart) {
+        const previous = (this.previousOrderdItem || []).find(row => row.item_code === line.item);
+        if ((line.comment || "") !== (previous?.comment || "")) return true;
+      }
+      return false;
+    },
+
+    /**
+     * The open table's order changed on another device. With nothing unsent
+     * it is re-read in place; with unsent edits the banner asks first
+     * (`force` is its "load latest"). If the order is gone — paid, cancelled,
+     * moved — the waiter is told and taken back to the tables.
+     */
+    async refreshOpenOrder({ force = false } = {}) {
+      const tableName = this.selectedTable;
+      if (!tableName || this.openingTable || this.invoiceData.invoiceUpdating) return "ignored";
+      if (!force && this.isOpenOrderDirty()) {
+        this.remoteChange = { at: Date.now() };
+        return "conflict";
+      }
+      this.remoteChange = null;
+      let order = {};
+      try {
+        const res = await this.call.get(
+          "ury.ury.doctype.ury_order.ury_order.get_order_invoice",
+          { table: tableName }
+        );
+        order = res.message || {};
+      } catch (error) {
+        console.error(error);
+        return "ignored";
+      }
+      if (this.invoiceNo && !order.name) {
+        this.notification.createNotification(t("live.order_closed", { table: tableName }), "info");
+        this.selectedTable = null;
+        this.invoiceNo = "";
+        this.previousOrderdItem = [];
+        this.menu.cart.splice(0, this.menu.cart.length);
+        (this.tableMenu || []).forEach((item) => { item.qty = ""; });
+        this.customers.search = "";
+        this.customers.numberOfPax = "";
+        this.fetchTable();
+        router.push("/Table");
+        return "closed";
+      }
+      const tile =
+        this.tables.find((row) => row.name === tableName) ||
+        { name: tableName, is_take_away: this.takeAwayTable };
+      if (!await this.addToSelectedTables(tile, { silent: true })) return "ignored";
+      this.notification.createNotification(t("live.order_refreshed"), "info");
+      return "reloaded";
+    },
+
     routeToCart(table) {
-      this.addToSelectedTables(table);
-      router.push("/Cart");
+      return this.addToSelectedTables(table, { destination: "/Cart" });
     },
     routeToMenu(table) {
-      this.addToSelectedTables(table);
-      router.push("/Menu");
+      return this.addToSelectedTables(table);
     },
     async invoiceNumberFetching() {
       const tableInvoiceNumber = {
