@@ -1,3 +1,4 @@
+import { compareNatural } from '@ury/core';
 import type { Table } from './table-api';
 
 export function parseMergedWith(mergedWith: string | null | undefined): string[] {
@@ -51,7 +52,7 @@ export function getMergeGroupMembers(table: Table, allTables: Table[]): string[]
     }
   }
 
-  return members.sort((a, b) => a.localeCompare(b));
+  return members.sort(compareNatural);
 }
 
 export function formatMergedTableLabel(
@@ -61,12 +62,12 @@ export function formatMergedTableLabel(
   if (!primary) return '';
   const partners = parseMergedWith(mergedTables);
   if (!partners.length) return primary;
-  return [primary, ...partners.sort((a, b) => a.localeCompare(b))].join(' + ');
+  return [primary, ...partners.sort(compareNatural)].join(' + ');
 }
 
 export function formatMergedTableLabelFromGroup(members: string[]): string {
   if (!members.length) return '';
-  return [...members].sort((a, b) => a.localeCompare(b)).join(' + ');
+  return [...members].sort(compareNatural).join(' + ');
 }
 
 function buildMergeClusters(tables: Table[]): string[][] {
@@ -101,10 +102,10 @@ function buildMergeClusters(tables: Table[]): string[][] {
         }
       }
     }
-    clusters.push(cluster.sort((a, b) => a.localeCompare(b)));
+    clusters.push(cluster.sort(compareNatural));
   }
 
-  clusters.sort((a, b) => a[0].localeCompare(b[0]));
+  clusters.sort((a, b) => compareNatural(a[0], b[0]));
   return clusters;
 }
 
