@@ -103,13 +103,15 @@
     "items": "Items",
     "items_not_found": "Items Not Found.",
     "items_not_found_hint": "Items Not Found. Please select a table or set an active menu.",
-    "no_match_body": "Try another search or course.",
+    "no_match_body": "Try another search, type or course.",
     "no_match_title": "No items match",
     "open_menu": "Open menu",
     "quantity": "Quantity",
     "select_course": "Select Course",
     "title": "Menu",
-    "load_failed": "Could not load the order or menu. Check your connection and select the table again."
+    "load_failed": "Could not load the order or menu. Check your connection and select the table again.",
+    "all_types": "All types",
+    "item_types": "Item types"
   },
   "nav": {
     "no_table_body": "Open a table first, then add the customer and items.",
