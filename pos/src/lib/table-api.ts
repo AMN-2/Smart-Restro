@@ -1,5 +1,5 @@
 import { DOCTYPES } from '../data/doctypes';
-import { db, call } from '@ury/core';
+import { db, call, compareNatural, sortByNaturalName } from '@ury/core';
 
 export interface Room {
   name: string;
@@ -74,7 +74,7 @@ export async function getTables(room: string): Promise<Table[]> {
     asDict: true,
   });
 
-  return tables as Table[];
+  return sortByNaturalName(tables as Table[]);
 }
 
 const TABLE_LIST_FIELDS = [
@@ -113,7 +113,7 @@ export async function getVacantTablesForBranch(
 
   return vacant.sort(
     (a, b) =>
-      a.restaurant_room.localeCompare(b.restaurant_room) || a.name.localeCompare(b.name)
+      compareNatural(a.restaurant_room, b.restaurant_room) || compareNatural(a.name, b.name)
   );
 }
 
