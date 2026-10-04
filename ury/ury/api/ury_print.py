@@ -1,4 +1,5 @@
 import frappe
+from ury.ury.api.floor_events import notify_floor_change
 from frappe import _
 
 import base64
@@ -73,9 +74,11 @@ def network_printing(
 
                 if restaurant_table and invoice_printed == 0:
                     frappe.db.set_value("POS Invoice", name, "invoice_printed", 1)
+                    notify_floor_change(invoices=[name], reason="printed")  # a printed bill locks the order on every screen
                     release_merge_cluster_tables(restaurant_table)
                 else:
                     frappe.db.set_value("POS Invoice", name, "invoice_printed", 1)
+                    notify_floor_change(invoices=[name], reason="printed")
 
                 return "Success"
             finally:
@@ -144,6 +147,7 @@ def qz_print_update(invoice):
             frappe.db.set_value(
                 "POS Invoice", invoice, "invoice_printed", 1, update_modified=False
             )
+            notify_floor_change(invoices=[invoice], reason="printed")  # a printed bill locks the order on every screen
             
             # Validate the update
             new_invoice_printed = frappe.db.get_value("POS Invoice", invoice, "invoice_printed")
@@ -157,6 +161,7 @@ def qz_print_update(invoice):
                 frappe.db.set_value(
                     "POS Invoice", invoice, "invoice_printed", 1, update_modified=False
                 )
+                notify_floor_change(invoices=[invoice], reason="printed")
 
                 release_merge_cluster_tables(table)
                 # Validate both updates
@@ -193,6 +198,7 @@ def print_pos_page(doctype, name, print_format):
 
     if invoice_printed == 0:
         frappe.db.set_value("POS Invoice", name, "invoice_printed", 1)
+        notify_floor_change(invoices=[name], branch=branch, reason="printed")
 
         if restaurant_table:
             release_merge_cluster_tables(restaurant_table)
