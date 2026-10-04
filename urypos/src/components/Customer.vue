@@ -1,406 +1,242 @@
 <template>
   <orderInfo />
-  <div class="container m-auto">
-    <div class="mb-6 gap-6 md:grid-cols-2">
-      <div class="relative mt-5 lg:mt-2" ref="container">
-        <div
-          class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-        >
-          <svg
-            aria-hidden="true"
-            class="h-5 w-5 text-muted-foreground"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            ></path>
-          </svg>
-        </div>
-        <input
-          type="search"
-          class="block w-full rounded-lg border border-input bg-muted p-2.5 pl-10 text-sm text-foreground focus:border-ring focus:ring-ring md:w-3/5 lg:w-2/5"
-          :placeholder="$t('customer.search')"
-          v-model="this.customers.search"
-          @input="this.customers.handleSearchInput"
-          @click="this.customers.searchCustomer()
-          "
-          :disabled="this.menu.selectedOrderType === 'Aggregators' || this.recentOrders.previousOrderdCustomer !== ''"
-          required
-        />
 
-        <div
-          v-if="
-            this.customers.showCustomers && this.customers.showAddNewCustomer
-          "
-          class="absolute left-0 top-full z-10 max-h-64 w-full overflow-y-scroll rounded-xl bg-card shadow md:w-3/5 lg:w-2/5"
-          ref="dropdown"
-        >
-          <div
-            class="h-16 rounded-lg p-4 hover:bg-muted"
-            v-for="(customer, index) in this.customers.customer"
-            :key="index"
-            @click="this.customers.selectCustomer(customer)"
+  <div class="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
+    <!--
+      Who the order is for. Four loose full-width inputs with icons pinned
+      to the left (wrong side in Arabic) became one card of labelled fields,
+      with the guest count as a stepper — the thing a waiter changes most.
+    -->
+    <section class="pos-card space-y-5 p-4 sm:p-5">
+      <div class="relative" data-autocomplete>
+        <label for="customerSearch" class="pos-form-label">{{ $t('customer.title') }}</label>
+        <div class="pos-search">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            id="customerSearch"
+            type="search"
+            class="pos-input"
+            autocomplete="off"
+            :placeholder="$t('customer.search')"
+            :value="customers.search"
+            :disabled="customerLocked"
+            @input="customers.handleSearchInput"
+            @focus="customers.searchCustomer()"
+          />
+        </div>
+        <p v-if="customerLocked && customers.search" class="mt-1.5 text-xs text-muted-foreground">
+          {{ $t('customer.locked_hint') }}
+        </p>
+
+        <div v-if="customers.showCustomers && customers.showAddNewCustomer && !customerLocked" class="pos-menu" role="listbox">
+          <button
+            v-for="customer in customers.customer"
+            :key="customer.name"
+            type="button"
+            role="option"
+            class="pos-menu-item"
+            @click="customers.selectCustomer(customer)"
           >
-            <h1 class="text-base font-semibold leading-normal">
-              {{ customer.name }}
-            </h1>
-            <h2 class="text-sm leading-normal">
-              {{ customer.name }}
-              {{
-                customer.content
-                  ? this.customers.extractName(customer.content)
-                  : ""
-              }}
-            </h2>
-          </div>
-          <div v-if="this.customers.showAddNewCustomer">
-            <div class="flex justify-end">
-              <span class="sr-only">{{ $t('common.close') }}</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="mt-2 mr-2 h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                @click="this.customers.showAddNewCustomer = false"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </div>
-            <a
-              href="#"
-              class="mt-1 lg:mt-0 inline-flex items-center text-primary hover:underline"
-              @click.prevent="
-                this.customers.newCustomerData(this.customers.search)
-              "
-            >
-              <svg
-                fill="none"
-                stroke="currentColor"
-                class="h-8 w-8 font-extrabold"
-                viewBox="0 0 25 25"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 6v12m6-6H6"
-                ></path>
-              </svg>
-              {{ $t('customer.create_new') }}
-            </a>
-          </div>
+            {{ customer.name }}
+            <small v-if="customer.mobile_number || customer.content" class="bidi-isolate">
+              {{ customer.mobile_number || customers.extractName(customer.content) }}
+            </small>
+          </button>
+          <button
+            type="button"
+            class="pos-menu-item flex-row items-center justify-start gap-2 text-primary"
+            @click="customers.showCustomers = false; customers.newCustomerData(customers.search)"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" d="M12 5v14M5 12h14" />
+            </svg>
+            {{ customers.search ? $t('customer.create_named', { name: customers.search }) : $t('customer.create_new') }}
+          </button>
         </div>
       </div>
-      <div
-        v-if="this.customers.showModalNewCustomer"
-        class="fixed inset-0 z-10 mt-20 overflow-y-auto bg-muted"
-      >
-        <div class="mb-16 mt-10 flex items-center justify-center">
-          <div class="w-full rounded-lg bg-card p-6 shadow-raised md:max-w-md">
-            <div class="flex justify-end">
-              <span class="sr-only">{{ $t('common.close') }}</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                @click="this.customers.showModalNewCustomer = false"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </div>
 
-            <h2
-              class="mt-1 block text-left text-xl font-medium text-foreground"
-            >
-              {{ $t('customer.new') }}
-            </h2>
-            <label
-              for="newCustomer"
-              class="mt-6 block text-left text-foreground"
-            >
-              {{ $t('customer.name') }}
-            </label>
-            <input
-              type="text"
-              id="newCustomer"
-              class="mt-4 w-full rounded-lg border border-input bg-muted text-sm text-foreground focus:border-ring focus:ring-ring"
-              v-model="this.customers.newCustomer"
-            />
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <div>
+          <label for="mobileNumber" class="pos-form-label">{{ $t('customer.mobile') }}</label>
+          <input
+            id="mobileNumber"
+            type="tel"
+            class="pos-input bg-muted/60 bidi-isolate"
+            readonly
+            :value="customers.newCustomerMobileNo || recentOrders.mobileNumber || table.mobileNumber"
+            :placeholder="$t('customer.mobile_auto')"
+          />
+        </div>
 
-            <label
-              for="mobileNumber"
-              class="mt-6 block text-left text-foreground"
-            >
-              {{ $t('customer.mobile') }}
-            </label>
+        <div>
+          <span class="pos-form-label">{{ $t('customer.guests') }}</span>
+          <div class="pos-stepper w-full">
+            <button type="button" class="press" :disabled="pax <= 1" :aria-label="$t('cart.decrease')" @click="setPax(pax - 1)">&minus;</button>
             <input
+              id="numberOfPax"
               type="number"
-              id="mobileNumber"
-              class="mt-4 w-full rounded-lg border border-input bg-muted text-sm text-foreground focus:border-ring focus:ring-ring"
-              v-model="this.customers.newCustomerMobileNo"
+              inputmode="numeric"
+              min="1"
+              class="pos-stepper-value flex-1 bg-card text-center focus:outline-none"
+              :placeholder="$t('cart.pax')"
+              v-model="customers.numberOfPax"
+              :aria-label="$t('customer.guests')"
+              @input="customers.validateInput"
             />
-            <div class="relative mt-5" ref="container">
-              <label
-                for="customerGroup"
-                class="mt-6 block text-left text-foreground"
-              >
-                {{ $t('customer.group') }}
-              </label>
-              <input
-                type="text"
-                id="customerGroup"
-                class="mt-4 w-full rounded-lg border border-input bg-muted text-sm text-foreground focus:border-ring focus:ring-ring"
-                v-model="this.customers.customerGroup"
-                @click="
-                  this.customers.showCustomersGroup = true;
-                  this.customers.pickCustomerGroup();
-                "
-                required
-              />
-
-              <div
-                v-if="this.customers.showCustomersGroup"
-                class="absolute left-0 top-full z-10 max-h-64 w-full overflow-y-scroll rounded-xl bg-card shadow"
-                ref="dropdown"
-              >
-                <div
-                  class="h-12 rounded-lg p-4 hover:bg-muted"
-                  v-for="(group, index) in this.customers.customerGroupList"
-                  :key="index"
-                  @click="this.customers.selectCustomerGroup(group)"
-                >
-                  <h1 class="text-base font-semibold leading-normal">
-                    {{ group.name }}
-                  </h1>
-                </div>
-              </div>
-            </div>
-            <div class="relative mt-5" ref="container">
-              <label
-                for="territory"
-                class="mt-6 block text-left text-foreground"
-              >
-                {{ $t('customer.territory') }}
-              </label>
-              <input
-                type="text"
-                id="territory"
-                class="mt-4 w-full rounded-lg border border-input bg-muted text-sm text-foreground focus:border-ring focus:ring-ring"
-                v-model="this.customers.customerTerritory"
-                @click="
-                  this.customers.showCustomersTerritory = true;
-                  this.customers.pickCustomerTerritory();
-                "
-                required
-              />
-
-              <div
-                v-if="this.customers.showCustomersTerritory"
-                class="absolute left-0 top-full z-10 max-h-64 w-full overflow-y-scroll rounded-xl bg-card shadow"
-                ref="dropdown"
-              >
-                <div
-                  class="h-12 rounded-lg p-4 hover:bg-muted"
-                  v-for="(territory, index) in this.customers
-                    .customerTerritoryList"
-                  :key="index"
-                  @click="this.customers.selectCustomerTerritory(territory)"
-                >
-                  <h1 class="text-base font-semibold leading-normal">
-                    {{ territory.name }}
-                  </h1>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex justify-end">
-              <button
-                @click="this.customers.addNewCustomer()"
-                class="mt-8 rounded-xl bg-primary px-3 py-2 text-primary-foreground hover:bg-primary"
-              >
-                {{ $t('common.save') }}
-              </button>
-            </div>
+            <button type="button" class="press" :disabled="pax >= 999" :aria-label="$t('cart.increase')" @click="setPax(pax + 1)">+</button>
           </div>
         </div>
-      </div>
-      <div class="relative mb-4 mt-4">
-        <div
-          class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-        >
-          <svg  
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"      
-          >
-          <path fill-rule="evenodd" d="M5 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4Zm12 12V5H7v11h10Zm-5 1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z" clip-rule="evenodd"/>
-          </svg>
 
-        </div>
-        <input
-          type="number"
-          id="mobileNumber"
-          class="block w-full rounded-lg border border-input bg-muted p-2.5 pl-10 text-sm text-foreground focus:border-ring focus:ring-ring md:w-3/5 lg:w-2/5"
-          :placeholder="$t('customer.mobile')"
-          readonly
-          :value="this.customers.newCustomerMobileNo || this.recentOrders.mobileNumber || this.table.mobileNumber"
-        />
       </div>
-      <div class="relative mb-4 mt-4" v-if="!this.auth.cashier">
-        <div
-          class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-        >
-          <svg
-            class="h-6 w-6 text-muted-foreground group-hover:text-primary"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </div>
-        <input
-          type="number"
-          id="numberOfPax"
-          class="block w-full rounded-lg border border-input bg-muted p-2.5 pl-10 text-sm text-foreground focus:border-ring focus:ring-ring md:w-3/5 lg:w-2/5"
-          :placeholder="$t('cart.pax')"
-          required
-          v-model="this.customers.numberOfPax"
-          @input="this.customers.validateInput"
-        />
+
+      <button type="button" class="pos-btn-primary pos-btn-lg w-full sm:w-auto" @click="tabClick.clickMenuTab() && $router.push('/Menu')">
+        {{ $t('customer.continue_to_menu') }}
+        <svg class="h-4 w-4 rtl-flip" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </button>
+    </section>
+
+    <!-- What this customer usually orders. -->
+    <section v-if="favourites.length" class="pos-card overflow-hidden">
+      <header class="border-b border-border bg-muted/60 px-4 py-3">
+        <p class="pos-label">{{ $t('menu.favourite_items') }}</p>
+      </header>
+      <ul class="divide-y divide-border">
+        <li v-for="(item, index) in favourites" :key="index" class="flex items-center justify-between gap-3 px-4 py-2.5 text-sm">
+          <span class="min-w-0 truncate font-semibold text-foreground">{{ item.item_name }}</span>
+          <span class="pos-badge-neutral tabular-nums">× {{ item.qty }}</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <PosDialog
+    :open="customers.showModalNewCustomer"
+    :title="$t('customer.new')"
+    @close="customers.showModalNewCustomer = false"
+  >
+    <div class="space-y-4">
+      <div>
+        <label for="newCustomer" class="pos-form-label">{{ $t('customer.name') }} *</label>
+        <input id="newCustomer" type="text" class="pos-input" v-model="customers.newCustomer" />
       </div>
-      <div class="relative mt-5" ref="container" v-if="this.auth.cashier">
-        <div
-          class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-        >
-          <svg
-            class="h-6 w-6 text-foreground group-hover:text-primary"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15 4h3c.6 0 1 .4 1 1v15c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1V5c0-.6.4-1 1-1h3m0 3h6m-3 5h3m-6 0h0m3 4h3m-6 0h0m1-13v4h4V3h-4Z"
-            />
-          </svg>
-        </div>
-        <input
-          type="text"
-          class="block w-full rounded-lg border border-input bg-muted p-2.5 pl-10 text-sm text-foreground focus:border-ring focus:ring-ring md:w-3/5 lg:w-2/5"
-          :placeholder="$t('order.type')"
-          :value="
-            this.menu.selectedOrderType || this.recentOrders.pastOrderType
-          "
-          @click="
-                this.invoiceData.editOrderType && (this.recentOrders.pastOrderType === 'Take Away' || this.recentOrders.pastOrderType === 'Delivery')
-                  ? this.customers.editOrderType(this.recentOrders.pastOrderType)
-                  : ''
-              "
-          :readonly="!(this.recentOrders.pastOrderType === 'Take Away' || this.recentOrders.pastOrderType === 'Delivery')"        
-          required
-        />
-        <div
-          v-if="
-             this.invoiceData.editOrderType && this.customers.showEditOrderType
-          "
-          class="absolute left-0 top-full z-10 max-h-64 w-full rounded-xl bg-card shadow md:w-3/5 lg:w-2/5"
-          ref="dropdown"
-        >
-          <div
-            class="h-10 mb-4 rounded-lg p-4 hover:bg-muted"
-            @click="this.customers.selecetOrderType(customers.newOrderType)"
-          >
-            <h2 class="text-sm leading-normal">
-               {{ customers.newOrderType }}
-            </h2>
+      <div>
+        <label for="newMobile" class="pos-form-label">{{ $t('customer.mobile') }} *</label>
+        <input id="newMobile" type="tel" inputmode="tel" class="pos-input bidi-isolate" v-model="customers.newCustomerMobileNo" />
+      </div>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div class="relative" data-autocomplete>
+          <label for="customerGroup" class="pos-form-label">{{ $t('customer.group') }}</label>
+          <input
+            id="customerGroup"
+            type="text"
+            class="pos-input"
+            autocomplete="off"
+            v-model="customers.customerGroup"
+            @focus="customers.showCustomersGroup = true; customers.pickCustomerGroup()"
+          />
+          <div v-if="customers.showCustomersGroup && customers.customerGroupList.length" class="pos-menu" role="listbox">
+            <button
+              v-for="group in customers.customerGroupList"
+              :key="group.name"
+              type="button"
+              role="option"
+              class="pos-menu-item"
+              @click="customers.selectCustomerGroup(group)"
+            >
+              {{ group.name }}
+            </button>
           </div>
         </div>
-      </div>
-
-      <h1
-        class="tex mt-5 text-lg font-medium"
-        v-if="this.customers.customerFavouriteItems.length > 0"
-      >
-        {{ $t('menu.favourite_items') }}
-      </h1>
-
-      <div
-        class="cart-item-details mt-1 grid grid-cols-2 gap-6 py-2 sm:w-full md:w-full lg:w-full lg:grid-cols-4"
-        v-if="this.customers.customerFavouriteItems.length > 0"
-      >
-        <h3 class="text-base font-medium">{{ $t('menu.item_name') }}</h3>
-        <h3 class="text-center text-base font-medium">{{ $t('menu.quantity') }}</h3>
-      </div>
-      <div
-        v-for="(item, index) in this.customers.customerFavouriteItems"
-        :key="index"
-      >
-        <div
-          class="cart-item-details sm:min-w-none grid w-full grid-cols-2 gap-6 py-2 sm:w-full md:w-full lg:w-full lg:grid-cols-4"
-        >
-          <span>{{ item.item_name }}</span>
-
-          <span class="text-center">{{ item.qty }}</span>
+        <div class="relative" data-autocomplete>
+          <label for="territory" class="pos-form-label">{{ $t('customer.territory') }}</label>
+          <input
+            id="territory"
+            type="text"
+            class="pos-input"
+            autocomplete="off"
+            v-model="customers.customerTerritory"
+            @focus="customers.showCustomersTerritory = true; customers.pickCustomerTerritory()"
+          />
+          <div v-if="customers.showCustomersTerritory && customers.customerTerritoryList.length" class="pos-menu" role="listbox">
+            <button
+              v-for="territory in customers.customerTerritoryList"
+              :key="territory.name"
+              type="button"
+              role="option"
+              class="pos-menu-item"
+              @click="customers.selectCustomerTerritory(territory)"
+            >
+              {{ territory.name }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <template #footer>
+      <button type="button" class="pos-btn-ghost" @click="customers.showModalNewCustomer = false">{{ $t('common.cancel') }}</button>
+      <button type="button" class="pos-btn-primary" @click="customers.addNewCustomer()">{{ $t('common.save') }}</button>
+    </template>
+  </PosDialog>
 </template>
 
 <script>
 import orderInfo from "./orderInfo.vue";
+import PosDialog from "./ui/PosDialog.vue";
 import { useCustomerStore } from "@/stores/Customer.js";
 import { useAuthStore } from "@/stores/Auth.js";
 import { usetoggleRecentOrder } from "@/stores/recentOrder.js";
 import { useMenuStore } from "@/stores/Menu.js";
 import { useTableStore } from "@/stores/Table.js";
 import { useInvoiceDataStore } from "@/stores/invoiceData.js";
-
+import { tabFunctions } from "@/stores/bottomTabs.js";
 
 export default {
   name: "Customer",
-  components: {
-    orderInfo,
-  },
+  components: { orderInfo, PosDialog },
   setup() {
-    const customers = useCustomerStore();
-    const auth = useAuthStore();
-    const recentOrders = usetoggleRecentOrder();
-    const menu = useMenuStore();
-    const invoiceData = useInvoiceDataStore();
-    const table=useTableStore();
-    return { table,customers, auth, recentOrders,menu,invoiceData };
+    return {
+      table: useTableStore(),
+      customers: useCustomerStore(),
+      auth: useAuthStore(),
+      recentOrders: usetoggleRecentOrder(),
+      menu: useMenuStore(),
+      invoiceData: useInvoiceDataStore(),
+      tabClick: tabFunctions(),
+    };
+  },
+  computed: {
+    /** An aggregator order, or one reopened from the log, keeps its customer. */
+    customerLocked() {
+      return this.menu.selectedOrderType === "Aggregators" || this.recentOrders.previousOrderdCustomer !== "";
+    },
+    pax() {
+      return parseInt(this.customers.numberOfPax, 10) || 0;
+    },
+    favourites() {
+      return Array.isArray(this.customers.customerFavouriteItems) ? this.customers.customerFavouriteItems : [];
+    },
+  },
+  mounted() {
+    document.addEventListener("click", this.closeMenus);
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.closeMenus);
+  },
+  methods: {
+    setPax(value) {
+      this.customers.numberOfPax = Math.min(999, Math.max(1, value));
+    },
+    closeMenus(event) {
+      const target = event.target;
+      if (!(target instanceof Element) || target.closest("[data-autocomplete]")) return;
+      this.customers.showCustomers = false;
+      this.customers.showCustomersGroup = false;
+      this.customers.showCustomersTerritory = false;
+    },
   },
 };
 </script>
