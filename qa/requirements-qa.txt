@@ -1,0 +1,8 @@
+# Install into ~/qa-tools/venv on the QA server, never into the bench env/.
+requests>=2.31
+python-socketio[client]>=5.10
+websocket-client>=1.7
+locust>=2.20
+ruff>=0.6
+bandit>=1.7
+semgrep>=1.70
