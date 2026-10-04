@@ -6,6 +6,7 @@ import { getCurrencyInfo, PosProfileCombined, getCombinedPosProfile } from '../l
 import { getCustomerGroups, getCustomerTerritories } from '../lib/customer-api';
 import { DEFAULT_ORDER_TYPE, OrderType } from '../data/order-types';
 import { getTableOrder, TableOrder } from '../lib/order-api';
+import { floorUpdateTouches, isOwnEcho, type FloorUpdate } from '../lib/floor-sync';
 import { getPaymentModes } from '../lib/payment-api';
 
 // Constants
@@ -171,6 +172,12 @@ interface POSState {
    * shown as an overlay without unmounting the app underneath it.
    */
   showVoluntaryClosing: boolean;
+  /**
+   * The order on screen was changed on another device while this one holds
+   * unsent edits (see handleFloorUpdate). Drives the "changed elsewhere"
+   * banner; cleared whenever the order is (re)loaded or reset.
+   */
+  remoteChange: { by: string | null } | null;
 }
 
 interface POSStore extends POSState {
@@ -234,6 +241,13 @@ interface POSStore extends POSState {
    */
   updateItemComment: (uniqueId: string, comment: string) => void;
   setShowVoluntaryClosing: (show: boolean) => void;
+  /**
+   * React to a live floor update for the order on screen: reload it if there
+   * is nothing unsent, otherwise raise `remoteChange` and keep the user's edits.
+   */
+  handleFloorUpdate: (update: FloorUpdate, currentUser: string | null | undefined) => Promise<'reloaded' | 'conflict' | 'ignored'>;
+  /** Drop local edits and load the order as it now is on the server. */
+  reloadRemoteChange: () => Promise<void>;
 }
 
 const generateUniqueId = (item: OrderItem): string => {
@@ -343,6 +357,7 @@ export const usePOSStore = create<POSStore>((set, get) => ({
   isUpdatingOrder: false,
   orderId: null,
   showVoluntaryClosing: false,
+  remoteChange: null,
   orderComment: '',
   noOfPax: 1,
   lastModifiedTime: null,
@@ -644,6 +659,35 @@ export const usePOSStore = create<POSStore>((set, get) => ({
   setNoOfPax: (pax: number) => set({ noOfPax: pax }),
   setShowVoluntaryClosing: (show: boolean) => set({ showVoluntaryClosing: show }),
 
+  handleFloorUpdate: async (update, currentUser) => {
+    const state = get();
+    if (!state.selectedTable && !state.orderId) return 'ignored';
+    if (!floorUpdateTouches(update, { invoice: state.orderId, tables: [state.selectedTable] })) return 'ignored';
+    if (isOwnEcho(update, currentUser)) return 'ignored';
+    if (state.orderLoading) return 'ignored';
+
+    const dirty = state.isUpdatingOrder
+      ? generateCartHash(state) !== state.originalCartHash
+      : state.activeOrders.length > 0;
+
+    if (!dirty && state.selectedTable) {
+      await get().loadTableOrder(state.selectedTable);
+      return 'reloaded';
+    }
+    set({ remoteChange: { by: update.by } });
+    return 'conflict';
+  },
+
+  reloadRemoteChange: async () => {
+    const { selectedTable } = get();
+    set({ remoteChange: null });
+    if (selectedTable) {
+      await get().loadTableOrder(selectedTable);
+    } else {
+      get().resetOrderState();
+    }
+  },
+
   processPayment: async (paymentMode: string, amount: number) => {
     try {
       const { cartId, selectedCustomer, selectedOrderType } = get();
@@ -751,7 +795,7 @@ export const usePOSStore = create<POSStore>((set, get) => ({
 
   loadTableOrder: async (table: string) => {
     try {
-      set({ orderLoading: true, error: null });
+      set({ orderLoading: true, error: null, remoteChange: null });
       const response = await getTableOrder(table);
       const order = response.message;
       if (order && order.name && order.items && order.items.length > 0) {
@@ -824,6 +868,7 @@ export const usePOSStore = create<POSStore>((set, get) => ({
 
   clearTableOrder: () => {
     set({
+      remoteChange: null,
       tableOrder: null,
       activeOrders: [],
       selectedCustomer: null,
@@ -843,6 +888,7 @@ export const usePOSStore = create<POSStore>((set, get) => ({
   },
 
   resetOrderState: () => {
+    set({ remoteChange: null });
     const state = get();
     const { fetchMenuItems } = state;
     
@@ -900,6 +946,8 @@ export const usePOSStore = create<POSStore>((set, get) => ({
   },
 
   addTab: () => {
+    // The banner belongs to the order being left.
+    set({ remoteChange: null });
     const state = get();
     const currentTabState: OrderTabState = {
       activeOrders: state.activeOrders,
@@ -955,6 +1003,8 @@ export const usePOSStore = create<POSStore>((set, get) => ({
   },
 
   switchTab: (tabId: string) => {
+    // The banner belongs to the order being left.
+    set({ remoteChange: null });
     const state = get();
     if (state.activeTabId === tabId) return;
 
