@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import AppLayout from './components/AppLayout';
 import Orders from './pages/Orders';
 import POS from './pages/POS';
@@ -11,11 +11,16 @@ import ScreenSizeProvider from './components/ScreenSizeProvider';
 import KotAlertListener from './components/KotAlertListener';
 import QzPrintAgent from './components/QzPrintAgent';
 import CaptainRouteGuard from './captain/components/CaptainRouteGuard';
-import CaptainTables from './captain/pages/CaptainTables';
-import CaptainOrder from './captain/pages/CaptainOrder';
+import CaptainWorkspace from './captain/pages/CaptainWorkspace';
 import { ToastProvider } from '@ury/ui';
 import { usePOSStore } from './store/pos-store';
 import { useEffect } from 'react';
+
+/** Old per-table captain links now open the single workspace on that table. */
+function LegacyCaptainTableRedirect() {
+  const { table } = useParams<{ table: string }>();
+  return <Navigate to={table ? `/order?table=${encodeURIComponent(table)}` : '/order'} replace />;
+}
 
 function App() {
   const {
@@ -48,7 +53,8 @@ function App() {
                   Captain "Order" module — its own shell, sibling to the
                   Cashier POS routes above, not nested under AppLayout
                   (PLAN.md §6/§10: own navigation, mobile-first, not the
-                  desktop Header/Footer shell). This Router (basename
+                  desktop Header/Footer shell). One workspace screen; the
+                  open table is the `?table=` query param. This Router (basename
                   "/ury") is already the outer app-nesting layer that mounts
                   "/pos" today, so "/order" sits alongside it here rather
                   than in a separate outer router file.
@@ -57,18 +63,11 @@ function App() {
                   path="/order"
                   element={
                     <CaptainRouteGuard>
-                      <CaptainTables />
+                      <CaptainWorkspace />
                     </CaptainRouteGuard>
                   }
                 />
-                <Route
-                  path="/order/table/:table"
-                  element={
-                    <CaptainRouteGuard>
-                      <CaptainOrder />
-                    </CaptainRouteGuard>
-                  }
-                />
+                <Route path="/order/table/:table" element={<LegacyCaptainTableRedirect />} />
               </Routes>
             </Router>
           </POSOpeningProvider>
