@@ -1,4 +1,4 @@
-import { Lock, User, Users } from 'lucide-react';
+import { Check, Lock, User, Users } from 'lucide-react';
 import { cn } from '@ury/ui';
 import { Badge } from '@ury/ui';
 import { formatCurrency } from '@ury/core';
@@ -15,6 +15,10 @@ export interface CaptainTableCardProps {
   ownerName?: string;
   /** Names of other tables merged into this one's cluster (excludes `table.name` itself). */
   mergePartners?: string[];
+  /** Shown when the card is listed outside its room tab (e.g. search results). */
+  roomLabel?: string;
+  /** The table the workspace currently has open. */
+  isSelected?: boolean;
   onTap: () => void;
 }
 
@@ -24,7 +28,7 @@ const elapsedLabel = (isoTimestamp: string | null): string | null => {
   if (Number.isNaN(started)) return null;
 
   const minutes = Math.max(0, Math.round((Date.now() - started) / 60000));
-  if (minutes < 1) return 'just now';
+  if (minutes < 1) return t('captain.just_now');
   if (minutes < 60) return `${minutes}m`;
   const hours = Math.floor(minutes / 60);
   const remainder = minutes % 60;
@@ -48,6 +52,8 @@ const CaptainTableCard = ({
   ownership,
   ownerName,
   mergePartners,
+  roomLabel,
+  isSelected = false,
   onTap,
 }: CaptainTableCardProps) => {
   const isOccupied = table.occupied === 1;
@@ -64,14 +70,12 @@ const CaptainTableCard = ({
         : 'border-amber-400 bg-amber-50 text-amber-900';
 
   const statusLabel = isBilled
-    ? 'Billed'
+    ? t('captain.status.billed')
     : ownership === 'mine'
-      ? 'Mine'
+      ? t('captain.status.mine')
       : ownership === 'free'
-        ? 'Free'
-        : ownerName
-          ? ownerName
-          : 'Occupied';
+        ? t('captain.status.free')
+        : t('captain.status.occupied');
 
   const statusBadgeVariant = isBilled
     ? 'secondary'
@@ -85,22 +89,32 @@ const CaptainTableCard = ({
     <button
       type="button"
       onClick={onTap}
+      aria-pressed={isSelected}
       className={cn(
-        'flex min-h-[7.5rem] flex-col items-stretch rounded-xl border-2 p-3 text-start transition-all active:scale-[0.98]',
-        colorClasses
+        'relative flex min-h-[7.5rem] flex-col items-stretch rounded-xl border-2 p-3 text-start transition-all active:scale-[0.98] touch-manipulation',
+        colorClasses,
+        isSelected && 'ring-2 ring-[#f05b42] ring-offset-2 ring-offset-[#fffdf8]'
       )}
     >
       <div className="flex items-start justify-between gap-2">
         <span className="truncate text-lg font-bold" title={table.name}>
           {table.name}
         </span>
-        {isBilled && <Lock className="h-4 w-4 shrink-0" aria-label={t('captain.billed_locked')} />}
+        {isSelected ? (
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f05b42] text-white">
+            <Check className="h-3.5 w-3.5" aria-label={t('captain.picker.current')} />
+          </span>
+        ) : (
+          isBilled && <Lock className="h-4 w-4 shrink-0" aria-label={t('captain.billed_locked')} />
+        )}
       </div>
+
+      {roomLabel && <span className="truncate text-xs font-medium opacity-70">{roomLabel}</span>}
 
       {hasMergePartners && (
         <span
           className="mt-0.5 truncate text-xs font-medium opacity-80"
-          title={`Merged with ${mergePartners!.join(', ')}`}
+          title={t('captain.merged_with', { tables: mergePartners!.join(', ') })}
         >
           + {mergePartners!.join(', ')}
         </span>
