@@ -776,7 +776,7 @@ def add_customer_items(session, items):
             ]
             kot_execute(invoice.name, invoice.customer, invoice.restaurant_table, current_items_for_kot, past_item, None)
         except Exception as e:
-            frappe.log_error(f"Self-order KOT creation failed: {e}", "KOT Error")
+            frappe.log_error(title="KOT Error", message=f"Self-order KOT creation failed: {e}")
 
     return _sanitize_invoice_for_customer(invoice)
 
@@ -1044,7 +1044,7 @@ def create_payment_request(session):
                 return_doc=1,
             )
         except Exception as e:
-            frappe.log_error(f"create_payment_request failed: {e}", "Self-Order Payment")
+            frappe.log_error(title="Self-Order Payment", message=f"create_payment_request failed: {e}")
             # ERPNext's make_payment_request() queues its own raw msgprint
             # (e.g. "Payment Entry is already created") via frappe.throw
             # before we ever get a chance to catch it — that message stays
@@ -1067,7 +1067,7 @@ def create_payment_request(session):
             # still real and valid; only the redirect/link URL is
             # unavailable. Surface this plainly instead of fabricating a
             # fake link.
-            frappe.log_error(f"Payment Request created but no payment URL available: {e}", "Self-Order Payment")
+            frappe.log_error(title="Self-Order Payment", message=f"Payment Request created but no payment URL available: {e}")
 
     return {
         "payment_request": pr.name,
@@ -1107,7 +1107,7 @@ def get_payment_status(session):
 # ---------------------------------------------------------------------------
 
 def _default_communication_provider(recipient, message):
-    frappe.log_error(f"[self-ordering communication stub] to={recipient}: {message}", "Self-Order Notify")
+    frappe.log_error(title="Self-Order Notify", message=f"[self-ordering communication stub] to={recipient}: {message}")
 
 
 _communication_provider = _default_communication_provider
