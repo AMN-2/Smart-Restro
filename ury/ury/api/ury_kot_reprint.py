@@ -86,4 +86,4 @@ def print_kot(printer,docname, kot_print_format):
     try:
         print_by_server("POS Invoice",docname, printer, kot_print_format)
     except Exception as e:
-        frappe.log_error(f"KOT Reprint Error: {e}")
+        frappe.log_error(title="KOT Reprint Error", message=f"KOT Reprint Error: {e}")
