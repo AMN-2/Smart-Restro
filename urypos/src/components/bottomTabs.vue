@@ -1,85 +1,84 @@
 <template>
   <!--
-    Floor navigation, in two shapes.
+    Floor navigation, and the order's progress at the same time.
 
-    The markup is written once and placed twice: a bottom bar on a phone, a
-    side rail on a tablet. A POS station is usually a 10" tablet on a stand,
-    where a bottom bar wastes the width the screen has and puts the controls
-    furthest from the hands holding it — so past `md` the same tabs move to a
-    rail on the leading edge.
+    The separate step strip ("1 Table · 2 Customer · 3 Menu · 4 Cart") is
+    gone; the bar now carries what it used to say. Each tab shows where the
+    order stands — the open table, the customer, a tick once that part is
+    done, the number of lines in the cart — so one bar both navigates and
+    summarises.
 
-    Before this it was five near-identical 40-line blocks repeating the same
-    active/inactive test twice each, once on the icon and once on the label.
+    Written once, placed twice: a bottom bar on a phone, a side rail on a
+    tablet. Navigation is done in code after the tab's guard passes, so a
+    tab that is not ready yet explains why instead of flashing open.
   -->
-  <template v-if="!this.tabClick.isLoginPage">
+  <template v-if="!tabClick.isLoginPage">
     <!-- Phone -->
     <nav class="pos-tabbar" :aria-label="$t('nav.primary')">
-      <div
-        class="mx-auto grid h-16 max-w-xl"
-        :class="auth.cashier ? 'grid-cols-5' : 'grid-cols-4'"
-      >
-        <component
-          :is="'router-link'"
+      <div class="mx-auto grid h-16 max-w-xl" :style="{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }">
+        <a
           v-for="tab in tabs"
           :key="'bar-' + tab.path"
-          :to="tab.to"
+          :href="'/urypos' + tab.path"
           class="pos-tab press"
-          :class="[{ 'pos-tab-active': isActive(tab.path) }, tab.disabled && 'opacity-50']"
+          :class="[isActive(tab.path) && 'pos-tab-active', tab.disabled && 'opacity-40']"
           :aria-current="isActive(tab.path) ? 'page' : undefined"
           :aria-disabled="tab.disabled || undefined"
-          :tabindex="tab.disabled ? -1 : undefined"
-          @click="onTabClick(tab, $event)"
+          :aria-label="tab.hint ? `${tab.label}: ${tab.hint}` : tab.label"
+          @click.prevent="go(tab)"
         >
-          <span
-            v-if="isActive(tab.path)"
-            class="absolute inset-x-3 top-0 h-0.5 rounded-b bg-primary"
-            aria-hidden="true"
-          ></span>
+          <span v-if="isActive(tab.path)" class="absolute inset-x-3 top-0 h-0.5 rounded-b bg-primary" aria-hidden="true"></span>
 
           <span class="relative">
             <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
               <path v-for="(d, i) in tab.paths" :key="i" :d="d" fill-rule="evenodd" clip-rule="evenodd" />
             </svg>
-            <span v-if="tab.badge" :class="badgeClass">
-              {{ tab.badge > 99 ? '99+' : tab.badge }}
+            <span v-if="tab.badge" :key="'b' + tab.badge" :class="badgeClass">{{ tab.badge > 99 ? '99+' : tab.badge }}</span>
+            <span v-else-if="tab.done" :class="doneClass" aria-hidden="true">
+              <svg class="h-2.5 w-2.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 1 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0z" /></svg>
             </span>
           </span>
 
-          <span class="max-w-full truncate">{{ tab.label }}</span>
-        </component>
+          <!-- The table number / customer replaces the generic word once
+               chosen: it is what a waiter actually needs to see. -->
+          <span class="max-w-full truncate" :class="tab.hint && 'font-bold text-foreground bidi-isolate'">
+            {{ tab.hint || tab.label }}
+          </span>
+        </a>
       </div>
     </nav>
 
     <!-- Tablet -->
     <nav class="pos-rail" :aria-label="$t('nav.primary')">
-      <router-link
+      <a
         v-for="tab in tabs"
         :key="'rail-' + tab.path"
-        :to="tab.to"
+        :href="'/urypos' + tab.path"
         class="pos-tab press"
-        :class="[{ 'pos-tab-active': isActive(tab.path) }, tab.disabled && 'opacity-50']"
+        :class="[isActive(tab.path) && 'pos-tab-active', tab.disabled && 'opacity-40']"
         :aria-current="isActive(tab.path) ? 'page' : undefined"
         :aria-disabled="tab.disabled || undefined"
-        :tabindex="tab.disabled ? -1 : undefined"
-        @click="onTabClick(tab, $event)"
+        @click.prevent="go(tab)"
       >
-        <span
-          v-if="isActive(tab.path)"
-          class="absolute inset-y-2 start-0 w-1 rounded-e bg-primary"
-          aria-hidden="true"
-        ></span>
+        <span v-if="isActive(tab.path)" class="absolute inset-y-2 start-0 w-1 rounded-e bg-primary" aria-hidden="true"></span>
 
         <span class="relative">
           <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path v-for="(d, i) in tab.paths" :key="i" :d="d" fill-rule="evenodd" clip-rule="evenodd" />
           </svg>
-          <span v-if="tab.badge" :class="badgeClass">
-            {{ tab.badge > 99 ? '99+' : tab.badge }}
+          <span v-if="tab.badge" :key="'b' + tab.badge" :class="badgeClass">{{ tab.badge > 99 ? '99+' : tab.badge }}</span>
+          <span v-else-if="tab.done" :class="doneClass" aria-hidden="true">
+            <svg class="h-2.5 w-2.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 1 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0z" /></svg>
           </span>
         </span>
 
-        <span class="max-w-full truncate">{{ tab.label }}</span>
-      </router-link>
+        <!-- Two lines allowed: Arabic labels like «سجل الطلبات» outgrow 6rem. -->
+        <span class="line-clamp-2 max-w-full text-center leading-tight">{{ tab.label }}</span>
+        <span
+          v-if="tab.hint"
+          class="max-w-full truncate rounded-md bg-muted px-1.5 text-[11px] font-bold text-foreground bidi-isolate"
+        >{{ tab.hint }}</span>
+      </a>
     </nav>
   </template>
 </template>
@@ -90,6 +89,9 @@ import { tabFunctions } from "@/stores/bottomTabs.js";
 import { isInvoiceNavigationBlocked } from "@/router/invoiceNavigation.js";
 import { useInvoiceDataStore } from "@/stores/invoiceData.js";
 import { useMenuStore } from "@/stores/Menu.js";
+import { useTableStore } from "@/stores/Table.js";
+import { useCustomerStore } from "@/stores/Customer.js";
+import { usetoggleRecentOrder } from "@/stores/recentOrder.js";
 
 /** Icon path data, kept out of the template so the markup stays readable. */
 const ICONS = {
@@ -111,79 +113,81 @@ const ICONS = {
 };
 
 export default {
-  name: "Bottom Tabs",
+  name: "BottomTabs",
   setup() {
-    const auth = useAuthStore();
-    const invoiceData = useInvoiceDataStore();
-    const tabClick = tabFunctions();
-    const menu = useMenuStore();
-    return { auth, tabClick, invoiceData, menu };
+    return {
+      auth: useAuthStore(),
+      tabClick: tabFunctions(),
+      invoiceData: useInvoiceDataStore(),
+      menu: useMenuStore(),
+      table: useTableStore(),
+      customers: useCustomerStore(),
+      recentOrders: usetoggleRecentOrder(),
+    };
   },
   computed: {
-    /** One definition for the cart count, used by both placements. */
     badgeClass() {
-      return "absolute -end-2 -top-1.5 inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground tabular-nums";
+      return "absolute -end-2 -top-1.5 inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground tabular-nums animate-check-in";
+    },
+    doneClass() {
+      return "absolute -end-1.5 -top-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-success text-success-foreground ring-2 ring-card animate-check-in";
     },
 
-    /**
-     * Lines in the cart, not units — a waiter reads "four things to send",
-     * and a badge showing 12 because one line has twelve waters would be
-     * misleading about how much is on the ticket.
-     */
+    /** Lines, not units: "four things to send" is what a waiter reads. */
     cartCount() {
       return (this.menu.cart || []).length;
+    },
+
+    /** The table this order belongs to. */
+    seatHint() {
+      return this.table.selectedTable || this.recentOrders.restaurantTable || "";
+    },
+
+    customerHint() {
+      const name = this.customers.search;
+      const pax = parseInt(this.customers.numberOfPax, 10);
+      if (name) return name;
+      return pax > 0 ? this.$t("customer.pax_count", { count: pax }) : "";
     },
 
     tabs() {
       const list = [
         {
           path: "/Table",
-          to: "/Table",
           label: this.$t("tables.title"),
           paths: ICONS.tables,
+          hint: this.seatHint,
+          done: Boolean(this.seatHint),
         },
         {
           path: "/Menu",
-          to: "/Menu",
           label: this.$t("menu.title"),
           paths: ICONS.menu,
-          onClick: () => this.tabClick.clickMenuTab(),
+          guard: () => this.tabClick.clickMenuTab(),
         },
         {
           path: "/Customer",
-          to: "/Customer",
           label: this.$t("customer.title"),
           paths: ICONS.customer,
-          onClick: () => !this.auth.cashier && this.tabClick.checkActiveTable(),
+          hint: this.customerHint,
+          done: Boolean(this.customerHint),
+          guard: () => this.tabClick.checkActiveTable(),
         },
         {
           path: "/Cart",
-          to: "/Cart",
           label: this.$t("cart.title"),
           paths: ICONS.cart,
           badge: this.cartCount,
-          onClick: () => !this.auth.cashier && this.tabClick.checkActiveTable(),
+          guard: () => this.tabClick.checkActiveTable(),
         },
       ];
 
       if (this.auth.cashier) {
-        list.push({
-          path: "/recentOrder",
-          to: "/recentOrder",
-          label: this.$t("order.order_log"),
-          paths: ICONS.orders,
-        });
+        list.push({ path: "/recentOrder", label: this.$t("order.order_log"), paths: ICONS.orders });
       }
 
-      /**
-       * One rule decides what an open amendment blocks, shared with the step
-       * bar and the router guard (`router/invoiceNavigation.js`). These tabs
-       * used to state it inline and enforce it by routing to `#`, which the
-       * step bar did not do at all: the same amendment was protected on one
-       * navigation surface and not the other (UX-24). The tab now keeps its
-       * real destination and is marked disabled, so what a user sees matches
-       * what the guard will actually allow.
-       */
+      // One rule decides what an open amendment blocks, shared with the
+      // router guard (`router/invoiceNavigation.js`, UX-24).
       return list.map((tab) => ({
         ...tab,
         disabled: isInvoiceNavigationBlocked(this.invoiceData.invoiceUpdating, tab.path),
@@ -192,15 +196,14 @@ export default {
   },
   methods: {
     isActive(path) {
-      return this.tabClick.currentTab === path;
+      const current = this.tabClick.currentTab;
+      return current === path || (path === "/Table" && current === "/");
     },
 
-    onTabClick(tab, event) {
-      if (tab.disabled) {
-        event.preventDefault();
-        return;
-      }
-      tab.onClick && tab.onClick();
+    go(tab) {
+      if (tab.disabled || this.isActive(tab.path)) return;
+      if (tab.guard && !tab.guard()) return;
+      this.$router.push(tab.path);
     },
   },
 };
