@@ -7,7 +7,6 @@ import { getTableOrder, POSInvoice } from '../lib/order-api';
 import { getCombinedOrderTotals } from '../lib/invoice-api';
 import { Button, Input, Select, SelectItem } from '@ury/ui';
 import { t } from '../i18n';
-import { TABLE_STATE_STYLES } from './TableCard';
 
 
 
@@ -181,7 +180,9 @@ const LayoutView: React.FC<Props> = ({ selectedRoom, tables, onBackToGrid, onRef
   };
 
   const getTableStatusColor = (occupied: number) => {
-    return occupied ? TABLE_STATE_STYLES.occupied : TABLE_STATE_STYLES.available;
+    return occupied
+      ? 'border-amber-400 bg-amber-50 text-amber-900'
+      : 'border-emerald-300 bg-emerald-50 text-emerald-900 hover:border-emerald-400';
   };
 
   const handleMouseDown = (e: React.MouseEvent, table: typeof tablesWithPosition[0]) => {
