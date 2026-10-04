@@ -28,6 +28,7 @@ export const useMenuStore = defineStore("menu", {
     currentPage: 1,
     aggregatorId: null,
     selectedCourse: null,
+    selectedCategory: "",
     selectedOrderType: null,
     selectedAggregator: null,
     showAll: true,
@@ -48,41 +49,43 @@ export const useMenuStore = defineStore("menu", {
     recentOrders: usetoggleRecentOrder(),
   }),
   getters: {
-    filteredItems(state) {
-      if (
-        typeof state.searchTerm !== "string" ||
-        state.searchTerm.trim() === ""
-      ) {
-        if (state.showAll) {
-          if (state.selectedCourse) {
-            return state.items.filter(
-              (item) => item.course === state.selectedCourse
-            );
-          } else {
-            return state.items; // Return all items if no course is selected
-          }
-        } else {
-          if (state.selectedCourse) {
-            return state.items.filter(
-              (item) =>
-                item.special_dish === 1 && item.course === state.selectedCourse
-            );
-          } else {
-            return state.items.filter((item) => item.special_dish === 1);
-          }
-        }
-      } else {
-        const searchTerm = state.searchTerm.toLowerCase();
-        return state.items.filter(
-          (item) =>
-            typeof item.item_name === "string" &&
-            typeof item.item === "string" &&
-            (item.item_name.toLowerCase().includes(searchTerm) ||
-              item.item.toLowerCase().includes(searchTerm)) &&
-            (!state.selectedCourse || item.course === state.selectedCourse) &&
-            (state.showAll || item.special_dish === 1)
-        );
+    /**
+     * The item types on the loaded menu: each dish's ERPNext Item Group,
+     * as the server sends it (`category`, translated in `category_label`).
+     * Built from the items themselves, so a room menu, the default menu and
+     * an aggregator's list each offer only the types they actually carry.
+     */
+    categories(state) {
+      const groups = new Map();
+      for (const item of Array.isArray(state.items) ? state.items : []) {
+        if (!item || !item.category) continue;
+        const group = groups.get(item.category);
+        if (group) group.count += 1;
+        else groups.set(item.category, { name: item.category, label: item.category_label || item.category, count: 1 });
       }
+      return [...groups.values()].sort((a, b) => a.label.localeCompare(b.label));
+    },
+    /** The chosen type, or none once a new menu no longer carries it. */
+    activeCategory(state) {
+      const name = state.selectedCategory;
+      return name && this.categories.some((group) => group.name === name) ? name : "";
+    },
+    filteredItems(state) {
+      const items = Array.isArray(state.items) ? state.items : [];
+      const searchTerm =
+        typeof state.searchTerm === "string" ? state.searchTerm.trim().toLowerCase() : "";
+      const category = this.activeCategory;
+      return items.filter(
+        (item) =>
+          (!searchTerm ||
+            (typeof item.item_name === "string" &&
+              typeof item.item === "string" &&
+              (item.item_name.toLowerCase().includes(searchTerm) ||
+                item.item.toLowerCase().includes(searchTerm)))) &&
+          (!state.selectedCourse || item.course === state.selectedCourse) &&
+          (!category || item.category === category) &&
+          (state.showAll || item.special_dish === 1)
+      );
     },
     totalPages() {
       return Math.ceil(this.filteredItems.length / this.perPage);
@@ -311,12 +314,22 @@ export const useMenuStore = defineStore("menu", {
       event.target.value = "";
       this.searchTerm = "";
     },
-    showAllItems() {
+    /** Clears the search, course and priority filters; the item type stays. */
+    clearCourseFilter() {
       this.showAll = true;
       this.priority = false;
       this.displayAll = true;
       this.searchTerm = "";
       this.selectedCourse = "";
+      this.currentPage = 1;
+    },
+    showAllItems() {
+      this.clearCourseFilter();
+      this.selectedCategory = "";
+    },
+    /** Tapping the active type again clears it. */
+    selectCategory(name) {
+      this.selectedCategory = this.activeCategory === name ? "" : name || "";
       this.currentPage = 1;
     },
     showSpecialItems() {

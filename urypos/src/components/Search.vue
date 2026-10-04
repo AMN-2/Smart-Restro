@@ -1,11 +1,12 @@
 <template>
   <!--
-    Menu toolbar: one search field and one row of filter chips.
+    Menu toolbar: one search field and rows of filter chips.
 
     Courses were a dropdown beside two identical red buttons ("Priority",
     "All") whose only difference when active was a faint ring. A chip row
     shows every course at once, marks the live filter plainly, and is one
-    tap to change — the same pattern as the cashier POS.
+    tap to change — the same pattern as the cashier POS. A second row
+    filters by item type; the two combine.
   -->
   <div class="pos-sticky-toolbar space-y-3">
     <div class="pos-search">
@@ -23,13 +24,49 @@
       />
     </div>
 
-    <div v-if="menu.selectedOrderType !== 'Aggregators'" class="pos-chip-row" :aria-label="$t('menu.select_course')">
+    <!--
+      Item types: the ERPNext Item Group of each dish (Hookah, Hot Drinks…),
+      read from the loaded menu. Hidden when the menu has only one type,
+      where a filter would have nothing to narrow.
+    -->
+    <div
+      v-if="menu.categories.length > 1"
+      class="pos-chip-row"
+      role="group"
+      :aria-label="$t('menu.item_types')"
+    >
+      <button
+        type="button"
+        class="pos-chip press"
+        :class="!menu.activeCategory && 'pos-chip-active'"
+        :aria-pressed="!menu.activeCategory"
+        @click="menu.selectCategory('')"
+      >
+        {{ $t('menu.all_types') }}
+        <span class="pos-chip-count">{{ menu.items.length }}</span>
+      </button>
+
+      <button
+        v-for="group in menu.categories"
+        :key="group.name"
+        type="button"
+        class="pos-chip press"
+        :class="menu.activeCategory === group.name && 'pos-chip-active'"
+        :aria-pressed="menu.activeCategory === group.name"
+        @click="menu.selectCategory(group.name)"
+      >
+        {{ group.label }}
+        <span class="pos-chip-count">{{ group.count }}</span>
+      </button>
+    </div>
+
+    <div v-if="menu.selectedOrderType !== 'Aggregators'" class="pos-chip-row" role="group" :aria-label="$t('menu.select_course')">
       <button
         type="button"
         class="pos-chip press"
         :class="isAllActive && 'pos-chip-active'"
         :aria-pressed="isAllActive"
-        @click="menu.showAllItems(); menu.currentPage = 1"
+        @click="menu.clearCourseFilter()"
       >
         {{ $t('common.all') }}
       </button>
