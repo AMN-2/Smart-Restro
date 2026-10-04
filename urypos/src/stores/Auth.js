@@ -13,6 +13,7 @@ axios.defaults.baseURL = frappe.url;
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
+    sessionLoading: true,
     userId: "",
     userName: "",
     sessionUser: "",
@@ -75,35 +76,29 @@ export const useAuthStore = defineStore("auth", {
       }
       return this.userName;
     },
-    fetchUserDetails() {
-      const user = localStorage.getItem("userAuth");
-      // if (user !== "true") {
-      //   this.userAuth = false;
-      //   localStorage.removeItem("userAuth");
-      //   router.push("/login");
-      //   return
-      // }
-      this.auth
-        .getLoggedInUser()
-        .then((user) => {
-          this.sessionUser = user;
-          if (!this.sessionUser) {
-            this.userAuth = false;
-            localStorage.removeItem("userAuth");
-          } else {
-            this.userAuth = true;
-            this.invoiceData.fetchInvoiceDetails().then(() => {
-              router.push("/Table");
-              this.table.fetchRoom();
-              this.fetchUserRole();
-            });
-          }
-        })
-        .catch((error) => {
-          this.userAuth = false;
-          localStorage.removeItem("userAuth", "true");
-          router.push("/login");
-        });
+    async fetchUserDetails() {
+      this.sessionLoading = true;
+      try {
+        const user = await this.auth.getLoggedInUser();
+        this.sessionUser = user && user !== "Guest" ? user : "";
+        this.userAuth = Boolean(this.sessionUser);
+        if (!this.userAuth) {
+          localStorage.removeItem("userAuth");
+          await router.replace("/login");
+          return;
+        }
+        localStorage.setItem("userAuth", "true");
+        await this.invoiceData.fetchInvoiceDetails();
+        await router.replace("/Table");
+        this.table.fetchRoom();
+        this.fetchUserRole();
+      } catch (error) {
+        this.userAuth = false;
+        localStorage.removeItem("userAuth");
+        await router.replace("/login");
+      } finally {
+        this.sessionLoading = false;
+      }
     },
     fetchUserRole() {
       //Fetching role based on logged user
@@ -124,10 +119,6 @@ export const useAuthStore = defineStore("auth", {
               this.cashier = billingRoles.some((role) =>
                 this.userRole.includes(role)
               );
-              if (this.cashier) {
-                this.menu.pickOrderType();
-                // this.menu.fetchItems();
-              }
               this.isPosOpenChecking();
               this.isPosCloseCheck();
               var transferRoles = result.message.transfer_role_permissions.map(
@@ -154,7 +145,7 @@ export const useAuthStore = defineStore("auth", {
         });
     },
     routeToHome() {
-      var currentDomain = window.location.protocol + "//" + window.location.hostname;
+      var currentDomain = window.location.origin;
       window.location.href = currentDomain + "/app/";
     },
 
