@@ -33,6 +33,7 @@ import {
 } from '../lib/invoice-api';
 import { formatMergedTableLabel } from '../lib/table-utils';
 import { t } from '../i18n';
+import { useFloorUpdates } from '../lib/floor-sync';
 
 function getOrderTableLabel(order: Pick<POSInvoice, 'restaurant_table' | 'custom_merged_tables'>) {
   if (!order.restaurant_table) return null;
@@ -90,6 +91,26 @@ export default function Orders() {
   const [canCloseTable, setCanCloseTable] = React.useState(false);
   const [closeTableDialogOpen, setCloseTableDialogOpen] = React.useState(false);
   const [closingTable, setClosingTable] = React.useState(false);
+
+  // Live: another device added items, paid, cancelled, transferred or split
+  // an order on this branch. The list and the open order are re-read quietly;
+  // if the open order has left this list, every dialog acting on it closes
+  // so nothing is paid or cancelled against a stale copy.
+  useFloorUpdates(async (update) => {
+    const openName = useRootStore.getState().selectedOrder?.name;
+    const outcome = await useRootStore.getState().refreshOrdersLive(update);
+    if (outcome === 'closed') {
+      setShowPaymentDialog(false);
+      setShowSplitDialog(false);
+      setShowMergeDialog(false);
+      setCancelDialogOpen(false);
+      setCloseTableDialogOpen(false);
+      setOrderActionsMenuOpen(false);
+      // Declared further down; this runs after render, never during it.
+      setShowDetails(false);
+      showToast.info(t('live.order_left_list', { order: openName ?? '' }));
+    }
+  }, { branch: posStore.posProfile?.branch ?? null });
 
   React.useEffect(() => {
     if (selectedOrder?.name) {
