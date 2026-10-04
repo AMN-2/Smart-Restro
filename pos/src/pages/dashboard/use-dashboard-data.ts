@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useFloorUpdates } from '../../lib/floor-sync';
 import { call } from '@ury/core';
 
 /** One panel's async state. */
@@ -110,6 +111,9 @@ export function useDashboardData(branch: string | undefined): DashboardData {
   const [refreshing, setRefreshing] = useState(false);
 
   const inFlight = useRef(false);
+  // A live update that arrived mid-load: run once more when it finishes,
+  // so the figures never stay one change behind.
+  const rerun = useRef(false);
   // Guards against a response from a previous branch landing after a switch.
   const branchRef = useRef(branch);
   branchRef.current = branch;
@@ -213,7 +217,21 @@ export function useDashboardData(branch: string | undefined): DashboardData {
     if (branchRef.current === branch) setLastUpdated(new Date());
     inFlight.current = false;
     setRefreshing(false);
+    if (rerun.current) {
+      rerun.current = false;
+      void loadRef.current?.();
+    }
   }, [branch]);
+
+  const loadRef = useRef<typeof load | null>(null);
+  loadRef.current = load;
+
+  // Live: orders and tables changing on this branch move these figures.
+  // Throttled to one load per 2s; the 60s timer stays as the safety net.
+  useFloorUpdates(() => {
+    if (inFlight.current) rerun.current = true;
+    else void load();
+  }, { branch, debounceMs: 2_000 });
 
   useEffect(() => {
     if (!branch) return;
