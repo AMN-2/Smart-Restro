@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { getTables, type Table } from '../lib/table-api';
 import { sortTablesByMergeGroups } from '../lib/table-utils';
 import { t } from '../i18n';
+import { useFloorUpdates } from '../lib/floor-sync';
 
 /** A cache must not be an effect dependency: each response would fetch again. */
 export function useRoomTables(room: string | null, branch: string | null) {
@@ -88,6 +89,13 @@ export function useRoomTables(room: string | null, branch: string | null) {
       window.clearInterval(timer);
     };
   }, [loadTables]);
+
+  // Live: any order or table change on this branch (another cashier, a
+  // captain, payment, transfer, merge…) re-reads the visible room at once.
+  // The 30s poll above stays as the safety net if realtime is unavailable.
+  useFloorUpdates(() => {
+    void loadTables(activeRoom.current);
+  }, { branch });
 
   return { tables, loading, refreshing, error, lastUpdated, loadTables };
 }
