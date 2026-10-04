@@ -7,9 +7,11 @@ import { cn } from '@ury/ui';
 import { getRooms, getTables, Room, Table } from '../lib/table-api';
 import { Badge } from '@ury/ui';
 import { Spinner } from '@ury/ui';
+import { sortByNaturalName } from '@ury/core';
 import { TableShapeIcon } from './TableShapeIcon';
 import { getMergeGroupMembers, formatMergedTableLabelFromGroup } from '../lib/table-utils';
 import { t } from '../i18n';
+import { useFloorUpdates } from '../lib/floor-sync';
 
 interface Props {
   onClose: () => void;
@@ -24,9 +26,16 @@ const TableSelectionDialog: React.FC<Props> = ({ onClose }) => {
   const [loadingRooms, setLoadingRooms] = useState(false);
   const [loadingTables, setLoadingTables] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Bumped by a live update: drops the per-room cache and re-reads the room
+  // on screen, so a table taken on another device shows as occupied here.
+  const [liveVersion, setLiveVersion] = useState(0);
+  useFloorUpdates(() => {
+    setTablesCache({});
+    setLiveVersion((v) => v + 1);
+  }, { branch: posProfile?.branch ?? null });
 
   const sortTables = (tables: Table[]): Table[] => {
-    return [...tables].sort((a, b) => a.name.localeCompare(b.name));
+    return sortByNaturalName(tables);
   };
 
   // Fetch rooms on mount with session storage
@@ -71,7 +80,7 @@ const TableSelectionDialog: React.FC<Props> = ({ onClose }) => {
     async function fetchTables() {
       if (!selectedRoom) return;
       setError(null);
-      // If already cached, use cache
+      // If already cached, use cache (a live update has just cleared it)
       if (tablesCache[selectedRoom]) {
         setTables(sortTables(tablesCache[selectedRoom]));
         setLoadingTables(false);
@@ -91,7 +100,8 @@ const TableSelectionDialog: React.FC<Props> = ({ onClose }) => {
       }
     }
     fetchTables();
-  }, [selectedRoom]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedRoom, liveVersion]);
 
   // Clear cache when modal closes
   useEffect(() => {
