@@ -1,294 +1,208 @@
 <template>
   <orderInfo />
-  <Search />
-  <div v-if="this.menu.paginatedItems.length > 0">
-    <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-      <!--
-        A menu item.
+  <RemoteChangeBanner />
+  <div class="menu-workspace">
+    <div class="min-w-0">
+      <Search />
 
-        The card now carries the quantity itself: once an item is in the cart
-        it gets an amber wash and a count in the corner, so a waiter taking a
-        long order can see what they have already added while scrolling,
-        instead of only from the cart screen. The two typography branches the
-        old markup switched on `viewItemImage` are gone — the name and price
-        read the same either way, and only the image is conditional.
-      -->
-      <article
-        v-for="(item, itemIndex) in this.menu.paginatedItems"
-        :key="item.item"
-        :style="{ '--i': itemIndex }"
-        class="pos-card animate-fade-in-up stagger-fast relative flex flex-col overflow-hidden p-2.5 transition-colors duration-fast"
-        :class="item.qty ? 'border-accent bg-secondary/40' : ''"
+  <div
+    v-if="menu.paginatedItems.length > 0"
+    class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4"
+  >
+    <!--
+      A menu item, built like the cashier POS card: picture, name, price,
+      then the one control. Once an item is on the ticket the card turns
+      amber and carries its count, so a long order can be checked while
+      scrolling rather than only from the cart.
+    -->
+    <article
+      v-for="(item, itemIndex) in menu.paginatedItems"
+      :key="item.item"
+      :style="{ '--i': itemIndex }"
+      class="pos-card pos-product-card relative flex flex-col overflow-hidden animate-fade-in-up stagger-fast transition-colors duration-fast"
+      :class="item.qty ? 'border-accent ring-1 ring-accent/60' : ''"
+    >
+      <span
+        v-if="item.qty"
+        class="absolute end-2 top-2 z-10 inline-flex h-7 min-w-[1.75rem] items-center justify-center rounded-full bg-accent px-1.5 text-sm font-bold tabular-nums text-accent-foreground shadow-card animate-check-in"
       >
-        <span
-          v-if="item.qty"
-          class="absolute end-2 top-2 z-10 inline-flex h-7 min-w-[1.75rem] items-center justify-center rounded-full bg-accent px-1.5 text-sm font-bold text-accent-foreground tabular-nums shadow-card"
-        >
-          {{ item.qty }}
-        </span>
+        {{ item.qty }}
+      </span>
 
-        <div class="w-full" v-if="this.auth.viewItemImage">
-          <div v-if="item.item_image" class="aspect-square w-full overflow-hidden rounded-xl">
-            <img
-              :src="this.menu.getFullImagePath(item.item_image)"
-              :alt="item.item_name"
-              loading="lazy"
-              class="h-full w-full object-cover"
-            />
-          </div>
-          <!--
-            No photo. The old fallback fetched a 640×640 placeholder from
-            dummyimage.com on every such item — a network round trip per card,
-            to an external host, on a POS that is regularly offline. The
-            initials are drawn locally instead.
-          -->
-          <div
-            v-else
-            class="flex aspect-square w-full items-center justify-center rounded-xl bg-muted"
-          >
-            <span class="text-3xl font-bold text-muted-foreground/60">
-              {{ this.menu.itemNameExtract(item.item_name) }}
-            </span>
-          </div>
+      <div v-if="auth.viewItemImage" class="w-full overflow-hidden bg-muted" :class="item.item_image ? 'aspect-[4/3]' : 'aspect-[16/7]'">
+        <img
+          v-if="item.item_image"
+          :src="menu.getFullImagePath(item.item_image)"
+          :alt="item.item_name"
+          loading="lazy"
+          class="h-full w-full object-cover"
+        />
+        <!-- No photo: initials drawn locally, never a remote placeholder. -->
+        <div v-else class="flex h-full w-full items-center justify-center bg-secondary">
+          <span class="text-3xl font-bold text-primary/70">{{ menu.itemNameExtract(item.item_name) }}</span>
         </div>
+      </div>
 
-        <h2 class="mt-2 line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-snug text-foreground">
+      <div class="flex flex-1 flex-col p-3">
+        <h2 class="line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-snug text-foreground">
           {{ item.item_name }}
         </h2>
+        <p class="pos-money mt-1 text-base text-primary">{{ money(item.rate) }}</p>
 
-        <p class="pos-money mt-0.5 text-base text-foreground">
-          {{ this.invoiceData.currency }} {{ item.rate }}
-        </p>
-
-        <div class="mt-2.5">
+        <div class="mt-auto pt-3">
           <button
             v-if="!item.qty"
             type="button"
-            class="pos-btn-ghost w-full"
-            @click="
-              item.showInput = true;
-              this.menu.addToCart(item);
-            "
+            class="pos-btn-ghost press w-full"
+            @click="item.showInput = true; menu.addToCart(item)"
           >
-            {{ $t('cart.add_plus') }}
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" d="M12 5v14M5 12h14" />
+            </svg>
+            {{ $t('common.add') }}
           </button>
 
-          <!-- Stepper. Equal-weight ends with the count between them, sized so
-               a thumb cannot hit the wrong one. -->
-          <div v-else class="flex items-stretch overflow-hidden rounded-xl border border-border">
+          <div v-else class="pos-stepper w-full">
             <button
               type="button"
-              class="press flex h-11 w-11 shrink-0 items-center justify-center bg-card text-xl font-bold transition-colors duration-fast hover:bg-muted disabled:opacity-40"
-              :class="canRemove ? 'text-foreground' : 'text-muted-foreground/60'"
-              :disabled="this.recentOrders.restaurantTable"
+              class="press"
+              :disabled="Boolean(recentOrders.restaurantTable) || !canRemove"
               :aria-label="$t('cart.decrease')"
-              @click="canRemove && this.menu.decrementItemQuantity(item)"
-            >
-              &minus;
-            </button>
-
+              @click="menu.decrementItemQuantity(item)"
+            >&minus;</button>
             <button
               type="button"
-              class="flex h-11 min-w-0 flex-1 items-center justify-center border-x border-border bg-card text-base font-bold text-foreground tabular-nums"
-              @click="this.menu.showModal(item)"
-              :aria-label="$t('cart.quantity')"
-            >
-              {{ item.qty }}
-            </button>
-
+              class="pos-stepper-value flex-1"
+              :aria-label="$t('cart.edit_line')"
+              @click="menu.showModal(item)"
+            >{{ item.qty }}</button>
             <button
               type="button"
-              class="press flex h-11 w-11 shrink-0 items-center justify-center bg-card text-xl font-bold text-foreground transition-colors duration-fast hover:bg-muted"
+              class="press"
               :aria-label="$t('cart.increase')"
-              @click="this.menu.incrementItemQuantity(item)"
-            >
-              +
-            </button>
+              @click="menu.incrementItemQuantity(item)"
+            >+</button>
           </div>
         </div>
-      </article>
-      <div
-        v-if="menu.showDialog"
-        class="fixed inset-0 z-10 mt-20 overflow-y-auto bg-muted"
-      >
-        <div class="mt-10 flex items-center justify-center">
-          <div class="w-full rounded-lg bg-card p-6 shadow-raised md:max-w-md">
-            <div class="flex justify-end">
-              <span class="sr-only">{{ $t('common.close') }}</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                @click="menu.showDialog = false"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </div>
+      </div>
+    </article>
+  </div>
 
-            <h2
-              class="mt-1 block text-left text-xl font-medium text-foreground"
-            >
-              {{ $t('common.enter_details') }}
-            </h2>
-            <div class="relative">
-              <label
-                for="quantity"
-                class="mt-6 block text-left text-foreground"
-              >
-                {{ $t('menu.quantity') }}
-              </label>
-              <input
-                type="number"
-                id="quantity"
-                class="mt-4 w-full appearance-none rounded-xl border p-2 leading-tight text-foreground shadow focus:outline-none"
-                v-model="this.menu.quantity"
-                v-bind:readonly="
-                  this.recentOrders.editPrintedInvoice === 1 &&
-                  this.auth.removeTableOrderItem === 0
-                "
-                :disabled="this.recentOrders.restaurantTable"
-              />
-              <label
-                for="comments"
-                class="mt-6 block text-left text-foreground"
-              >
-                {{ $t('order.comments') }}
-              </label>
-              <input
-                type="text"
-                id="Comments"
-                class="mt-4 w-full rounded-xl border p-2 leading-tight text-foreground shadow focus:outline-none"
-                v-model="this.menu.itemComments"
-              />
-            </div>
-            <div class="flex justify-end">
-              <button
-                @click="this.menu.addToCartAndUpdateQty(item)"
-                class="mt-8 rounded-xl bg-primary px-3 py-2 text-primary-foreground hover:bg-primary"
-              >
-                {{ $t('common.add') }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div v-else>
-    <div
-      v-if="this.menu.items.length === 0"
-      class="flex h-screen items-center justify-center"
-    >
-      <div class="text-center">
-        {{ $t('menu.items_not_found_hint') }}
-      </div>
-    </div>
-    <div v-else class="flex h-screen items-center justify-center">
-      <div class="text-center">{{ $t('menu.items_not_found') }}</div>
-    </div>
-  </div>
-  <div
-    class="mt-4 flex justify-center"
-    v-if="this.menu.paginatedItems.length > 0"
+  <PosEmpty
+    v-else
+    :title="menu.items.length === 0 ? $t('menu.items_not_found') : $t('menu.no_match_title')"
+    :body="menu.items.length === 0 ? $t('menu.items_not_found_hint') : $t('menu.no_match_body')"
   >
-    <button
-      :class="{ hidden: this.menu.currentPage === 1 }"
-      :disabled="this.menu.currentPage === 1"
-      @click="this.menu.currentPage -= 1"
-      class="mr-2 rounded-md border px-2 py-1"
-    >
-      {{ $t('common.previous') }}
+    <template #icon>
+      <svg class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </template>
+    <button v-if="menu.items.length" type="button" class="pos-btn-ghost" @click="resetFilters">
+      {{ $t('menu.clear_filters') }}
     </button>
-    <div v-for="pageNumber in this.menu.pageNumbers">
-      <button
-        v-if="
-          pageNumber === this.menu.currentPage ||
-          Math.abs(pageNumber - this.menu.currentPage) <= 2
-        "
-        :key="pageNumber"
-        @click="this.menu.currentPage = pageNumber"
-        :class="{ 'bg-muted': pageNumber === this.menu.currentPage }"
-        class="mr-2 rounded-md border px-2 py-1"
-      >
-        {{ pageNumber }}
-      </button>
-      <span
-        v-else-if="
-          this.menu.pageNumbers.indexOf(pageNumber) === 0 ||
-          this.menu.pageNumbers.indexOf(pageNumber) ===
-            this.menu.pageNumbers.length - 1
-        "
-      >
-        ...
-      </span>
+  </PosEmpty>
+
+  <PosPagination
+    v-if="menu.paginatedItems.length > 0"
+    :page="menu.currentPage"
+    :total-pages="menu.totalPages"
+    :has-next="menu.currentPage < menu.totalPages"
+    @previous="goToPage(menu.currentPage - 1)"
+    @next="goToPage(menu.currentPage + 1)"
+  />
     </div>
-    <button
-      :disabled="this.menu.currentPage === this.menu.totalPages"
-      @click="this.menu.currentPage += 1"
-      :class="{ hidden: this.menu.currentPage === this.menu.totalPages }"
-      class="rounded-md border px-2 py-1"
-    >
-      {{ $t('common.next') }}
-    </button>
+    <MenuCartRail class="hidden xl:flex" />
   </div>
+
+  <!-- Room for the order bar, so the last row of cards is never under it. -->
+  <div v-if="menu.cart.length" class="h-24 xl:hidden" aria-hidden="true"></div>
+
+  <!--
+    The ticket, always one glance away.
+
+    Taking an order used to mean hopping to the Cart step to check what was
+    on it and what it came to. The running count and total now ride along
+    the bottom of the menu, and one tap goes to review and send.
+  -->
+  <div v-if="menu.cart.length" class="pos-actionbar animate-fade-in-up xl:hidden">
+    <div class="mx-auto flex max-w-7xl items-center gap-3">
+      <div class="flex min-w-0 flex-1 items-center gap-3">
+        <span class="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-foreground text-background">
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+          </svg>
+          <span class="absolute -end-1.5 -top-1.5 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-primary px-1 text-[11px] font-bold tabular-nums text-primary-foreground">
+            {{ menu.cart.length }}
+          </span>
+        </span>
+        <span class="min-w-0">
+          <span class="block truncate text-xs font-semibold text-muted-foreground">
+            {{ $t('cart.items_count', { count: menu.cart.length }) }}
+          </span>
+          <span class="pos-money block text-lg text-foreground">{{ money(menu.grand_total) }}</span>
+        </span>
+      </div>
+      <router-link to="/Cart" class="pos-btn-primary pos-btn-lg shrink-0">
+        {{ $t('cart.review_order') }}
+        <svg class="h-4 w-4 rtl-flip" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </router-link>
+    </div>
+  </div>
+
+  <ItemDialog />
 </template>
 
 <script>
 import Search from "./Search.vue";
+import MenuCartRail from "./MenuCartRail.vue";
 import orderInfo from "./orderInfo.vue";
-import frappe from "@/stores/frappeSdk.js";
+import ItemDialog from "./ItemDialog.vue";
+import RemoteChangeBanner from "./RemoteChangeBanner.vue";
+import PosEmpty from "./ui/PosEmpty.vue";
+import PosPagination from "./ui/PosPagination.vue";
 import { useMenuStore } from "@/stores/Menu.js";
 import { useAuthStore } from "@/stores/Auth.js";
 import { usetoggleRecentOrder } from "@/stores/recentOrder.js";
 import { useInvoiceDataStore } from "@/stores/invoiceData.js";
 
 export default {
-  data() {
-    return {
-      frappe: frappe,
-    };
-  },
+  name: "Menu",
+  components: { Search, MenuCartRail, orderInfo, ItemDialog, PosEmpty, PosPagination, RemoteChangeBanner },
   setup() {
-    const menu = useMenuStore();
-    const auth = useAuthStore();
-    const recentOrders = usetoggleRecentOrder();
-    const invoiceData = useInvoiceDataStore();
-    return { menu, auth, recentOrders, invoiceData };
+    return {
+      menu: useMenuStore(),
+      auth: useAuthStore(),
+      recentOrders: usetoggleRecentOrder(),
+      invoiceData: useInvoiceDataStore(),
+    };
   },
   computed: {
     /**
-     * Whether this till may take items back off a ticket.
-     *
-     * The same two-clause test was inlined twice per item card — once to
-     * colour the minus button and once to guard its click — so the two could
-     * disagree and show an enabled control that does nothing.
+     * Whether this till may take items back off a ticket. Drives both the
+     * disabled look and the guard, so the two cannot disagree.
      */
     canRemove() {
-      return (
-        this.recentOrders.editPrintedInvoice === 0 ||
-        this.auth.removeTableOrderItem === 1
-      );
+      return this.recentOrders.editPrintedInvoice === 0 || this.auth.removeTableOrderItem === 1;
     },
-  },
-  name: "Menu",
-  components: {
-    Search,
-    orderInfo,
   },
   mounted() {
     window.scrollTo(0, 0);
   },
+  methods: {
+    money(value) {
+      return `${this.invoiceData.currency || ""} ${value ?? ""}`.trim();
+    },
+    goToPage(page) {
+      this.menu.currentPage = page;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    resetFilters() {
+      this.menu.showAllItems();
+      this.menu.currentPage = 1;
+    },
+  },
 };
 </script>
-<style>
-.bg-muted {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-</style>
