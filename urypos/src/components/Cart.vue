@@ -1,435 +1,214 @@
 <template>
-  <div
-    class="fixed inset-0 z-50 flex items-center justify-center bg-border bg-opacity-50 text-lg"
-    v-if="this.invoiceData.invoiceUpdating"
-  >
-    {{ $t('order.updating') }}
-  </div>
-  <div
-    class="fixed inset-0 z-50 flex items-center justify-center bg-border bg-opacity-50 text-lg"
-    v-if="this.invoiceData.kotPrinting"
-  >
-    {{ $t('order.kot_reprinting') }}
-  </div>
-  <div class="mt-5">
-    <orderInfo />
+  <PosBusy :show="invoiceData.invoiceUpdating" :label="$t('order.updating')" />
 
-    <!--
-      Ticket-level actions.
+  <orderInfo />
+  <RemoteChangeBanner />
 
-      These were three unlabelled grey buttons floated right with `mr-4`,
-      indistinguishable from each other and from the page. They are now a
-      wrapping row of named controls with the destructive one clearly
-      destructive, so "cancel the order" cannot be hit while reaching for
-      "reprint".
-    -->
-    <div class="mt-3 flex flex-wrap gap-2" v-if="this.menu.cart.length > 0">
-      <!--
-        The one action that sends the cart to the kitchen.
-
-        It used to read "Update" unconditionally, because its `v-if` was the
-        store's submit-in-flight flag rather than anything about the order.
-        The label now follows what is actually happening: a new ticket is
-        sent, an existing one is updated.
-      -->
-      <button
-        class="pos-btn-primary pos-btn-lg"
-        v-if="this.invoiceData.showUpdateButtton === true"
-        @click="this.invoiceData.invoiceCreation()"
-      >
-        {{ $t(this.invoiceData.submitLabelKey) }}
-      </button>
-
-      <button
-        class="pos-btn-ghost"
-        v-if="this.invoiceData.enableKotReprint"
-        @click="this.invoiceData.kotReprint()"
-      >
-        {{ $t('order.kot_reprint') }}
-      </button>
-
-      <button
-        class="pos-btn-ghost ms-auto text-destructive"
-        v-if="
-          (this.recentOrders.invoicePrinted === 0 ||
-            this.table.invoicePrinted === 0) &&
-          !this.auth.cashier
-        "
-        @click="this.invoiceData.showCancelInvoiceModal()"
-      >
-        {{ $t('common.cancel') }}
-      </button>
-    </div>
-  </div>
-
-  <!-- Empty cart. The old copy was the generic "nothing to show" centred in a
-       full viewport height; it now says what is missing and offers the way
-       out, which on this screen is always "go add something". -->
-  <div
-    class="flex flex-col items-center justify-center py-24 text-center animate-fade-in"
-    v-if="this.menu.cart.length === 0"
-  >
-    <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-muted">
-      <svg class="h-8 w-8 text-muted-foreground" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true">
+  <PosEmpty v-if="menu.cart.length === 0" :title="$t('cart.empty_title')" :body="$t('cart.empty_body')">
+    <template #icon>
+      <svg class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true">
         <circle cx="9" cy="20" r="1.5" /><circle cx="18" cy="20" r="1.5" />
         <path stroke-linecap="round" stroke-linejoin="round" d="M2 3h2.5l2.2 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.55L21 7H6" />
       </svg>
-    </div>
-    <p class="pos-title">{{ $t('cart.empty_title') }}</p>
-    <p class="mt-1 text-sm text-muted-foreground">{{ $t('cart.empty_body') }}</p>
-    <router-link to="/Menu" class="pos-btn-primary mt-5">
-      {{ $t('menu.title') }}
-    </router-link>
-  </div>
+    </template>
+    <router-link to="/Menu" class="pos-btn-primary">{{ $t('menu.open_menu') }}</router-link>
+  </PosEmpty>
 
-  <!--
-    The ticket.
-
-    Was a three-column grid whose header declared two of the three columns, so
-    the delete column had no heading and the widths never lined up between the
-    header row and the item rows. It is a list now: each row owns its own
-    layout, and the quantity and price sit together where they are compared.
-  -->
-  <div class="pos-card mt-5 overflow-hidden" v-if="this.menu.cart.length > 0">
-    <div class="flex items-center justify-between border-b border-border bg-muted px-4 py-2.5">
-      <span class="pos-label">{{ $t('menu.item_name') }}</span>
-      <span class="pos-label">{{ $t('menu.quantity') }}</span>
-    </div>
-
-    <ul class="divide-y divide-border">
-      <li
-        v-for="(cart_item, index) in this.menu.cart"
-        :key="index"
-        class="flex items-center gap-3 px-4 py-3"
-      >
-        <span class="min-w-0 flex-1 text-base font-semibold text-foreground">
-          {{ cart_item.item_name }}
-        </span>
-
-        <button
-          type="button"
-          class="press h-10 min-w-[3rem] rounded-xl border border-border bg-card text-base font-bold text-foreground tabular-nums transition-colors duration-fast hover:bg-muted"
-          :aria-label="$t('cart.quantity')"
-          @click="
-            this.menu.showModal(cart_item);
-            menu.showDialogCart = true;
-          "
-        >
-          {{ parseInt(cart_item.qty) }}
-        </button>
-
-        <button
-          class="press flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-destructive transition-colors duration-fast hover:bg-destructive/10 disabled:opacity-40"
-          type="button"
-          :disabled="this.recentOrders.restaurantTable || !canRemove"
-          :aria-label="$t('common.delete')"
-          @click="canRemove && this.menu.removeItemFromCart(index)"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"></path>
-            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"></path>
-          </svg>
-        </button>
-      </li>
-    </ul>
-
-    <!-- The total belongs on the ticket, not in a read-only text input two
-         sections below it. -->
-    <div class="flex items-center justify-between border-t-2 border-border bg-muted px-4 py-3.5">
-      <span class="text-sm font-bold uppercase tracking-wider text-muted-foreground">
-        {{ $t('totals.grand_total') }}
-      </span>
-      <span class="pos-money text-xl text-foreground">
-        {{ this.invoiceData.currency }}
-        {{ this.menu.grand_total || this.table.grandTotal || invoiceData.grandTotal }}
-      </span>
-    </div>
-  </div>
-
-  <div class="mt-5 space-y-4" v-if="this.menu.cart.length > 0">
-    <div v-if="this.menu.selectedOrderType === 'Aggregators'">
-      <label for="aggregatorId" class="pos-label mb-1.5 block">
-        {{ $t('order.aggregator_id') }}
-      </label>
-      <input id="aggregatorId" class="pos-input md:w-3/5 lg:w-2/5" v-model="this.menu.aggregatorId" />
-    </div>
-
-    <div>
-      <label for="comments" class="pos-label mb-1.5 block">
-        {{ $t('order.comments') }}
-      </label>
-      <input id="comments" class="pos-input md:w-3/5 lg:w-2/5" v-model="this.menu.comments" />
-    </div>
-  </div>
-
-  <div
-    v-if="this.invoiceData.cancelInvoiceFlag === true"
-    class="fixed inset-0 z-10 mt-20 overflow-y-auto bg-muted"
-  >
-    <div class="mt-20 flex items-center justify-center">
-      <div class="w-full rounded-lg bg-card p-6 shadow-raised md:max-w-md">
-        <div class="flex justify-end">
-          <span class="sr-only">{{ $t('common.close') }}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            @click="this.invoiceData.cancelInvoiceFlag = false"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+  <div v-else class="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <!--
+      The ticket. Each line carries its own stepper now, so correcting a
+      quantity no longer means opening a dialog; tapping the line opens the
+      quantity and kitchen-note editor for anything finer.
+    -->
+    <section class="pos-card overflow-hidden">
+      <header class="flex items-center justify-between gap-3 border-b border-border bg-muted/60 px-4 py-3">
+        <div class="min-w-0">
+          <p class="pos-label">{{ ticketLabel }}</p>
+          <p class="truncate text-base font-bold text-foreground">{{ ticketTitle }}</p>
         </div>
-        <h2
-          class="mt-1 block text-left text-xl font-medium text-foreground"
+        <span class="pos-badge-accent shrink-0">{{ $t('cart.items_count', { count: menu.cart.length }) }}</span>
+      </header>
+
+      <ul class="divide-y divide-border">
+        <li
+          v-for="(line, index) in menu.cart"
+          :key="line.item"
+          class="flex items-center gap-3 px-4 py-3 animate-fade-in"
         >
-          {{ $t('order.confirm_cancel') }}
-        </h2>
-        <div class="relative">
-          <label
-            for="cancelReason"
-            class="mt-6 block text-left text-foreground"
-          >
-            {{ $t('order.reason') }}
-          </label>
-          <input
-            type="text"
-            id="cancelReason"
-            class="mt-4 w-full appearance-none rounded-xl border p-2 leading-tight text-foreground shadow focus:outline-none"
-            v-model="this.invoiceData.cancelReason"
-          />
-        </div>
-        <div class="flex justify-end">
-          <button
-            @click="this.invoiceData.cancelInvoiceFlag = false"
-            class="mr-3 mt-6 rounded-xl border border-input bg-muted px-3 py-2"
-          >
-            {{ $t('common.no') }}
+          <button type="button" class="min-w-0 flex-1 text-start" @click="menu.showModal(line)">
+            <span class="block text-base font-semibold leading-snug text-foreground">{{ line.item_name }}</span>
+            <span v-if="line.comment" class="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
+              <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5M21 12c0 4.4-4 8-9 8a9.9 9.9 0 0 1-4-.8L3 20l1.3-3.9A7.6 7.6 0 0 1 3 12c0-4.4 4-8 9-8s9 3.6 9 8z" />
+              </svg>
+              <span class="truncate">{{ line.comment }}</span>
+            </span>
+            <!-- Phones get the line total alone; the working shows from sm up. -->
+            <span class="mt-0.5 block text-sm tabular-nums text-muted-foreground">
+              <span class="hidden sm:inline">{{ money(line.rate) }} × {{ Number(line.qty) }} = </span>
+              <strong class="pos-money text-foreground">{{ money(lineTotal(line)) }}</strong>
+            </span>
           </button>
+
+          <div class="pos-stepper shrink-0">
+            <button
+              type="button"
+              class="press"
+              :disabled="Boolean(recentOrders.restaurantTable) || !canRemove"
+              :aria-label="$t('cart.decrease')"
+              @click="menu.decrementItemQuantity(line)"
+            >&minus;</button>
+            <span class="pos-stepper-value">{{ Number(line.qty) }}</span>
+            <button type="button" class="press" :aria-label="$t('cart.increase')" @click="menu.incrementItemQuantity(line)">+</button>
+          </div>
+
           <button
-            @click="handleConfirmCancellation()"
-            class="mt-6 rounded-xl bg-primary px-3 py-2 text-primary-foreground hover:bg-primary"
+            type="button"
+            class="pos-icon-btn text-destructive hover:bg-destructive/10 hover:text-destructive"
+            :disabled="Boolean(recentOrders.restaurantTable) || !canRemove"
+            :aria-label="$t('common.delete')"
+            :title="$t('common.delete')"
+            @click="canRemove && menu.removeItemFromCart(index)"
           >
-            {{ $t('common.yes') }}
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
+            </svg>
           </button>
+        </li>
+      </ul>
+
+      <footer class="flex items-center justify-between border-t-2 border-border bg-muted/60 px-4 py-3.5">
+        <span class="text-sm font-bold uppercase tracking-wider text-muted-foreground">{{ $t('totals.grand_total') }}</span>
+        <span class="pos-money text-2xl text-foreground">{{ money(total) }}</span>
+      </footer>
+    </section>
+
+    <aside class="space-y-4">
+      <div class="pos-card space-y-4 p-4">
+        <div>
+          <label for="comments" class="pos-form-label">{{ $t('order.order_note') }}</label>
+          <textarea
+            id="comments"
+            rows="2"
+            class="pos-input h-auto py-2.5"
+            :placeholder="$t('order.order_note_hint')"
+            v-model="menu.comments"
+          ></textarea>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div
-    v-if="menu.showDialogCart"
-    class="fixed inset-0 z-10 mt-20 overflow-y-auto bg-muted"
-  >
-    <div class="mt-10 flex items-center justify-center">
-      <div class="w-full rounded-lg bg-card p-6 shadow-raised md:max-w-md">
-        <div class="flex justify-end">
-          <span class="sr-only">{{ $t('common.close') }}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            @click="menu.showDialogCart = false"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
+      <!-- Who and where this ticket belongs to, read-only. -->
+      <details v-if="details.length" class="pos-card group overflow-hidden">
+        <summary class="flex min-h-[2.75rem] cursor-pointer list-none items-center justify-between px-4 text-sm font-bold text-foreground">
+          {{ $t('common.additional_details') }}
+          <svg class="h-4 w-4 text-muted-foreground transition-transform duration-fast group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
           </svg>
-        </div>
+        </summary>
+        <dl class="divide-y divide-border border-t border-border">
+          <div v-for="row in details" :key="row.label" class="flex items-center justify-between gap-3 px-4 py-2.5 text-sm">
+            <dt class="text-muted-foreground">{{ row.label }}</dt>
+            <dd class="truncate font-semibold text-foreground bidi-isolate">{{ row.value }}</dd>
+          </div>
+        </dl>
+      </details>
 
-        <h2
-          class="mt-1 block text-left text-xl font-medium text-foreground"
-        >
-          {{ $t('common.enter_details') }}
-        </h2>
-        <div class="relative">
-          <label
-            for="quantity"
-            class="mt-6 block text-left text-foreground"
-          >
-            {{ $t('menu.quantity') }}
-          </label>
-          <input
-            type="number"
-            id="modeOfPayment"
-            class="mt-4 w-full appearance-none rounded-xl border p-2 leading-tight text-foreground shadow focus:outline-none"
-            v-model="this.menu.quantity"
-            v-bind:readonly="
-              this.recentOrders.editPrintedInvoice === 1 &&
-              this.auth.removeTableOrderItem === 0
-            "
-            :disabled="this.recentOrders.restaurantTable"
-          />
-          <label
-            for="Comments"
-            class="mt-6 block text-left text-foreground"
-          >
-            {{ $t('order.comments') }}
-          </label>
-          <input
-            type="text"
-            id="Comments"
-            class="mt-4 w-full appearance-none rounded-xl border p-2 leading-tight text-foreground shadow focus:outline-none"
-            v-model="this.menu.itemComments"
-          />
-        </div>
-        <div class="flex justify-end">
-          <button
-            @click="
-              this.menu.addToCartAndUpdateQty(item);
-              menu.showDialogCart = false;
-            "
-            class="mt-8 rounded-xl bg-primary px-3 py-2 text-primary-foreground hover:bg-primary"
-          >
-            {{ $t('common.add') }}
-          </button>
-        </div>
+    </aside>
+  </div>
+
+  <!-- Room for the send bar. -->
+  <div v-if="showSend" class="h-24" aria-hidden="true"></div>
+
+  <!-- The one action this screen exists for. -->
+  <div v-if="showSend" class="pos-actionbar">
+    <div class="mx-auto flex max-w-7xl items-center gap-3">
+      <div class="min-w-0 flex-1">
+        <span class="block truncate text-xs font-semibold text-muted-foreground">{{ ticketTitle }}</span>
+        <span class="pos-money block text-lg text-foreground">{{ money(total) }}</span>
       </div>
+      <router-link to="/Menu" class="pos-btn-ghost pos-btn-lg hidden shrink-0 sm:inline-flex">
+        {{ $t('cart.add_more') }}
+      </router-link>
+      <button type="button" class="pos-btn-primary pos-btn-lg shrink-0" @click="invoiceData.invoiceCreation()">
+        <svg class="h-4 w-4 rtl-flip" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" />
+        </svg>
+        {{ $t(invoiceData.submitLabelKey) }}
+      </button>
     </div>
   </div>
 
-  <div
-    class="mt-4 w-full divide-y divide-border bg-card"
-    v-if="this.menu.cart.length > 0"
-  >
-    <details>
-      <summary class="question w-full cursor-pointer select-none py-3">
-        {{ $t('common.additional_details') }}
-      </summary>
-      <div class="additional-details m-3">
-        <label
-          for="invoiceNo"
-          class="mt-10 block text-sm font-medium text-foreground"
-          v-if="this.table.invoiceNo || invoiceData.invoiceNumber"
-        >
-          {{ $t('order.invoice') }}
-        </label>
-        <input
-          class="invoiceNo mt-3 block w-full rounded-md border bg-muted p-2.5 text-sm text-foreground md:w-3/5 lg:w-2/5"
-          :value="this.table.invoiceNo || invoiceData.invoiceNumber"
-          v-if="this.table.invoiceNo || invoiceData.invoiceNumber"
-          readonly
-        />
-        <label
-          for="waiter"
-          class="mt-10 block text-sm font-medium text-foreground"
-          :class="{ hidden: this.invoiceData.waiter === '' }"
-        >
-          {{ $t('tables.waiter') }}
-        </label>
-        <input
-          class="waiter mt-3 block w-full rounded-md border bg-muted p-2.5 text-sm text-foreground md:w-3/5 lg:w-2/5"
-          :class="{ hidden: this.invoiceData.waiter === '' }"
-          :value="
-            this.table.previousWaiter !== null &&
-            this.table.previousWaiter !== undefined
-              ? this.table.previousWaiter
-              : this.recentOrders.recentWaiter !== null &&
-                this.recentOrders.recentWaiter !== undefined
-              ? this.recentOrders.recentWaiter
-              : this.invoiceData.waiter
-          "
-          readonly
-        />
-        <label
-          for="posProfile"
-          class="mt-10 block text-sm font-medium text-foreground"
-          :class="{ hidden: this.invoiceData.posProfile === '' }"
-        >
-          {{ $t('pos.profile') }}
-        </label>
-        <input
-          class="posProfile mt-3 block w-full rounded-md border bg-muted p-2.5 text-sm text-foreground md:w-3/5 lg:w-2/5"
-          :class="{ hidden: this.invoiceData.posProfile === '' }"
-          v-model="this.invoiceData.posProfile"
-          readonly
-        />
-        <label
-          for="cashier"
-          class="mt-10 block text-sm font-medium text-foreground"
-          :class="{ hidden: this.invoiceData.cashier === '' }"
-        >
-          {{ $t('pos.cashier') }}
-        </label>
-        <input
-          class="mt-3 block w-full rounded-md border bg-muted p-2.5 text-sm text-foreground md:w-3/5 lg:w-2/5"
-          :class="{ hidden: this.invoiceData.cashier === '' }"
-          v-model="this.invoiceData.cashier"
-          readonly
-        />
-      </div>
-    </details>
-  </div>
+  <ItemDialog />
+
 </template>
 
 <script>
 import orderInfo from "./orderInfo.vue";
+import ItemDialog from "./ItemDialog.vue";
+import RemoteChangeBanner from "./RemoteChangeBanner.vue";
+import PosBusy from "./ui/PosBusy.vue";
+import PosEmpty from "./ui/PosEmpty.vue";
 import { useMenuStore } from "@/stores/Menu.js";
 import { useTableStore } from "@/stores/Table.js";
 import { useInvoiceDataStore } from "@/stores/invoiceData.js";
 import { useAuthStore } from "@/stores/Auth.js";
 import { usetoggleRecentOrder } from "@/stores/recentOrder.js";
-import { useNotifications } from "@/stores/Notification.js";
+import { useCustomerStore } from "@/stores/Customer.js";
 
 export default {
   name: "Cart",
-  components: {
-    orderInfo,
-  },
-  methods: {
-    handleConfirmCancellation() {
-      console.log(this.invoiceData.cancelReason);
-      console.log(!this.invoiceData.cancelReason || this.invoiceData.cancelReason.trim() === '');
-      if (!this.invoiceData.cancelReason || this.invoiceData.cancelReason.trim() === '') {
-        this.notification.createNotification('Please enter a reason for cancellation');
-        return;
-      }
-      this.invoiceData.cancelInvoice();
-      this.invoiceData.cancelInvoiceFlag = false;
-    },
-  },
+  components: { orderInfo, ItemDialog, PosBusy, PosEmpty, RemoteChangeBanner },
   setup() {
-    const menu = useMenuStore();
-    const table = useTableStore();
-    const auth = useAuthStore();
-    const recentOrders = usetoggleRecentOrder();
-    const invoiceData = useInvoiceDataStore();
-    const notification = useNotifications();
-    return { menu, table, invoiceData, auth, recentOrders, notification };
+    return {
+      menu: useMenuStore(),
+      table: useTableStore(),
+      invoiceData: useInvoiceDataStore(),
+      auth: useAuthStore(),
+      recentOrders: usetoggleRecentOrder(),
+      customers: useCustomerStore(),
+    };
   },
   computed: {
-    /**
-     * Whether this till may take a line back off the ticket.
-     *
-     * The same test was inlined in the delete handler only, so the button
-     * looked enabled on a printed invoice and silently did nothing. It now
-     * drives the `disabled` state too.
-     */
+    /** See Menu.vue: drives the disabled look and the guard together. */
     canRemove() {
-      return (
-        this.recentOrders.editPrintedInvoice === 0 ||
-        this.auth.removeTableOrderItem === 1
-      );
+      return this.recentOrders.editPrintedInvoice === 0 || this.auth.removeTableOrderItem === 1;
+    },
+    showSend() {
+      return this.menu.cart.length > 0 && this.invoiceData.showUpdateButtton === true;
+    },
+    total() {
+      return this.menu.grand_total || this.table.grandTotal || this.invoiceData.grandTotal;
+    },
+    ticketLabel() {
+      return this.$t("tables.title");
+    },
+    ticketTitle() {
+      const where =
+        this.table.selectedTable || this.recentOrders.restaurantTable || this.recentOrders.pastOrderType;
+      const who = this.customers.search;
+      return [where, who].filter(Boolean).join(" · ") || this.$t("order.title");
+    },
+    details() {
+      const waiter =
+        this.table.previousWaiter ?? this.recentOrders.recentWaiter ?? this.invoiceData.waiter;
+      return [
+        { label: this.$t("order.invoice"), value: this.table.invoiceNo || this.invoiceData.invoiceNumber },
+        { label: this.$t("tables.waiter"), value: waiter },
+        { label: this.$t("pos.profile"), value: this.invoiceData.posProfile },
+        { label: this.$t("pos.cashier"), value: this.invoiceData.cashier },
+      ].filter((row) => row.value);
     },
   },
   mounted() {
     window.scrollTo(0, 0);
   },
+  methods: {
+    money(value) {
+      return `${this.invoiceData.currency || ""} ${value ?? ""}`.trim();
+    },
+    lineTotal(line) {
+      return ((parseFloat(line.rate) || 0) * (Number(line.qty) || 0)).toFixed(2);
+    }
+  },
 };
 </script>
-<style>
-.bg-muted {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-</style>
