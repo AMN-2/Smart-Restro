@@ -1,0 +1,802 @@
+## Aggregator Settings  submittable=0 istable=1 single=0 autoname=
+  - customer: Link -> Customer
+  - price_list: Link -> Price List
+  - mode_of_payments: Link -> Mode of Payment
+
+## Item Add On  submittable=0 istable=1 single=0 autoname=
+  - item: Link -> Item
+
+## KDS Order Type  submittable=0 istable=1 single=0 autoname=
+  - order_type: Select -> /Dine In/Phone In/Take Away/Delivery/Aggregators
+
+## Menu for Room  submittable=0 istable=1 single=0 autoname=
+  - menu: Link -> URY Menu
+  - room: Link -> URY Room
+
+## Multiple Rooms  submittable=0 istable=1 single=0 autoname=
+  - room: Link -> URY Room
+
+## Order Type Menu  submittable=0 istable=1 single=0 autoname=
+  - order_type: Select -> /Phone In/Take Away/Delivery
+  - menu: Link -> URY Menu
+
+## POS Item Variants  submittable=0 istable=1 single=0 autoname=
+  - item: Link -> Item
+
+## Role Permitted  submittable=0 istable=1 single=0 autoname=
+  - role: Link -> Role
+
+## Sub POS Closing  submittable=1 istable=0 single=0 autoname=SUB-CLO-.YYYY.-.#####
+  - period_start_date: Datetime [reqd]
+  - period_end_date: Datetime [reqd]
+  - posting_date: Date [reqd]
+  - posting_time: Time [reqd]
+  - pos_opening_entry: Link -> POS Opening Entry [reqd]
+  - status: Select -> Draft/Submitted/Queued/Failed/Cancelled
+  - company: Link -> Company [reqd]
+  - pos_profile: Link -> POS Profile [reqd]
+  - user: Link -> User [reqd]
+  - pos_transactions: Table -> Sub POS Invoices
+  - payment_reconciliation: Table -> Sub POS Closing Payment
+  - grand_total: Currency
+  - net_total: Currency
+  - total_quantity: Float
+  - amended_from: Link -> Sub POS Closing
+  - amended_from: Link -> Sub POS Closing
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1, 'submit': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1, 'submit': 1, 'cancel': 1}
+  perm: URY Manager {'read': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1, 'submit': 1}
+  perm: URY Captain {'read': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1, 'submit': 1, 'cancel': 1, 'amend': 1}
+
+## Sub POS Closing Payment  submittable=0 istable=1 single=0 autoname=
+  - mode_of_payment: Link -> Mode of Payment [reqd]
+  - opening_amount: Currency -> company:company_currency
+  - expected_amount: Currency -> company:company_currency
+  - closing_amount: Currency
+  - difference: Currency -> company:company_currency
+
+## Sub POS Invoices  submittable=0 istable=1 single=0 autoname=
+  - pos_invoice: Link -> POS Invoice
+  - posting_date: Date
+  - grand_total: Currency
+
+## URY Audit Log  submittable=0 istable=0 single=0 autoname=hash
+  - event: Select -> /Discount Applied/Invoice Cancelled/Price Overridden/Payment Refunded/Bill Split/Bill Merged/Table Transferred/Captain Transferred/Shift Closed With Difference/Coupon Applied/Coupon Removed [reqd]
+  - reference_doctype: Link -> DocType
+  - reference_name: Dynamic Link -> reference_doctype
+  - branch: Link -> Branch
+  - pos_profile: Link -> POS Profile
+  - amount: Currency
+  - performed_by: Link -> User
+  - occurred_at: Datetime
+  - old_value: Data
+  - new_value: Data
+  - reason: Small Text
+  - details: Small Text
+  perm: System Manager {'read': 1}
+  perm: URY Manager {'read': 1}
+  perm: URY Admin {'read': 1}
+
+## URY Checklist Item  submittable=0 istable=1 single=0 autoname=autoincrement
+  - item_label: Data [reqd]
+  - applies_to: Select -> Opening/Closing/Both
+  - is_mandatory: Check
+
+## URY Checklist Log Item  submittable=0 istable=1 single=0 autoname=autoincrement
+  - item_label: Data [reqd]
+  - is_mandatory: Check
+  - is_checked: Check
+  - remarks: Small Text
+
+## URY Consumption Log  submittable=0 istable=0 single=0 autoname=format:CONS-{YYYY}-{#####}
+  - pos_invoice: Link -> POS Invoice [reqd]
+  - status: Select -> Pending/Done/Failed/Cancelled
+  - company: Link -> Company
+  - branch: Link -> Branch
+  - posting_date: Date
+  - posting_time: Time
+  - stock_entry: Link -> Stock Entry
+  - total_cost: Currency -> Company:company:default_currency
+  - items: Table -> URY Consumption Log Item
+  - attempts: Int
+  - error: Small Text
+  perm: System Manager {'read': 1, 'write': 1}
+  perm: URY Manager {'read': 1, 'write': 1}
+  perm: URY Admin {'read': 1, 'write': 1}
+
+## URY Consumption Log Item  submittable=0 istable=1 single=0 autoname=
+  - sold_item: Link -> Item
+  - sold_qty: Float
+  - recipe: Link -> BOM
+  - item_code: Link -> Item [reqd]
+  - item_name: Data
+  - warehouse: Link -> Warehouse [reqd]
+  - qty: Float [reqd]
+  - stock_uom: Link -> UOM
+  - rate: Currency -> Company:company:default_currency
+  - amount: Currency -> Company:company:default_currency
+
+## URY Cost Of Goods  submittable=0 istable=1 single=0 autoname=
+  - item_code: Link -> Item [reqd]
+  - item_name: Data [reqd]
+  - item_group: Link -> Item Group [reqd]
+  - qty: Float [reqd]
+  - buying_price: Currency [reqd]
+  - amount: Currency [reqd]
+
+## URY Daily P and L  submittable=1 istable=0 single=0 autoname=Daily-PL-.YYYY.-.#####
+  - proft_loss_details: HTML
+  - branch: Link -> Branch [reqd]
+  - date: Date [reqd]
+  - electricity_opening: Float [reqd]
+  - electricity_closing: Float [reqd]
+  - other_expenses: Table -> URY P and L Breakup
+  - gross_sales: Currency
+  - gross_sales_percent: Percent
+  - cash_discount_round_off: Currency
+  - cash_discount_round_off_percent: Percent
+  - tax: Currency
+  - tax_percent: Percent
+  - net_sales: Currency
+  - net_sales_percent: Percent
+  - cogs: Currency
+  - cogs_percent: Percent
+  - total_direct_expenses: Currency
+  - total_direct_expenses_percent: Percent
+  - gross_profit: Currency
+  - gross_profit_percent: Percent
+  - depreciation: Currency
+  - depreciation_percent: Percent
+  - total_other_expenses: Currency
+  - other_expenses_percent: Percent
+  - total_indirect_expenses: Currency
+  - total_indirect_expenses_percent: Percent
+  - net_profit: Currency
+  - net_profit_percent: Percent
+  - direct_expenses_breakup: Table -> URY P and L Breakup
+  - employee_costs_breakup: Table -> URY P and L Breakup
+  - indirect_expenses_breakup: Table -> URY P and L Breakup
+  - cost_of_goods: Table -> URY Cost Of Goods
+  - amended_from: Link -> URY Daily P and L
+  - remarks: Long Text
+  - total_employee_costs: Currency
+  - total_employee_costs_percent: Percent
+  - materials_consumed: Table -> URY P and L Materials
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1, 'submit': 1, 'cancel': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1, 'submit': 1, 'cancel': 1}
+
+## URY Delivery  submittable=0 istable=0 single=0 autoname=naming_series:
+  - naming_series: Select -> DLV-.YYYY.- [reqd]
+  - invoice: Link -> POS Invoice [reqd]
+  - branch: Link -> Branch [reqd]
+  - zone: Link -> URY Delivery Zone
+  - customer_name: Data
+  - mobile_number: Data -> Phone
+  - address: Small Text [reqd]
+  - latitude: Float
+  - longitude: Float
+  - status: Select -> Pending/Assigned/On The Way/Delivered/Failed/Returned [reqd]
+  - driver: Link -> URY Driver
+  - promised_minutes: Int
+  - ordered_at: Datetime [reqd]
+  - assigned_at: Datetime
+  - departed_at: Datetime
+  - closed_at: Datetime
+  - delivery_fee: Currency
+  - order_total: Currency
+  - cash_on_delivery: Check
+  - cash_settled: Check
+  - cash_settled_at: Datetime
+  - failure_reason: Small Text
+  - notes: Small Text
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Captain {'read': 1, 'write': 1, 'create': 1}
+
+## URY Delivery Zone  submittable=0 istable=0 single=0 autoname=field:zone_name
+  - zone_name: Data [reqd]
+  - branch: Link -> Branch [reqd]
+  - active: Check
+  - delivery_fee: Currency
+  - minimum_order: Currency
+  - estimated_minutes: Int
+  - landmarks: Small Text
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Captain {'read': 1, 'write': 1, 'create': 1}
+
+## URY Driver  submittable=0 istable=0 single=0 autoname=field:driver_name
+  - driver_name: Data [reqd]
+  - mobile_number: Data -> Phone
+  - branch: Link -> Branch [reqd]
+  - active: Check
+  - vehicle: Data
+  - user: Link -> User
+  - last_latitude: Float
+  - last_longitude: Float
+  - position_updated_at: Datetime
+  - position_accuracy: Float
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Captain {'read': 1, 'write': 1, 'create': 1}
+
+## URY Feature Flag  submittable=0 istable=1 single=0 autoname=
+  - feature: Data [reqd]
+  - enabled: Check
+
+## URY Feature Settings  submittable=0 istable=0 single=1 autoname=
+  - enforce_desk_policy: Check
+  - role_access: Table -> URY Role Access
+  - features: Table -> URY Feature Flag
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1}
+
+## URY Fixed Expenses  submittable=0 istable=1 single=0 autoname=
+  - expense: Data [reqd]
+  - amount: Currency [reqd]
+
+## URY Guest Feedback  submittable=0 istable=0 single=0 autoname=naming_series:
+  - naming_series: Select -> FB-.YYYY.- [reqd]
+  - branch: Link -> Branch [reqd]
+  - invoice: Link -> POS Invoice
+  - restaurant_table: Link -> URY Table
+  - submitted_at: Datetime
+  - served_by: Link -> User
+  - source: Select -> Receipt/Table/Staff
+  - overall: Int [reqd]
+  - food: Int
+  - service: Int
+  - cleanliness: Int
+  - recommend_score: Int
+  - comment: Small Text
+  - contact_number: Data -> Phone
+  - status: Select -> New/Acknowledged/Resolved
+  - follow_up_notes: Small Text
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Captain {'read': 1, 'write': 1, 'create': 1}
+
+## URY Kitchen Message  submittable=0 istable=0 single=0 autoname=naming_series:
+  - naming_series: Select -> KMSG-.YYYY.- [reqd]
+  - message: Small Text [reqd]
+  - priority: Select -> Normal/High/Urgent [reqd]
+  - branch: Link -> Branch [reqd]
+  - production: Link -> URY Production Unit
+  - requires_acknowledgement: Check
+  - status: Select -> Active/Acknowledged/Expired/Cancelled
+  - sent_by: Link -> User
+  - sent_by_name: Data
+  - sent_at: Datetime
+  - expires_at: Datetime
+  - acknowledgements: Table -> URY Kitchen Message Ack
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Captain {'read': 1, 'create': 1}
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Kitchen Message Ack  submittable=0 istable=1 single=0 autoname=
+  - user: Link -> User
+  - user_name: Data
+  - station: Data
+  - acknowledged_at: Datetime
+
+## URY KOT  submittable=1 istable=0 single=0 autoname=naming_series:
+  - invoice: Data
+  - restaurant_table: Link -> URY Table
+  - customer_name: Link -> Customer
+  - original_kot: Small Text
+  - date: Date [reqd]
+  - time: Time
+  - type: Select -> /New Order/Order Modified/Cancelled/Partially cancelled/Duplicate
+  - order_status: Data
+  - production: Link -> URY Production Unit
+  - start_time_prep: Time
+  - start_time_serv: Data
+  - kot_items: Table -> URY KOT Items
+  - naming_series: Data
+  - pos_profile: Link -> POS Profile
+  - comments: Data
+  - branch: Link -> Branch
+  - verified: Check
+  - order_no: Data
+  - verified_by: Link -> User
+  - customer_group: Data
+  - table_takeaway: Check
+  - user: Data
+  - aggregator_id: Data
+  - is_aggregator: Check
+  - amended_from: Link -> URY KOT
+  - production_time: Data
+  - prepared_by: Link -> User
+  - served_by: Link -> User
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Captain {'read': 1, 'write': 1, 'create': 1, 'submit': 1, 'cancel': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1, 'submit': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1, 'submit': 1, 'cancel': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1, 'submit': 1, 'cancel': 1}
+
+## URY KOT Error Log  submittable=0 istable=0 single=0 autoname=
+  - kot: Data
+  - date: Date
+  - time: Time
+  - invoice: Data
+  - invoice_creation_time: Data
+  - branch: Link -> Branch
+  - production: Data
+  - pos_profile: Link -> POS Profile
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Captain {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY KOT Items  submittable=0 istable=1 single=0 autoname=URYKOTITM.#####
+  - item: Link -> Item
+  - item_name: Data
+  - quantity: Data
+  - cancelled_qty: Data
+  - comments: Data
+  - course: Link -> URY Menu Course
+  - serve_priority: Int
+  - indicate_course: Check
+  - prepared: Check
+  - prepared_at: Datetime
+  - prepared_by: Link -> User
+
+## URY Materials  submittable=0 istable=1 single=0 autoname=
+  - cost_per_unit: Currency [reqd]
+  - material: Data [reqd]
+
+## URY Menu  submittable=0 istable=0 single=0 autoname=prompt
+  - enabled: Check
+  - price_list: Link -> Price List
+  - items: Table -> URY Menu Item [reqd]
+  - branch: Link -> Branch [reqd]
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Captain {'read': 1}
+  perm: URY Cashier {'read': 1, 'write': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Menu Course  submittable=0 istable=0 single=0 autoname=field:course
+  - course: Data [reqd]
+  - icon: Data
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Captain {'read': 1}
+  perm: URY Cashier {'read': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Menu Item  submittable=0 istable=1 single=0 autoname=
+  - item: Link -> Item
+  - item_name: Data
+  - rate: Currency
+  - plate_cost: Currency
+  - special_dish: Check
+  - disabled: Check
+  - course: Link -> URY Menu Course
+  - course_icon: Data
+
+## URY Merged POS Invoice Detail  submittable=0 istable=1 single=0 autoname=
+  - item_code: Link -> Item
+  - item_name: Data
+  - qty: Float
+  - rate: Currency
+  - amount: Currency
+
+## URY Notification Recipient  submittable=0 istable=1 single=0 autoname=
+  - receiver_by_role: Link -> Role
+
+## URY Order  submittable=0 istable=0 single=1 autoname=
+  - take_away: Check
+  - table_list: HTML
+  - take_away_list: HTML
+  - restaurant_table: Link -> URY Table
+  - item_search: Data
+  - all_item: Button
+  - priority_item: Button
+  - item: HTML -> <div class="container px-0">/<div class="row" id="restaurant_menu_items"></div>/</div>
+  - customer_name: Link -> Customer [reqd]
+  - no_of_pax: Int [reqd]
+  - favorite_items: HTML -> <div class="container px-0">/<div class="row" id="fav_items"></div>/</div>
+  - add_item: Link -> Item
+  - cart_items: HTML -> <div class="container px-0">/<div id="restaurantCartItems"></div>/</div>
+  - grand_total: Currency
+  - last_invoice: Link -> POS Invoice
+  - items: Table -> URY Order Item
+  - waiter: Link -> User
+  - pos_profile: Link -> POS Profile
+  - cashier: Link -> User
+  - comments: Data
+  - modified_time: Datetime
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Captain {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Order Item  submittable=0 istable=1 single=0 autoname=
+  - item: Link -> Item [reqd]
+  - item_name: Data
+  - qty: Int
+  - rate: Currency
+  - comments: Data
+
+## URY Ordering Device  submittable=0 istable=0 single=0 autoname=prompt
+  - device_name: Data [reqd]
+  - device_id: Data [reqd]
+  - ordering_profile: Link -> URY Self Ordering Profile [reqd]
+  - branch: Link -> Branch
+  - device_type: Select -> /Kiosk/Table Tablet/Portable Tablet [reqd]
+  - layout: Select -> /Tablet/Landscape Kiosk/Portrait Kiosk [reqd]
+  - table_mode: Select -> /None/Fixed/Selectable
+  - fixed_table: Link -> URY Table
+  - enabled: Check
+  - credential_hash: Data
+  - last_seen: Datetime
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1}
+  perm: Self Ordering Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Ordering Session  submittable=0 istable=0 single=0 autoname=hash
+  - ordering_profile: Link -> URY Self Ordering Profile [reqd]
+  - source: Select -> /QR Table/QR Pickup/Kiosk/Table Tablet [reqd]
+  - device: Link -> URY Ordering Device
+  - table: Link -> URY Table
+  - token_hash: Data [reqd]
+  - status: Select -> /Active/Expired/Closed
+  - opened_at: Datetime
+  - expires_at: Datetime
+  - last_activity: Datetime
+  - invoice: Link -> POS Invoice
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1}
+  perm: Self Ordering Manager {'read': 1}
+
+## URY P and L Breakup  submittable=0 istable=1 single=0 autoname=
+  - breakup: Data [reqd]
+  - amount: Currency [reqd]
+  - percent: Percent
+
+## URY P and L Materials  submittable=0 istable=1 single=0 autoname=
+  - cost_per_unit: Currency [reqd]
+  - units_consumed: Float [reqd]
+  - amount: Currency -> currency [reqd]
+  - material: Data [reqd]
+
+## URY Payment Terminal  submittable=0 istable=0 single=0 autoname=prompt
+  - terminal_id: Data [reqd]
+  - device: Link -> URY Ordering Device
+  - provider: Select -> Simulated/Ingenico/PAX/Verifone/Other
+  - status: Select -> Idle/Busy/Offline
+  - last_transaction_id: Data
+  - last_seen: Datetime
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Payment Terminal Transaction  submittable=0 istable=0 single=0 autoname=hash
+  - terminal: Link -> URY Payment Terminal [reqd]
+  - invoice: Link -> POS Invoice [reqd]
+  - transaction_id: Data
+  - amount: Currency
+  - currency: Data
+  - status: Select -> Pending/Approved/Declined/Cancelled
+  - created_at: Datetime
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY POS Checklist Log  submittable=0 istable=0 single=0 autoname=format:CHK-{branch}-{checklist_type}-{shift_date}-{#####}
+  - pos_profile: Link -> POS Profile [reqd]
+  - branch: Link -> Branch [reqd]
+  - checklist_type: Select -> Opening/Closing [reqd]
+  - pos_opening_entry: Link -> POS Opening Entry
+  - shift_date: Date [reqd]
+  - status: Select -> In Progress/Complete
+  - completed_by: Link -> User
+  - completed_at: Datetime
+  - items: Table -> URY Checklist Log Item
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Captain {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Print Job  submittable=0 istable=0 single=0 autoname=hash
+  - status: Select -> Pending/Claimed/Printed/Failed [reqd]
+  - branch: Link -> Branch
+  - printer: Data [reqd]
+  - reference_doctype: Link -> DocType [reqd]
+  - reference_name: Dynamic Link -> reference_doctype [reqd]
+  - print_format: Link -> Print Format
+  - claimed_by: Data
+  - claimed_at: Datetime
+  - attempts: Int
+  - printed_at: Datetime
+  - error: Small Text
+  perm: System Manager {'read': 1, 'write': 1, 'delete': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1}
+  perm: URY Cashier {'read': 1}
+
+## URY Printer Settings  submittable=0 istable=1 single=0 autoname=autoincrement
+  - bill: Check
+  - printer: Link -> Network Printer Settings
+
+## URY Production Item Groups  submittable=0 istable=1 single=0 autoname=
+  - item_group: Link -> Item Group
+
+## URY Production Unit  submittable=0 istable=0 single=0 autoname=field:production
+  - production: Data
+  - pos_profile: Link -> POS Profile
+  - branch: Link -> Branch
+  - warehouse: Link -> Warehouse
+  - item_groups: Table -> URY Production Item Groups
+  - qz_printer: Data
+  - printer_settings: Table -> URY Printer Settings
+  - enable_order_type_wise_display_on_mosaic: Check
+  - order_type: Table -> KDS Order Type
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Captain {'read': 1}
+  perm: URY Cashier {'read': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Report Settings  submittable=0 istable=0 single=0 autoname=field:branch
+  - branch: Link -> Branch [reqd]
+  - extended_hours: Check [reqd]
+  - hours: Int
+  - buying_price_list: Link -> Price List [reqd]
+  - direct_fixed_expenses: Table -> URY Fixed Expenses
+  - indirect_fixed_expenses: Table -> URY Fixed Expenses
+  - percentage_expenses: Table -> URY Variable Expenses
+  - depreciation: Currency
+  - electricity_charges: Currency
+  - consumables: Table -> URY Materials
+  - employee_costs: Table -> URY Fixed Expenses
+  - monthly_fixed_expenses: Table -> URY Fixed Expenses
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Restaurant  submittable=0 istable=0 single=0 autoname=prompt
+  - image: Attach Image
+  - company: Link -> Company [reqd]
+  - invoice_series_prefix: Data [reqd]
+  - active_menu: Link -> URY Menu
+  - branch: Link -> Branch [reqd]
+  - default_tax_template: Link -> Sales Taxes and Charges Template
+  - address: Link -> Address
+  - room_wise_menu: Check
+  - menu_for_room: Table -> Menu for Room
+  - default_room: Link -> URY Room [reqd]
+  - aggregator_series_prefix: Data
+  - order_type_wise_menu: Check
+  - order_type_menu: Table -> Order Type Menu
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Captain {'read': 1}
+  perm: URY Cashier {'read': 1, 'write': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Role Access  submittable=0 istable=1 single=0 autoname=
+  - role: Link -> Role [reqd]
+  - block_desk: Check
+  - landing: Data
+
+## URY Room  submittable=0 istable=0 single=0 autoname=Prompt
+  - room_type: Select -> AC/NON-AC
+  - printer_settings: Table -> URY Printer Settings
+  - branch: Link -> Branch [reqd]
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Captain {'read': 1}
+  perm: URY Cashier {'read': 1, 'write': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Self Ordering Profile  submittable=0 istable=0 single=0 autoname=prompt
+  - profile_name: Data [reqd]
+  - restaurant: Link -> URY Restaurant [reqd]
+  - branch: Link -> Branch [reqd]
+  - pos_profile: Link -> POS Profile [reqd]
+  - default_customer: Link -> Customer
+  - enabled: Check
+  - enable_qr_table_ordering: Check
+  - enable_qr_pickup_ordering: Check
+  - enable_kiosk_ordering: Check
+  - allow_add_to_running_table: Check
+  - enable_product_detail_page: Check
+  - show_item_images: Check
+  - show_item_descriptions: Check
+  - enable_item_notes: Check
+  - enable_request_bill: Check
+  - enable_customer_payment: Check
+  - enable_payment_link: Check
+  - enable_pay_at_counter: Check
+  - enable_call_waiter: Check
+  - session_idle_timeout_minutes: Int
+  - qr_signing_secret: Data
+  - staff_pin: Data
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1}
+  perm: Self Ordering Manager {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Service Request  submittable=0 istable=0 single=0 autoname=hash
+  - request_type: Select -> /Bill/Assistance [reqd]
+  - table: Link -> URY Table [reqd]
+  - invoice: Link -> POS Invoice
+  - session: Link -> URY Ordering Session
+  - status: Select -> /Open/Acknowledged/Resolved
+  - requested_at: Datetime
+  - resolved_at: Datetime
+  - resolved_by: Link -> User
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1, 'write': 1}
+  perm: URY Captain {'read': 1, 'write': 1}
+  perm: Self Ordering Manager {'read': 1, 'write': 1}
+
+## URY Sync Request  submittable=0 istable=0 single=0 autoname=hash
+  - idempotency_key: Data [reqd]
+  - invoice: Link -> POS Invoice
+  - pos_profile: Link -> POS Profile
+  - applied_by: Link -> User
+  perm: System Manager {'read': 1, 'delete': 1}
+  perm: URY Manager {'read': 1}
+
+## URY Table  submittable=0 istable=0 single=0 autoname=prompt
+  - no_of_seats: Int
+  - minimum_seating: Int
+  - restaurant: Link -> URY Restaurant [reqd]
+  - restaurant_room: Link -> URY Room [reqd]
+  - branch: Link -> Branch [reqd]
+  - is_take_away: Check
+  - occupied: Check
+  - latest_invoice_time: Time
+  - table_shape: Select -> /Rectangle/Square/Circle
+  - layout_x: Float
+  - layout_width: Float
+  - layout_y: Float
+  - layout_height: Float
+  - merged_with: Data
+  - enable_self_ordering: Check
+  - self_ordering_qr: HTML
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Captain {'read': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1, 'write': 1}
+  perm: URY Admin {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Table Reservation  submittable=0 istable=0 single=0 autoname=naming_series:
+  - website_request_id: Data
+  - naming_series: Select -> RES-.YYYY.- [reqd]
+  - guest_name: Data [reqd]
+  - mobile_number: Data -> Phone
+  - customer: Link -> Customer
+  - branch: Link -> Branch [reqd]
+  - restaurant_room: Link -> URY Room
+  - table: Link -> URY Table
+  - no_of_pax: Int [reqd]
+  - reserved_from: Datetime [reqd]
+  - reserved_to: Datetime
+  - status: Select -> Requested/Confirmed/Seated/Completed/No Show/Cancelled [reqd]
+  - seated_invoice: Link -> POS Invoice
+  - notes: Small Text
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Captain {'read': 1, 'write': 1, 'create': 1}
+
+## URY User  submittable=0 istable=1 single=0 autoname=
+  - user: Link -> User
+  - room: Link -> URY Room
+
+## URY Variable Expenses  submittable=0 istable=1 single=0 autoname=
+  - expense: Data [reqd]
+  - percentage_type: Select -> Gross Sales/Net Sales [reqd]
+  - percent: Percent [reqd]
+
+## URY Waitlist Entry  submittable=0 istable=0 single=0 autoname=naming_series:
+  - naming_series: Select -> WL-.YYYY.- [reqd]
+  - guest_name: Data [reqd]
+  - mobile_number: Data -> Phone
+  - no_of_pax: Int [reqd]
+  - branch: Link -> Branch [reqd]
+  - restaurant_room: Link -> URY Room
+  - source: Select -> Walk-in/Phone/Staff
+  - joined_at: Datetime [reqd]
+  - quoted_minutes: Int
+  - notified_at: Datetime
+  - status: Select -> Waiting/Notified/Seated/Cancelled/No Show [reqd]
+  - table: Link -> URY Table
+  - seated_at: Datetime
+  - seated_invoice: Link -> POS Invoice
+  - notes: Small Text
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1}
+  perm: URY Captain {'read': 1, 'write': 1, 'create': 1}
+
+## URY Waste Log  submittable=1 istable=0 single=0 autoname=naming_series:
+  - naming_series: Select -> WASTE-.YYYY.- [reqd]
+  - branch: Link -> Branch [reqd]
+  - posting_date: Date [reqd]
+  - reason: Select -> Spoilage/Overproduction/Preparation Error/Customer Return/Breakage/Staff Meal/Other [reqd]
+  - recorded_by: Link -> User
+  - items: Table -> URY Waste Log Item [reqd]
+  - total_value: Currency
+  - stock_entry: Link -> Stock Entry
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1, 'submit': 1, 'cancel': 1, 'amend': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1, 'submit': 1, 'cancel': 1, 'amend': 1}
+  perm: URY Cashier {'read': 1, 'write': 1, 'create': 1, 'submit': 1}
+
+## URY Waste Log Item  submittable=0 istable=1 single=0 autoname=
+  - item_code: Link -> Item [reqd]
+  - item_name: Data
+  - qty: Float [reqd]
+  - uom: Link -> UOM
+  - valuation_rate: Currency
+  - amount: Currency
+  - reason: Data
+
+## URY Website  submittable=0 istable=0 single=0 autoname=field:slug
+  - published: Check
+  - slug: Data [reqd]
+  - restaurant: Link -> URY Restaurant [reqd]
+  - restaurant_name: Data [reqd]
+  - language: Select -> ar/en [reqd]
+  - theme: Select -> Olive/Terracotta/Midnight [reqd]
+  - layout: Select -> Classic/Centered/Editorial [reqd]
+  - logo: Attach Image
+  - hero_image: Attach Image
+  - eyebrow: Data
+  - hero_title: Data
+  - hero_description: Small Text
+  - show_story: Check
+  - story_title: Data
+  - story: Small Text
+  - story_image: Attach Image
+  - gallery: Table -> URY Website Image
+  - show_menu: Check
+  - menu: Link -> URY Menu
+  - menu_note: Small Text
+  - address: Small Text
+  - phone: Data
+  - map_url: Data
+  - instagram_url: Data
+  - hours: Table -> URY Website Hours
+  - enable_reservations: Check
+  - duration_minutes: Int [reqd]
+  - lead_minutes: Int [reqd]
+  - advance_days: Int [reqd]
+  - max_guests: Int [reqd]
+  - booking_note: Small Text
+  - privacy_note: Small Text
+  - seo_title: Data
+  - seo_description: Small Text
+  perm: System Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+  perm: URY Manager {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+
+## URY Website Hours  submittable=0 istable=1 single=0 autoname=
+  - day: Select -> Monday/Tuesday/Wednesday/Thursday/Friday/Saturday/Sunday [reqd]
+  - opens: Time [reqd]
+  - closes: Time [reqd]
+
+## URY Website Image  submittable=0 istable=1 single=0 autoname=
+  - image: Attach Image [reqd]
+  - caption: Data
+

@@ -1,0 +1,246 @@
+method,guest,http_methods,is_doc_method,rate_limited,params,authz_signal,location
+ury.setup.demo.clear_demo_data,no,ANY,no,no,,explicit:only_for,ury/setup/demo.py:536
+ury.ury.api.audit.get_audit_log,no,ANY,no,no,event from_date to_date limit start,explicit:PermissionError|getBranch,ury/ury/api/audit.py:26
+ury.ury.api.audit.get_audit_summary,no,ANY,no,no,from_date to_date,explicit:PermissionError|getBranch,ury/ury/api/audit.py:70
+ury.ury.api.button_permission.cancel_check,no,ANY,no,no,,explicit:has_permission,ury/ury/api/button_permission.py:5
+ury.ury.api.consumption.retry,no,POST,no,no,names branch,explicit:has_permission,ury/ury/api/consumption.py:242
+ury.ury.api.consumption.get_consumption,no,ANY,no,no,branch from_date to_date,explicit:has_permission,ury/ury/api/consumption.py:275
+ury.ury.api.control_center.get_state,no,ANY,no,no,,explicit:has_permission,ury/ury/api/control_center.py:19
+ury.ury.api.control_center.save,no,POST,no,no,feature_states enforce roles,via-helper:get_state,ury/ury/api/control_center.py:41
+ury.ury.api.control_center.preview_user,no,ANY,no,no,user,via-helper:_check,ury/ury/api/control_center.py:73
+ury.ury.api.dashboard.get_dashboard_summary,no,ANY,no,no,branch,explicit:PermissionError|has_permission,ury/ury/api/dashboard.py:51
+ury.ury.api.dashboard.get_dashboard_charts,no,ANY,no,no,branch,explicit:PermissionError|has_permission,ury/ury/api/dashboard.py:111
+ury.ury.api.dashboard.get_recent_transactions,no,ANY,no,no,branch limit,explicit:PermissionError|has_permission,ury/ury/api/dashboard.py:226
+ury.ury.api.dashboard.get_module_records,no,ANY,no,no,doctype branch,explicit:PermissionError|has_permission,ury/ury/api/dashboard.py:268
+ury.ury.api.delivery.get_zones,no,ANY,no,no,branch active_only,implicit:get_list,ury/ury/api/delivery.py:36
+ury.ury.api.delivery.quote_delivery,no,ANY,no,no,zone order_amount,none,ury/ury/api/delivery.py:53
+ury.ury.api.delivery.create_delivery,no,ANY,no,no,invoice address zone customer_name mobile_number cash_on_delivery notes promised_minutes branch,via-helper:_branch,ury/ury/api/delivery.py:90
+ury.ury.api.delivery.get_board,no,ANY,no,no,branch include_closed,implicit:get_list,ury/ury/api/delivery.py:140
+ury.ury.api.delivery.get_drivers,no,ANY,no,no,branch active_only,implicit:get_list,ury/ury/api/delivery.py:179
+ury.ury.api.delivery.assign_driver,no,ANY,no,no,delivery driver,explicit:check_permission,ury/ury/api/delivery.py:235
+ury.ury.api.delivery.set_delivery_status,no,ANY,no,no,delivery status failure_reason,explicit:check_permission,ury/ury/api/delivery.py:252
+ury.ury.api.delivery.settle_driver_cash,no,ANY,no,no,driver branch,explicit:check_permission,ury/ury/api/delivery.py:264
+ury.ury.api.delivery.get_delivery_summary,no,ANY,no,no,branch from_date,implicit:get_list,ury/ury/api/delivery.py:297
+ury.ury.api.delivery.set_delivery_location,no,ANY,no,no,delivery latitude longitude,explicit:check_permission,ury/ury/api/delivery.py:346
+ury.ury.api.delivery.get_deliverable_invoices,no,ANY,no,no,branch,implicit:get_list,ury/ury/api/delivery.py:368
+ury.ury.api.driver_app.get_driver_link,no,ANY,no,no,driver,explicit:check_permission,ury/ury/api/driver_app.py:63
+ury.ury.api.driver_app.driver_state,yes,GET,no,yes,token,explicit:driver_from_token,ury/ury/api/driver_app.py:93
+ury.ury.api.driver_app.report_position,yes,POST,no,yes,token latitude longitude accuracy,explicit:driver_from_token,ury/ury/api/driver_app.py:115
+ury.ury.api.driver_app.driver_set_status,yes,POST,no,yes,token delivery status failure_reason,explicit:PermissionError|driver_from_token,ury/ury/api/driver_app.py:149
+ury.ury.api.feedback.get_feedback_link,no,ANY,no,no,invoice branch,explicit:PermissionError|check_permission|has_permission,ury/ury/api/feedback.py:49
+ury.ury.api.feedback.page_context,yes,GET,no,yes,token,explicit:read_token,ury/ury/api/feedback.py:102
+ury.ury.api.feedback.submit_feedback,yes,POST,no,yes,token overall food service cleanliness recommend_score comment contact_number,explicit:read_token,ury/ury/api/feedback.py:113
+ury.ury.api.feedback.get_feedback,no,ANY,no,no,from_date to_date status branch limit,explicit:getBranch,ury/ury/api/feedback.py:155
+ury.ury.api.feedback.get_feedback_summary,no,ANY,no,no,from_date to_date branch,via-helper:get_feedback,ury/ury/api/feedback.py:181
+ury.ury.api.feedback.set_feedback_status,no,ANY,no,no,feedback status follow_up_notes,explicit:check_permission,ury/ury/api/feedback.py:208
+ury.ury.api.feedback.get_branch_feedback_card,no,ANY,no,no,branch,explicit:PermissionError|getBranch|has_permission,ury/ury/api/feedback.py:220
+ury.ury.api.food_cost.get_plate_costs,no,ANY,no,no,branch menu,explicit:getBranch,ury/ury/api/food_cost.py:46
+ury.ury.api.food_cost.get_waste_summary,no,ANY,no,no,from_date to_date branch,explicit:getBranch,ury/ury/api/food_cost.py:120
+ury.ury.api.inventory.get_inventory_overview,no,ANY,no,no,branch days,implicit:get_list,ury/ury/api/inventory.py:33
+ury.ury.api.inventory.get_warehouse_stock,no,ANY,no,no,warehouse search status item_group page page_size sort,via-helper:_check_access,ury/ury/api/inventory.py:142
+ury.ury.api.inventory.get_warehouse_layout,no,ANY,no,no,warehouse,via-helper:_check_access,ury/ury/api/inventory.py:191
+ury.ury.api.invoice_browser.get_transactions,no,ANY,no,no,branch from_date to_date status order_type search page page_size,explicit:has_permission,ury/ury/api/invoice_browser.py:37
+ury.ury.api.invoice_browser.get_invoice_detail,no,ANY,no,no,invoice,explicit:check_permission|has_permission,ury/ury/api/invoice_browser.py:103
+ury.ury.api.invoice_browser.print_invoice,no,ANY,no,no,invoice channel,explicit:PermissionError|has_permission,ury/ury/api/invoice_browser.py:187
+ury.ury.api.loyalty.get_customer_loyalty,no,ANY,no,no,customer pos_profile,none,ury/ury/api/loyalty.py:62
+ury.ury.api.menu_quick_add.get_menu_page,no,ANY,no,no,branch,explicit:has_permission,ury/ury/api/menu_quick_add.py:26
+ury.ury.api.menu_quick_add.quick_add_item,no,ANY,no,no,branch item_name rate category kitchen image special_dish,explicit:has_permission,ury/ury/api/menu_quick_add.py:99
+ury.ury.api.menu_quick_add.update_menu_item,no,ANY,no,no,branch item item_name rate category kitchen image special_dish disabled,explicit:has_permission,ury/ury/api/menu_quick_add.py:157
+ury.ury.api.minimal.business_setup.get_business_setup,no,ANY,no,no,,none,ury/ury/api/minimal/business_setup.py:8
+ury.ury.api.minimal.business_setup.get_branches,no,ANY,no,no,,none,ury/ury/api/minimal/business_setup.py:32
+ury.ury.api.minimal.business_setup.update_business_setup,no,ANY,no,no,branch restaurant,none,ury/ury/api/minimal/business_setup.py:43
+ury.ury.api.minimal.business_setup.create_setup_user,no,ANY,no,no,email name password role,none,ury/ury/api/minimal/business_setup.py:98
+ury.ury.api.minimal.business_setup.submit_configure_data,no,ANY,no,no,data,none,ury/ury/api/minimal/business_setup.py:118
+ury.ury.api.minimal.setup_organization.get_setup_defaults,no,ANY,no,no,,none,ury/ury/api/minimal/setup_organization.py:11
+ury.ury.api.minimal.setup_organization.get_country_defaults,no,ANY,no,no,country,none,ury/ury/api/minimal/setup_organization.py:58
+ury.ury.api.minimal.setup_organization.get_setup_progress_steps,no,ANY,no,no,setup_ury_demo,none,ury/ury/api/minimal/setup_organization.py:110
+ury.ury.api.minimal.setup_organization.get_setup_progress_status,no,ANY,no,no,,none,ury/ury/api/minimal/setup_organization.py:157
+ury.ury.api.minimal.setup_organization.submit_setup,no,ANY,no,no,payload,none,ury/ury/api/minimal/setup_organization.py:165
+ury.ury.api.minimal.setup_organization.complete_wizard_setup,no,ANY,no,no,payload,none,ury/ury/api/minimal/setup_organization.py:193
+ury.ury.api.minimal.setup_organization.get_wizard_status,no,ANY,no,no,,none,ury/ury/api/minimal/setup_organization.py:199
+ury.ury.api.payment_preview.preview_payment,no,ANY,no,no,invoice pos_profile additionalDiscount,explicit:PermissionError|_enforce_|check_permission|getBranch,ury/ury/api/payment_preview.py:18
+ury.ury.api.payment_terminal.register_simulated_terminal_provider,no,ANY,no,no,,none,ury/ury/api/payment_terminal.py:153
+ury.ury.api.pos_extend.overrided_past_order_list,no,ANY,no,no,search_term status limit,none,ury/ury/api/pos_extend.py:21
+ury.ury.api.promotions.get_active_offers,no,ANY,no,no,pos_profile branch company,none,ury/ury/api/promotions.py:60
+ury.ury.api.promotions.check_coupon,no,ANY,no,no,coupon_code invoice,none,ury/ury/api/promotions.py:97
+ury.ury.api.promotions.apply_coupon,no,ANY,no,no,invoice coupon_code,via-helper:_invoice_for_write,ury/ury/api/promotions.py:137
+ury.ury.api.promotions.remove_coupon,no,ANY,no,no,invoice,via-helper:_invoice_for_write,ury/ury/api/promotions.py:172
+ury.ury.api.purchases.get_purchase_setup,no,ANY,no,no,branch,explicit:has_permission,ury/ury/api/purchases.py:43
+ury.ury.api.purchases.search_suppliers,no,ANY,no,no,term,implicit:get_list,ury/ury/api/purchases.py:87
+ury.ury.api.purchases.create_supplier,no,POST,no,no,supplier_name mobile_no,explicit:has_permission,ury/ury/api/purchases.py:108
+ury.ury.api.purchases.search_items,no,ANY,no,no,term warehouse supplier,implicit:get_list,ury/ury/api/purchases.py:139
+ury.ury.api.purchases.get_purchases,no,ANY,no,no,branch from_date to_date status supplier warehouse search page page_size,explicit:has_permission,ury/ury/api/purchases.py:237
+ury.ury.api.purchases.get_purchase_summary,no,ANY,no,no,branch from_date to_date,explicit:has_permission,ury/ury/api/purchases.py:284
+ury.ury.api.purchases.get_purchase_detail,no,ANY,no,no,name,explicit:check_permission|has_permission,ury/ury/api/purchases.py:344
+ury.ury.api.purchases.save_purchase,no,POST,no,no,data submit,explicit:check_permission|has_permission,ury/ury/api/purchases.py:441
+ury.ury.api.purchases.submit_purchase,no,POST,no,no,name,explicit:check_permission,ury/ury/api/purchases.py:476
+ury.ury.api.purchases.cancel_purchase,no,POST,no,no,name reason,explicit:check_permission,ury/ury/api/purchases.py:486
+ury.ury.api.purchases.delete_purchase,no,POST,no,no,name,explicit:check_permission,ury/ury/api/purchases.py:515
+ury.ury.api.purchases.record_payment,no,POST,no,no,name mode_of_payment amount reference_no posting_date,explicit:check_permission|has_permission,ury/ury/api/purchases.py:525
+ury.ury.api.qz_printing.get_setup,no,ANY,no,no,branch,explicit:_require_,ury/ury/api/qz_printing.py:44
+ury.ury.api.qz_printing.save_setup,no,ANY,no,no,branch qz_enabled qz_host bill_printer kitchens,explicit:_require_,ury/ury/api/qz_printing.py:78
+ury.ury.api.qz_printing.get_certificate,no,ANY,no,no,,explicit:PermissionError,ury/ury/api/qz_printing.py:104
+ury.ury.api.qz_printing.generate_certificate,no,ANY,no,no,force,explicit:_require_,ury/ury/api/qz_printing.py:112
+ury.ury.api.qz_printing.test_print,no,ANY,no,no,branch printer,explicit:_require_,ury/ury/api/qz_printing.py:166
+ury.ury.api.qz_printing.retry_failed,no,ANY,no,no,branch job,explicit:_require_,ury/ury/api/qz_printing.py:184
+ury.ury.api.qz_printing.claim_jobs,no,ANY,no,no,branch station limit,explicit:_require_,ury/ury/api/qz_printing.py:248
+ury.ury.api.qz_printing.complete_job,no,ANY,no,no,job ok error,explicit:_require_,ury/ury/api/qz_printing.py:286
+ury.ury.api.recipes.get_recipe_setup,no,ANY,no,no,branch,explicit:has_permission,ury/ury/api/recipes.py:38
+ury.ury.api.recipes.get_recipes,no,ANY,no,no,branch search status,implicit:get_list,ury/ury/api/recipes.py:71
+ury.ury.api.recipes.get_recipe,no,ANY,no,no,item_code branch,via-helper:_check_read,ury/ury/api/recipes.py:137
+ury.ury.api.recipes.search_ingredients,no,ANY,no,no,term warehouse exclude,implicit:get_list,ury/ury/api/recipes.py:216
+ury.ury.api.recipes.price_ingredients,no,ANY,no,no,item_codes warehouse,via-helper:_check_read,ury/ury/api/recipes.py:251
+ury.ury.api.recipes.save_recipe,no,POST,no,no,item_code data,via-helper:_check_write,ury/ury/api/recipes.py:269
+ury.ury.api.recipes.remove_recipe,no,POST,no,no,item_code recipe,via-helper:_check_write,ury/ury/api/recipes.py:331
+ury.ury.api.reservations.get_reservations,no,ANY,no,no,from_date to_date status branch,via-helper:_resolve_branch,ury/ury/api/reservations.py:39
+ury.ury.api.reservations.get_table_reservation_status,no,ANY,no,no,branch,via-helper:_resolve_branch,ury/ury/api/reservations.py:66
+ury.ury.api.reservations.create_reservation,no,ANY,no,no,guest_name reserved_from no_of_pax mobile_number table restaurant_room reserved_to notes customer branch,via-helper:_resolve_branch,ury/ury/api/reservations.py:109
+ury.ury.api.reservations.set_reservation_status,no,ANY,no,no,reservation status table invoice,explicit:PermissionError,ury/ury/api/reservations.py:141
+ury.ury.api.reservations.get_available_tables,no,ANY,no,no,reserved_from reserved_to no_of_pax branch,via-helper:_resolve_branch,ury/ury/api/reservations.py:171
+ury.ury.api.restaurant_website.availability,yes,GET,no,yes,slug reserved_from no_of_pax,via-helper:website,ury/ury/api/restaurant_website.py:130
+ury.ury.api.restaurant_website.reserve,yes,POST,no,yes,slug reserved_from no_of_pax table guest_name mobile_number request_id consent notes company_website,via-helper:website,ury/ury/api/restaurant_website.py:138
+ury.ury.api.self_ordering.generate_qr_token,no,ANY,no,no,profile table,explicit:PermissionError|has_permission,ury/ury/api/self_ordering.py:147
+ury.ury.api.self_ordering.enroll_device,no,ANY,no,no,device,explicit:PermissionError|has_permission,ury/ury/api/self_ordering.py:227
+ury.ury.api.self_ordering.get_ordering_context,yes,ANY,no,yes,token device_id device_credential,explicit:PermissionError|_resolve_device|_verify_qr_token,ury/ury/api/self_ordering.py:378
+ury.ury.api.self_ordering.assign_device_table,yes,ANY,no,yes,device_id device_credential staff_pin table,explicit:PermissionError|_assert_|_resolve_device,ury/ury/api/self_ordering.py:400
+ury.ury.api.self_ordering.get_customer_menu,yes,ANY,no,yes,session,explicit:_resolve_session,ury/ury/api/self_ordering.py:444
+ury.ury.api.self_ordering.get_customer_product,yes,ANY,no,yes,session item_code,explicit:_resolve_session,ury/ury/api/self_ordering.py:463
+ury.ury.api.self_ordering.get_customer_order,yes,ANY,no,yes,session,explicit:_resolve_session,ury/ury/api/self_ordering.py:554
+ury.ury.api.self_ordering.add_customer_items,yes,ANY,no,yes,session items,explicit:_resolve_session|check_permission,ury/ury/api/self_ordering.py:567
+ury.ury.api.self_ordering.request_bill,yes,ANY,no,yes,session,explicit:_resolve_session,ury/ury/api/self_ordering.py:833
+ury.ury.api.self_ordering.call_waiter,yes,ANY,no,yes,session,explicit:_resolve_session,ury/ury/api/self_ordering.py:847
+ury.ury.api.self_ordering.get_order_status,yes,ANY,no,yes,session,explicit:_resolve_session,ury/ury/api/self_ordering.py:910
+ury.ury.api.self_ordering.create_payment_request,yes,ANY,no,yes,session,explicit:_resolve_session,ury/ury/api/self_ordering.py:1003
+ury.ury.api.self_ordering.get_payment_status,yes,ANY,no,yes,session,explicit:_resolve_session,ury/ury/api/self_ordering.py:1083
+ury.ury.api.self_ordering.share_payment_link,yes,ANY,no,yes,session recipient,explicit:_resolve_session,ury/ury/api/self_ordering.py:1126
+ury.ury.api.self_ordering_qr.get_table_qr,no,ANY,no,no,table,via-helper:_build,ury/ury/api/self_ordering_qr.py:198
+ury.ury.api.self_ordering_qr.download_table_qr,no,ANY,no,no,table fmt,via-helper:_build,ury/ury/api/self_ordering_qr.py:212
+ury.ury.api.self_ordering_qr.get_branch_table_qrs,no,ANY,no,no,branch include_takeaway,explicit:PermissionError|has_permission,ury/ury/api/self_ordering_qr.py:242
+ury.ury.api.service_requests.get_open_service_requests,no,ANY,no,no,,explicit:getBranch,ury/ury/api/service_requests.py:109
+ury.ury.api.service_requests.acknowledge_service_requests,no,ANY,no,no,names,explicit:PermissionError,ury/ury/api/service_requests.py:137
+ury.ury.api.service_requests.resolve_service_request,no,ANY,no,no,name status,explicit:PermissionError|getBranch,ury/ury/api/service_requests.py:166
+ury.ury.api.ury_dashboard.get_dashboard_stats,no,GET,no,no,branch,none,ury/ury/api/ury_dashboard.py:7
+ury.ury.api.ury_dashboard.get_needs_attention,no,GET,no,no,branch,none,ury/ury/api/ury_dashboard.py:79
+ury.ury.api.ury_dashboard.get_shift_metrics,no,GET,no,no,branch,none,ury/ury/api/ury_dashboard.py:165
+ury.ury.api.ury_dashboard.get_baseline,no,GET,no,no,branch weeks,none,ury/ury/api/ury_dashboard.py:224
+ury.ury.api.ury_dashboard.get_floor_load,no,GET,no,no,branch,none,ury/ury/api/ury_dashboard.py:285
+ury.ury.api.ury_kitchen_message.send_message,no,ANY,no,no,message branch production requires_acknowledgement priority expires_in_minutes,none,ury/ury/api/ury_kitchen_message.py:37
+ury.ury.api.ury_kitchen_message.get_active_messages,no,ANY,no,no,branch production,none,ury/ury/api/ury_kitchen_message.py:71
+ury.ury.api.ury_kitchen_message.acknowledge,no,ANY,no,no,name station,none,ury/ury/api/ury_kitchen_message.py:99
+ury.ury.api.ury_kitchen_message.dismiss,no,ANY,no,no,name,none,ury/ury/api/ury_kitchen_message.py:130
+ury.ury.api.ury_kitchen_message.get_stations,no,ANY,no,no,branch,none,ury/ury/api/ury_kitchen_message.py:143
+ury.ury.api.ury_kot_display.serve_kot,no,POST,no,no,name time,explicit:PermissionError|has_permission,ury/ury/api/ury_kot_display.py:9
+ury.ury.api.ury_kot_display.start_kot_prep,no,POST,no,no,name,explicit:_assert_,ury/ury/api/ury_kot_display.py:68
+ury.ury.api.ury_kot_display.recall_kot,no,POST,no,no,name,explicit:_assert_,ury/ury/api/ury_kot_display.py:97
+ury.ury.api.ury_kot_display.set_kot_item_prepared,no,POST,no,no,name row prepared,explicit:_assert_,ury/ury/api/ury_kot_display.py:124
+ury.ury.api.ury_kot_display.set_item_availability,no,POST,no,no,item available menu,explicit:PermissionError|getBranch|has_permission,ury/ury/api/ury_kot_display.py:166
+ury.ury.api.ury_kot_display.unavailable_items,no,ANY,no,no,,explicit:getBranch,ury/ury/api/ury_kot_display.py:247
+ury.ury.api.ury_kot_display.kitchen_stats,no,ANY,no,no,,explicit:getBranch,ury/ury/api/ury_kot_display.py:285
+ury.ury.api.ury_kot_display.confirm_cancel_kot,no,ANY,no,no,name,explicit:PermissionError|getBranch|get_roles|has_permission,ury/ury/api/ury_kot_display.py:325
+ury.ury.api.ury_kot_display.get_site_name,yes,ANY,no,no,,none,ury/ury/api/ury_kot_display.py:366
+ury.ury.api.ury_kot_display.kot_list,no,ANY,no,no,,explicit:getBranch,ury/ury/api/ury_kot_display.py:512
+ury.ury.api.ury_kot_display.station_summary,no,ANY,no,no,,implicit:get_list,ury/ury/api/ury_kot_display.py:556
+ury.ury.api.ury_kot_display.served_kot_list,no,ANY,no,no,,explicit:getBranch,ury/ury/api/ury_kot_display.py:620
+ury.ury.api.ury_kot_display.get_kot_details,no,ANY,no,no,name,explicit:PermissionError|getBranch,ury/ury/api/ury_kot_display.py:672
+ury.ury.api.ury_kot_generate.kot_execute,no,ANY,no,no,invoice_id customer restaurant_table current_items previous_items comments,explicit:PermissionError|has_permission,ury/ury/api/ury_kot_generate.py:336
+ury.ury.api.ury_kot_notification.order_delay_notification,no,ANY,no,no,id,explicit:PermissionError|has_permission,ury/ury/api/ury_kot_notification.py:21
+ury.ury.api.ury_kot_reprint.reprint_kot,no,ANY,no,no,invoice_number,explicit:PermissionError|getBranch|get_roles|has_permission,ury/ury/api/ury_kot_reprint.py:11
+ury.ury.api.ury_kot_validation.get_kot_errors,no,ANY,no,no,pos_profile,explicit:PermissionError|getBranch|get_roles,ury/ury/api/ury_kot_validation.py:164
+ury.ury.api.ury_print.network_printing,no,ANY,no,no,doctype name printer_setting print_format doc no_letterhead,none,ury/ury/api/ury_print.py:27
+ury.ury.api.ury_print.select_network_printer,no,ANY,no,no,pos_profile invoice_id,explicit:PermissionError|has_permission,ury/ury/api/ury_print.py:97
+ury.ury.api.ury_print.qz_print_update,no,ANY,no,no,invoice,explicit:PermissionError|has_permission,ury/ury/api/ury_print.py:136
+ury.ury.api.ury_print.print_pos_page,no,ANY,no,no,doctype name print_format,explicit:PermissionError|has_permission,ury/ury/api/ury_print.py:183
+ury.ury.api.ury_print.qz_certificate,no,ANY,no,no,,none,ury/ury/api/ury_print.py:208
+ury.ury.api.ury_print.signature_promise,no,ANY,no,no,toSign,explicit:PermissionError|get_roles,ury/ury/api/ury_print.py:251
+ury.ury.api.ury_service_line.get_service_line,no,GET,no,no,branch,none,ury/ury/api/ury_service_line.py:7
+ury.ury.api.ury_service_line.get_running_low,no,GET,no,no,branch,none,ury/ury/api/ury_service_line.py:79
+ury.ury.api.waitlist.get_waitlist,no,ANY,no,no,branch include_closed,via-helper:_branch,ury/ury/api/waitlist.py:186
+ury.ury.api.waitlist.get_wait_quote,no,ANY,no,no,no_of_pax branch,via-helper:_branch,ury/ury/api/waitlist.py:224
+ury.ury.api.waitlist.join_waitlist,no,ANY,no,no,guest_name no_of_pax mobile_number restaurant_room notes quoted_minutes source branch,via-helper:_branch,ury/ury/api/waitlist.py:230
+ury.ury.api.waitlist.set_status,no,ANY,no,no,entry status table,explicit:check_permission,ury/ury/api/waitlist.py:259
+ury.ury.api.waitlist.suggest_tables,no,ANY,no,no,entry,explicit:check_permission,ury/ury/api/waitlist.py:273
+ury.ury.api.waitlist.get_waitlist_summary,no,ANY,no,no,branch,via-helper:_branch,ury/ury/api/waitlist.py:347
+ury.ury.api.website_editor.get_editor_state,no,ANY,no,no,restaurant,explicit:PermissionError|check_permission|has_permission,ury/ury/api/website_editor.py:64
+ury.ury.api.website_editor.save_website,no,ANY,no,no,payload,explicit:check_permission,ury/ury/api/website_editor.py:109
+ury.ury.api.website_editor.save_preview_draft,no,ANY,no,no,slug payload,explicit:check_permission,ury/ury/api/website_editor.py:152
+ury.ury.api.website_editor.discard_preview_draft,no,ANY,no,no,slug,none,ury/ury/api/website_editor.py:176
+ury.ury.api.website_editor.set_published,no,ANY,no,no,slug published,explicit:check_permission,ury/ury/api/website_editor.py:183
+ury.ury.controllers.access.get_my_access,no,ANY,no,no,,explicit:get_roles,ury/ury/controllers/access.py:177
+ury.ury.doctype.sub_pos_closing.sub_pos_closing.get_pos_profile,no,ANY,no,no,,explicit:getBranch,ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:84
+ury.ury.doctype.sub_pos_closing.sub_pos_closing.get_cashiers,no,ANY,no,no,doctype txt searchfield start page_len filters,none,ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:92
+ury.ury.doctype.sub_pos_closing.sub_pos_closing.get_pos_invoices,no,ANY,no,no,start end pos_profile user,explicit:PermissionError|getBranch|get_roles|has_permission,ury/ury/doctype/sub_pos_closing/sub_pos_closing.py:103
+ury.ury.doctype.ury_daily_p_and_l.ury_daily_p_and_l.get_proft_loss_details,no,ANY,yes,no,,none,ury/ury/doctype/ury_daily_p_and_l/ury_daily_p_and_l.py:552
+ury.ury.doctype.ury_menu.ury_menu.sync_menu_prices,no,ANY,no,no,menu,explicit:PermissionError|has_permission,ury/ury/doctype/ury_menu/ury_menu.py:146
+ury.ury.doctype.ury_menu.ury_menu.get_menu_price_sync_status,no,ANY,no,no,menu,explicit:PermissionError|has_permission,ury/ury/doctype/ury_menu/ury_menu.py:169
+ury.ury.doctype.ury_order.ury_order.merge_free_tables,no,ANY,no,no,table1 table2,none,ury/ury/doctype/ury_order/ury_order.py:24
+ury.ury.doctype.ury_order.ury_order.merge_tables_batch,no,ANY,no,no,anchor_table tables,none,ury/ury/doctype/ury_order/ury_order.py:30
+ury.ury.doctype.ury_order.ury_order.release_tables_after_print,no,ANY,no,no,invoice,explicit:PermissionError|has_permission,ury/ury/doctype/ury_order/ury_order.py:400
+ury.ury.doctype.ury_order.ury_order.close_table,no,POST,no,no,invoice table reason,explicit:PermissionError|getBranch|has_permission,ury/ury/doctype/ury_order/ury_order.py:484
+ury.ury.doctype.ury_order.ury_order.get_table_close_state,no,ANY,no,no,table invoice,explicit:getBranch,ury/ury/doctype/ury_order/ury_order.py:617
+ury.ury.doctype.ury_order.ury_order.unmerge_tables,no,ANY,no,no,table,none,ury/ury/doctype/ury_order/ury_order.py:748
+ury.ury.doctype.ury_order.ury_order.split_bill,no,ANY,no,no,source_invoice items_to_move customer,explicit:PermissionError|getBranch|get_roles|has_permission,ury/ury/doctype/ury_order/ury_order.py:833
+ury.ury.doctype.ury_order.ury_order.get_order_invoice,no,ANY,no,no,table invoiceNo order_type is_payment,via-helper:_resolve_or_create_pos_invoice,ury/ury/doctype/ury_order/ury_order.py:1135
+ury.ury.doctype.ury_order.ury_order.get_table_order_context,no,ANY,no,no,table,explicit:PermissionError|_has_role|getBranch|get_roles|has_permission,ury/ury/doctype/ury_order/ury_order.py:1340
+ury.ury.doctype.ury_order.ury_order.get_captain_context,no,ANY,no,no,,explicit:_has_role|getBranch|get_roles,ury/ury/doctype/ury_order/ury_order.py:1544
+ury.ury.doctype.ury_order.ury_order.sync_order,no,ANY,no,no,items cashier owner mode_of_payment customer no_of_pax last_invoice waiter pos_profile last_modified_time table invoice comments order_type aggregator_id room merged_tables request_id,explicit:PermissionError|_has_role|getBranch|get_roles|has_permission,ury/ury/doctype/ury_order/ury_order.py:1699
+ury.ury.doctype.ury_order.ury_order.item_query_restaurant,no,ANY,no,no,doctype txt searchfield start page_len filters as_dict,none,ury/ury/doctype/ury_order/ury_order.py:2078
+ury.ury.doctype.ury_order.ury_order.get_restaurant_and_menu_name,no,ANY,no,no,table,none,ury/ury/doctype/ury_order/ury_order.py:2097
+ury.ury.doctype.ury_order.ury_order.get_menu_name,no,ANY,no,no,order_type,explicit:getBranch,ury/ury/doctype/ury_order/ury_order.py:2129
+ury.ury.doctype.ury_order.ury_order.pos_opening_check,no,ANY,no,no,,explicit:getBranch,ury/ury/doctype/ury_order/ury_order.py:2154
+ury.ury.doctype.ury_order.ury_order.table_transfer,no,ANY,no,no,table newTable invoice,explicit:PermissionError|_has_role|get_roles|has_permission,ury/ury/doctype/ury_order/ury_order.py:2199
+ury.ury.doctype.ury_order.ury_order.captain_transfer,no,ANY,no,no,currentCaptain newCaptain invoice,explicit:PermissionError|_has_role|get_roles|has_permission,ury/ury/doctype/ury_order/ury_order.py:2270
+ury.ury.doctype.ury_order.ury_order.customer_favourite_item,no,ANY,no,no,customer_name,explicit:PermissionError|getBranch|has_permission,ury/ury/doctype/ury_order/ury_order.py:2345
+ury.ury.doctype.ury_order.ury_order.cancel_order,no,ANY,no,no,invoice_id reason,explicit:PermissionError|_require_|getBranch|has_permission,ury/ury/doctype/ury_order/ury_order.py:2380
+ury.ury.doctype.ury_order.ury_order.make_invoice,no,ANY,no,no,customer payments cashier pos_profile owner additionalDiscount table invoice redeem_loyalty_points,explicit:PermissionError|_require_|get_roles,ury/ury/doctype/ury_order/ury_order.py:2520
+ury.ury.report_api.customers.search_customers,no,ANY,no,no,query limit,explicit:require_manager,ury/ury/report_api/customers.py:15
+ury.ury.report_api.customers.get_customer_data,no,ANY,no,no,customer start_date end_date branch page page_size,explicit:require_manager,ury/ury/report_api/customers.py:38
+ury.ury.report_api.customers.get_daywise_customer_details,no,ANY,no,no,start_date end_date branch,explicit:require_manager,ury/ury/report_api/customers.py:157
+ury.ury.report_api.customers.get_repeated_customers,no,ANY,no,no,start_date end_date branch,explicit:require_manager,ury/ury/report_api/customers.py:215
+ury.ury.report_api.employees.search_employees,no,ANY,no,no,query limit,explicit:require_manager,ury/ury/report_api/employees.py:13
+ury.ury.report_api.employees.get_employee_sales,no,ANY,no,no,start_date end_date branch sort_by,explicit:require_manager,ury/ury/report_api/employees.py:33
+ury.ury.report_api.employees.get_employee_item_wise_sales,no,ANY,no,no,employee start_date end_date branch,explicit:require_manager,ury/ury/report_api/employees.py:101
+ury.ury.report_api.financial.get_daily_pnl,no,ANY,no,no,date branch,explicit:require_manager,ury/ury/report_api/financial.py:54
+ury.ury.report_api.financial.get_daily_pnl_dates,no,ANY,no,no,branch limit,explicit:require_manager,ury/ury/report_api/financial.py:138
+ury.ury.report_api.items.get_item_wise_sales,no,ANY,no,no,start_date end_date branch item_group search page page_size,explicit:require_manager,ury/ury/report_api/items.py:13
+ury.ury.report_api.items.get_item_groups,no,ANY,no,no,,explicit:require_manager,ury/ury/report_api/items.py:116
+ury.ury.report_api.items.get_item_wise_purchase_history,no,ANY,no,no,start_date end_date branch page page_size,explicit:require_manager,ury/ury/report_api/items.py:123
+ury.ury.report_api.operations.get_completed_work_orders,no,ANY,no,no,start_date end_date,explicit:require_manager,ury/ury/report_api/operations.py:7
+ury.ury.report_api.sales.get_today_sales,no,ANY,no,no,branch date,explicit:require_manager,ury/ury/report_api/sales.py:14
+ury.ury.report_api.sales.get_daywise_sales,no,ANY,no,no,start_date end_date branch,explicit:require_manager,ury/ury/report_api/sales.py:86
+ury.ury.report_api.sales.get_daywise_invoices,no,ANY,no,no,start_date end_date branch page page_size,explicit:require_manager,ury/ury/report_api/sales.py:156
+ury.ury.report_api.sales.get_month_wise_sales,no,ANY,no,no,branch months_back,explicit:require_manager,ury/ury/report_api/sales.py:267
+ury.ury.report_api.sales.get_time_wise_sales,no,ANY,no,no,branch date bucket_size_hours,explicit:require_manager,ury/ury/report_api/sales.py:351
+ury.ury.report_api.sales.get_service_wise_sales,no,ANY,no,no,start_date end_date branch,explicit:require_manager,ury/ury/report_api/sales.py:441
+ury.ury.report_api.sales.get_cancelled_invoices,no,ANY,no,no,start_date end_date branch page page_size,explicit:require_manager,ury/ury/report_api/sales.py:508
+ury.ury.report_api.sales.get_average_bill_value,no,ANY,no,no,start_date end_date branch,explicit:require_manager,ury/ury/report_api/sales.py:619
+ury.ury_pos.api.getRestaurantMenu,no,ANY,no,no,pos_profile room order_type,explicit:getBranch|get_roles,ury/ury_pos/api.py:126
+ury.ury_pos.api.getMenuCourses,no,ANY,no,no,,none,ury/ury_pos/api.py:153
+ury.ury_pos.api.getBranch,no,ANY,no,no,,explicit:getBranch,ury/ury_pos/api.py:158
+ury.ury_pos.api.get_production_units_for_branch,no,ANY,no,no,,explicit:getBranch,ury/ury_pos/api.py:187
+ury.ury_pos.api.getBranchRoom,no,ANY,no,no,,explicit:getBranch,ury/ury_pos/api.py:200
+ury.ury_pos.api.getRoom,no,ANY,no,no,,none,ury/ury_pos/api.py:225
+ury.ury_pos.api.getModeOfPayment,no,ANY,no,no,,via-helper:getPosProfile,ury/ury_pos/api.py:249
+ury.ury_pos.api.get_split_group,no,ANY,no,no,invoice,explicit:PermissionError|getBranch|has_permission,ury/ury_pos/api.py:358
+ury.ury_pos.api.getInvoiceForCashier,no,ANY,no,no,status cashier limit limit_start,explicit:getBranch,ury/ury_pos/api.py:446
+ury.ury_pos.api.getPosInvoice,no,ANY,no,no,status limit limit_start,explicit:_assert_|getBranch,ury/ury_pos/api.py:587
+ury.ury_pos.api.searchPosInvoice,no,ANY,no,no,query status,explicit:_assert_|getBranch|get_roles,ury/ury_pos/api.py:741
+ury.ury_pos.api.get_select_field_options,no,ANY,no,no,,none,ury/ury_pos/api.py:820
+ury.ury_pos.api.fav_items,no,ANY,no,no,customer,explicit:PermissionError|getBranch|has_permission,ury/ury_pos/api.py:829
+ury.ury_pos.api.getCashier,no,ANY,no,no,room,explicit:getBranch,ury/ury_pos/api.py:862
+ury.ury_pos.api.getPosProfile,no,ANY,no,no,,explicit:_require_|getBranch,ury/ury_pos/api.py:927
+ury.ury_pos.api.getPosInvoiceItems,no,ANY,no,no,invoice,explicit:PermissionError|getBranch|has_permission,ury/ury_pos/api.py:1048
+ury.ury_pos.api.posOpening,no,ANY,no,no,,explicit:getBranch,ury/ury_pos/api.py:1085
+ury.ury_pos.api.getAggregator,no,ANY,no,no,,explicit:getBranch,ury/ury_pos/api.py:1102
+ury.ury_pos.api.getAggregatorItem,no,ANY,no,no,aggregator,explicit:getBranch,ury/ury_pos/api.py:1113
+ury.ury_pos.api.getAggregatorMOP,no,ANY,no,no,aggregator,explicit:getBranch,ury/ury_pos/api.py:1150
+ury.ury_pos.api.create_customer,no,ANY,no,no,customer_name mobile_number customer_group territory,explicit:PermissionError|has_permission,ury/ury_pos/api.py:1164
+ury.ury_pos.api.get_open_pos_opening_entries,no,ANY,no,no,pos_profile,explicit:PermissionError|has_permission,ury/ury_pos/api.py:1223
+ury.ury_pos.api.validate_pos_close,no,ANY,no,no,pos_profile,none,ury/ury_pos/api.py:1253
+ury.ury_pos.api.create_pos_opening_entry,no,ANY,no,no,pos_profile company balance_details,explicit:PermissionError|has_permission,ury/ury_pos/api.py:1376
+ury.ury_pos.api.get_pos_opening_screen_data,no,ANY,no,no,,explicit:has_permission,ury/ury_pos/api.py:1429
+ury.ury_pos.api._validate_checklist_branch,no,ANY,no,no,pos_profile,explicit:PermissionError|getBranch,ury/ury_pos/api.py:1566
+ury.ury_pos.api.get_checklist,no,ANY,no,no,pos_profile checklist_type,via-helper:_validate_checklist_branch,ury/ury_pos/api.py:1587
+ury.ury_pos.api.submit_checklist,no,ANY,no,no,pos_profile checklist_type items pos_opening_entry,explicit:getBranch,ury/ury_pos/api.py:1632
+ury.ury_pos.api.merge_bills,no,ANY,no,no,primary_invoice secondary_invoice,explicit:PermissionError|has_permission,ury/ury_pos/api.py:1714
+ury.www.pos.get_context_for_dev,no,POST,no,no,,explicit:PermissionError|get_roles,ury/www/pos.py:48
+ury.www.ury.get_context_for_dev,no,POST,no,no,,explicit:PermissionError|get_roles,ury/www/ury.py:57
