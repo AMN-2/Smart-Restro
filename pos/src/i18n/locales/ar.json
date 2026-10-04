@@ -38,7 +38,8 @@
     "remove": "إزالة",
     "preview": "معاينة",
     "close": "إغلاق",
-    "retry": "أعد المحاولة"
+    "retry": "أعد المحاولة",
+    "clear": "مسح"
   },
   "header": {
     "search_placeholder_default": "ابحث في الطلبات أو الأصناف أو الزبائن...",
@@ -419,7 +420,14 @@
     "stale_data": "تعذّر تحديث الطاولات. المعروض هو آخر حالة.",
     "reserved_now": "محجوزة الآن",
     "reserved_for": "محجوزة لـ {{guest}} الساعة {{time}}",
-    "reservations": "الحجوزات"
+    "reservations": "الحجوزات",
+    "needs_attention": "تحتاج متابعة",
+    "open": "فتح",
+    "seated_for": "مفتوحة من {{time}}",
+    "occupied_only": "المشغولة فقط",
+    "show_all_tables": "عرض كل الطاولات",
+    "no_occupied_tables": "ماكو طاولات مشغولة بهذي الصالة",
+    "seats_count": "{{count}} كراسي"
   },
   "bill_split": {
     "split_bill": "تقسيم الفاتورة",
@@ -535,16 +543,63 @@
       "no_order_reprint": "ماكو طلب مفتوح حتى تعيد طباعته.",
       "no_order_print": "ماكو طلب مفتوح للطباعة.",
       "no_order_transfer": "ماكو طلب مفتوح حتى تنقله.",
-      "transfer_unavailable": "تعذّر نقل هذه الطاولة."
+      "transfer_unavailable": "تعذّر نقل هذه الطاولة.",
+      "modified_elsewhere": "عدّل شخص آخر هذا الطلب. أعد فتح الطاولة وحاول مجددًا."
     },
     "success": {
       "kot_reprinted": "انطبع وصل المطبخ مرة ثانية.",
       "printed": "تمت الطباعة بنجاح.",
       "table_transferred": "تم نقل الطاولة.",
-      "captain_transferred": "تم نقل الكابتن."
+      "captain_transferred": "تم نقل الكابتن.",
+      "order_sent": "أُرسل طلب الطاولة {{table}} إلى المطبخ.",
+      "order_updated": "حُدّث طلب الطاولة {{table}}."
     },
     "feature_off_title": "طلبات الكابتن متوقفة",
-    "feature_off_body": "اطلب من المدير يفعّلها من مركز التحكم."
+    "feature_off_body": "اطلب من المدير يفعّلها من مركز التحكم.",
+    "browse_only": "يمكنك تصفح القائمة، لكن لا تملك صلاحية إضافة أصناف إلى هذا الطلب.",
+    "choose_table": "اختر طاولة",
+    "choose_table_to_send": "اختر طاولة للإرسال",
+    "clear_new": "مسح",
+    "draft_label": "بدون طاولة بعد",
+    "draft_moved": "أُضيفت أصنافك إلى الطاولة {{table}}. راجعها ثم أرسل.",
+    "empty_hint_draft": "اضغط على الأصناف في القائمة للبدء. يمكنك اختيار الطاولة الآن أو قبل الإرسال مباشرة.",
+    "empty_hint_table": "اضغط على الأصناف في القائمة لإضافتها إلى هذه الطاولة.",
+    "just_now": "الآن",
+    "merged_with": "مدموجة مع {{tables}}",
+    "new_items": "أصناف جديدة",
+    "new_order": "طلب جديد",
+    "updating_order": "إضافة إلى طلب مفتوح",
+    "send_to_kitchen": "إرسال إلى المطبخ",
+    "sending": "جارٍ الإرسال…",
+    "send_short": "إرسال",
+    "update_short": "تحديث",
+    "table_label": "طاولة {{table}}",
+    "tap_to_choose": "اضغط لاختيار طاولة هذا الطلب",
+    "table_locked_draft_kept": "لا يمكن إضافة أصناف إلى الطاولة {{table}} حاليًا. احتفظنا بأصنافك — اختر طاولة أخرى.",
+    "view_only": "عرض فقط — لا تملك صلاحية تعديل طلب هذه الطاولة حاليًا.",
+    "view_only_other": "لا يمكنك فتح طلب هذه الطاولة. قد تكون تابعة لكابتن آخر أو صدرت فاتورتها.",
+    "picker": {
+      "title": "اختر طاولة",
+      "search": "ابحث برقم الطاولة…",
+      "no_match": "لا توجد طاولة مطابقة للبحث.",
+      "free_count": "الطاولات الفارغة",
+      "current": "الطاولة الحالية",
+      "assigned_to": "هذه الطاولة مسندة إلى {{name}}",
+      "occupied": "هذه الطاولة مشغولة",
+      "billed_locked_hint": "طُبعت فاتورة هذه الطاولة. اطلب من الكاشير تسويتها أو إعادة فتحها."
+    },
+    "status": {
+      "free": "فارغة",
+      "mine": "طاولاتي",
+      "occupied": "مشغولة",
+      "billed": "مفوترة"
+    },
+    "switch": {
+      "title": "تغييرات غير مرسلة",
+      "body": "على الطاولة {{from}} تغييرات لم تُرسل بعد. ماذا تريد أن تفعل قبل فتح الطاولة {{to}}؟",
+      "discard": "تجاهل التغييرات",
+      "carry": "نقل الأصناف الجديدة إلى {{to}}"
+    }
   },
   "auth": {
     "access_denied": "ما مسموحلك تدخل",
@@ -740,5 +795,14 @@
   },
   "qz": {
     "print_failed": "تعذّرت الطباعة على {{printer}}: {{reason}}"
+  },
+  "live": {
+    "order_left_list": "تم دفع الطلب {{order}} أو إلغاؤه أو نقله من جهاز آخر.",
+    "order_refreshed": "تم تحديث هذا الطلب من جهاز آخر.",
+    "changed_elsewhere_title": "تم التعديل من جهاز آخر",
+    "changed_elsewhere_by": "عدّل {{user}} هذا الطلب أثناء تعديلك له.",
+    "changed_elsewhere_body": "تغيّر هذا الطلب أثناء تعديلك له.",
+    "reload_order": "تحميل آخر نسخة",
+    "keep_mine": "الإبقاء على تعديلاتي"
   }
 }
