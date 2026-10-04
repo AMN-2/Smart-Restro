@@ -112,7 +112,9 @@
  * paper and amber rather than the grey-and-blue admin default urypos had.
  * =================================================================== */
 
+/* Light only: the POS has no dark theme, so native controls stay light too. */
 :root {
+  color-scheme: light;
   --background: 42 43% 97%;
   --foreground: 20 24% 16%;
 
@@ -129,12 +131,14 @@
   --secondary-foreground: 28 63% 23%;
 
   --muted: 40 30% 93%;
-  --muted-foreground: 25 12% 45%;
+  /* 42%, matching theme.css: 45% measured 4.47:1 on the background, under
+     the 4.5:1 WCAG floor for body text. */
+  --muted-foreground: 25 12% 42%;
 
   --accent: 45 100% 58%;
   --accent-foreground: 28 63% 20%;
 
-  --destructive: 0 72% 46%;
+  --destructive: 0 84.2% 48%;
   --destructive-foreground: 0 0% 100%;
 
   /* Not in theme.css yet: a floor app needs "this table is fine" and "this
@@ -180,7 +184,58 @@
 
   .pos-card {
     @apply rounded-2xl border border-border bg-card shadow-card;
+    position: relative;
+    box-shadow:
+      0 1px 1px hsl(25 22% 22% / 0.04),
+      0 10px 26px hsl(25 26% 18% / 0.07),
+      inset 0 1px 0 hsl(0 0% 100% / 0.72);
   }
+
+  .pos-card::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(145deg, hsl(0 0% 100% / 0.16), transparent 34%);
+  }
+
+  .table-scene {
+    @apply relative mx-auto mb-1 mt-[-0.25rem] w-full max-w-[11rem];
+    perspective: 560px;
+    color: hsl(var(--success));
+    filter: drop-shadow(0 8px 8px hsl(24 22% 15% / 0.09));
+  }
+
+  .table-scene svg {
+    @apply block h-auto w-full overflow-visible;
+    transform: rotateX(2deg) translateZ(0);
+    transform-origin: 50% 80%;
+    transition: transform 180ms ease;
+  }
+
+  .pos-card:hover .table-scene svg { transform: rotateX(2deg) translateY(-2px) scale(1.025); }
+  .table-scene-active { color: hsl(var(--primary)); }
+  .table-scene-occupied { color: hsl(var(--warning)); }
+  .table-scene-attention { color: hsl(var(--destructive)); }
+  .table-scene-service { transform-origin: 50% 50%; animation: scene-service-in 420ms cubic-bezier(.2,.8,.2,1) both; }
+
+  .pos-product-card {
+    transform: translateZ(0);
+    transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  }
+
+  .pos-product-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 2px 2px hsl(25 22% 22% / 0.04),
+      0 16px 34px hsl(25 26% 18% / 0.12),
+      inset 0 1px 0 hsl(0 0% 100% / 0.76);
+  }
+
+  .pos-product-card img { transition: transform 320ms cubic-bezier(.2,.8,.2,1), filter 180ms ease; }
+  .pos-product-card:hover img { transform: scale(1.045); filter: saturate(1.04) contrast(1.02); }
+
 
   /* A card that is itself a control: a table tile, a menu item. */
   .pos-card-interactive {
@@ -453,6 +508,178 @@
     unicode-bidi: isolate;
   }
 
+  /* --- Small controls ---------------------------------------------- */
+
+  /* Square icon-only button; 44px so it clears the thumb floor. */
+  .pos-icon-btn {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl
+           text-muted-foreground transition-colors duration-fast
+           hover:bg-muted hover:text-foreground
+           disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  /* Filter chips: rooms, courses, statuses. One look everywhere. */
+  .pos-chip {
+    @apply inline-flex min-h-[2.5rem] shrink-0 items-center gap-2 whitespace-nowrap
+           rounded-xl border border-border bg-card px-4 text-sm font-semibold
+           text-muted-foreground transition-colors duration-fast
+           hover:border-accent hover:text-foreground;
+  }
+
+  .pos-chip-active {
+    @apply border-primary bg-primary text-primary-foreground shadow-card
+           hover:border-primary hover:text-primary-foreground;
+  }
+
+  .pos-chip-count {
+    @apply rounded-full bg-muted px-1.5 text-[11px] font-bold tabular-nums text-muted-foreground;
+  }
+
+  .pos-chip-active .pos-chip-count { @apply bg-white/25 text-primary-foreground; }
+
+  /* A horizontal strip of chips that scrolls instead of wrapping. */
+  .pos-chip-row {
+    @apply -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6;
+    scrollbar-width: none;
+  }
+  .pos-chip-row::-webkit-scrollbar { display: none; }
+
+  /* Two-to-four way choice. */
+  .pos-segment {
+    @apply inline-flex rounded-xl border border-border bg-muted p-1;
+  }
+
+  .pos-segment-item {
+    @apply min-h-[2.25rem] flex-1 whitespace-nowrap rounded-lg px-4 text-sm font-bold
+           text-muted-foreground transition-colors duration-fast hover:text-foreground;
+  }
+
+  .pos-segment-item-active { @apply bg-card text-foreground shadow-card; }
+
+  /* Quantity stepper: equal-weight ends, the count between them. */
+  .pos-stepper {
+    @apply inline-flex items-stretch overflow-hidden rounded-xl border border-border bg-card;
+  }
+
+  .pos-stepper > button {
+    @apply flex h-10 w-10 shrink-0 items-center justify-center text-lg font-bold
+           text-foreground transition-colors duration-fast hover:bg-muted
+           disabled:cursor-not-allowed disabled:text-muted-foreground/50 disabled:hover:bg-card;
+  }
+
+  .pos-stepper > .pos-stepper-value {
+    @apply flex h-10 min-w-[2.75rem] items-center justify-center border-x border-border
+           px-2 text-base font-bold tabular-nums text-foreground;
+  }
+
+  /* An <input> keeps its intrinsic ~20-character width in a flex row, which
+     pushed the stepper (and the card around it) past a phone's edge. Zero
+     basis + flex-grow lets it take only the room that is left. */
+  .pos-stepper > input.pos-stepper-value {
+    width: 0;
+    min-width: 2.75rem;
+    -moz-appearance: textfield;
+  }
+
+  .pos-stepper > input.pos-stepper-value::-webkit-outer-spin-button,
+  .pos-stepper > input.pos-stepper-value::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Search field with a leading icon. */
+  .pos-search { @apply relative; }
+
+  .pos-search > svg {
+    @apply pointer-events-none absolute top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground;
+    inset-inline-start: 0.85rem;
+  }
+
+  .pos-search > .pos-input { padding-inline-start: 2.75rem; }
+
+  /* Autocomplete / dropdown list. */
+  .pos-menu {
+    @apply absolute inset-x-0 top-full z-30 mt-1.5 max-h-72 overflow-y-auto
+           rounded-xl border border-border bg-popover p-1 shadow-raised animate-scale-in;
+  }
+
+  .pos-menu-item {
+    @apply flex min-h-[2.75rem] w-full cursor-pointer flex-col justify-center rounded-lg
+           px-3 py-2 text-start text-sm font-semibold text-foreground
+           transition-colors duration-fast hover:bg-muted;
+  }
+
+  .pos-menu-item small { @apply text-xs font-medium text-muted-foreground; }
+
+  /* Labelled field stacked above its control (forms, dialogs). */
+  .pos-form-label {
+    @apply mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground;
+  }
+
+  /* A screen's title row: title + status on one side, actions on the other. */
+  .pos-page-header {
+    @apply mb-5 flex flex-wrap items-center justify-between gap-3;
+  }
+
+  .pos-section-title {
+    @apply mb-3 text-sm font-bold uppercase tracking-wider text-muted-foreground;
+  }
+
+  /* Data table (opening / closing balances). */
+  .pos-table { @apply w-full text-sm; }
+
+  .pos-table th {
+    @apply bg-muted px-4 py-3 text-start text-[11px] font-bold uppercase tracking-wider
+           text-muted-foreground;
+  }
+
+  .pos-table td { @apply border-t border-border px-4 py-2.5 text-foreground; }
+
+  .pos-table input {
+    @apply h-10 w-full rounded-lg border border-input bg-card px-3 text-end
+           tabular-nums focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/25;
+  }
+
+  /* A toolbar that sticks right under the brand bar while the page scrolls
+     (menu search and courses). Full-bleed against the shell's padding. */
+  .pos-sticky-toolbar {
+    @apply sticky z-20 -mx-4 border-b border-border bg-background/95 px-4 py-3
+           backdrop-blur sm:-mx-6 sm:px-6;
+    top: calc(3.5rem + env(safe-area-inset-top));
+  }
+
+  @media (min-width: 768px) {
+    .pos-sticky-toolbar { top: calc(4rem + env(safe-area-inset-top)); }
+  }
+
+  /* --- Toasts ------------------------------------------------------- */
+
+  .pos-toast-region {
+    @apply pointer-events-none fixed z-[60] flex flex-col items-center gap-2 px-4;
+    inset-inline: 0;
+    bottom: calc(5rem + env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 768px) {
+    .pos-toast-region {
+      @apply items-end;
+      /* Above the screen's action bar (send / review), never on top of it. */
+      bottom: 6rem;
+      inset-inline-start: auto;
+      inset-inline-end: 1.5rem;
+    }
+  }
+
+  .pos-toast {
+    @apply pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-xl
+           border border-border bg-card px-4 py-3 text-sm font-semibold text-foreground
+           shadow-raised animate-fade-in-up;
+  }
+
+  .pos-toast-dot { @apply mt-1.5 h-2 w-2 shrink-0 rounded-full bg-success; }
+  .pos-toast-error .pos-toast-dot { @apply bg-destructive; }
+  .pos-toast-info .pos-toast-dot { @apply bg-accent; }
+
   /* --- Skeleton ---------------------------------------------------- */
 
   .pos-skeleton {
@@ -569,6 +796,11 @@
   to { opacity: 1; transform: scale(1); }
 }
 
+@keyframes scene-service-in {
+  from { opacity: 0; transform: translateY(-3px) scale(0.82); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .animate-fade-in { animation: fade-in var(--duration-base) var(--ease-out) both; }
 .animate-fade-in-up { animation: fade-in-up var(--duration-base) var(--ease-out) both; }
 .animate-slide-in { animation: slide-in var(--duration-base) var(--ease-out) both; }
@@ -602,6 +834,7 @@
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
@@ -613,3 +846,124 @@
   from { background-position: 100% 50%; }
   to { background-position: 0 50%; }
 }
+
+/* ===================================================================
+ * vue-datepicker-next, re-skinned to match `.pos-input`.
+ *
+ * The picker ships its own grey-and-blue look and a 34px field; on the
+ * opening and closing screens it sat next to token-styled inputs and looked
+ * like it came from another app.
+ * =================================================================== */
+.mx-datepicker { width: 100% !important; }
+
+.mx-datepicker .mx-input {
+  height: 2.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--input));
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  box-shadow: none;
+  padding-inline: 0.875rem 2.25rem;
+}
+
+.mx-datepicker .mx-input:focus {
+  border-color: hsl(var(--ring));
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.25);
+}
+
+.mx-datepicker-main {
+  font-family: var(--font-sans);
+  border-radius: 0.75rem;
+  border-color: hsl(var(--border));
+  box-shadow: 0 8px 24px rgba(74, 48, 30, 0.12);
+}
+
+.mx-table-date td.active, .mx-table td.active,
+.mx-time-item.active {
+  background-color: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+}
+
+.mx-calendar-content .cell:hover, .mx-time-item:hover { background-color: hsl(var(--muted)); }
+.mx-btn:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary)); }
+
+
+/* Directional icons (arrows, chevrons) point the reading direction. Used by
+   Table.vue and the pagination before it was ever defined. */
+[dir='rtl'] .rtl-flip { transform: scaleX(-1); }
+
+/* --- Workspace composition ---------------------------------------- */
+.menu-workspace {
+  display: block;
+}
+
+@media (min-width: 1280px) {
+  .menu-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 22rem;
+    align-items: start;
+    gap: 1.25rem;
+  }
+}
+
+.menu-cart-rail {
+  position: sticky;
+  top: calc(5rem + env(safe-area-inset-top));
+  max-height: calc(100vh - 6rem - env(safe-area-inset-top));
+  min-height: 30rem;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid hsl(var(--border));
+  border-radius: 1.25rem;
+  background: hsl(var(--card) / 0.96);
+  box-shadow: 0 18px 48px hsl(24 28% 14% / 0.12), inset 0 1px 0 hsl(0 0% 100% / 0.72);
+  backdrop-filter: blur(14px);
+}
+
+.menu-cart-lines {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.menu-cart-line {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.menu-cart-line .pos-stepper > button { width: 2rem; height: 2rem; }
+.menu-cart-line .pos-stepper > .pos-stepper-value { min-width: 2rem; height: 2rem; font-size: .75rem; }
+
+.connection-dot {
+  width: .55rem;
+  height: .55rem;
+  border-radius: 999px;
+  box-shadow: 0 0 0 4px hsl(0 0% 100% / .08);
+}
+
+.connection-online {
+  background: hsl(var(--success));
+  box-shadow: 0 0 0 4px hsl(var(--success) / .15), 0 0 12px hsl(var(--success) / .45);
+}
+
+.connection-offline {
+  background: hsl(var(--destructive));
+  box-shadow: 0 0 0 4px hsl(var(--destructive) / .16), 0 0 12px hsl(var(--destructive) / .42);
+  animation: pulse-soft 1.4s ease-in-out infinite;
+}
+
+.route-fade-enter-active,
+.route-fade-leave-active {
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+
+.route-fade-enter-from { opacity: 0; transform: translateY(4px); }
+.route-fade-leave-to { opacity: 0; transform: translateY(-2px); }
+
