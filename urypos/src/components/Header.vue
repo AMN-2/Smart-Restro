@@ -16,26 +16,31 @@
     <nav class="pos-header">
       <div class="pos-header-inner">
         <div class="pos-brand">
-          <a href="/urypos/Table" class="pos-brand-mark" aria-label="Smart Restro">
+          <router-link to="/Table" class="pos-brand-mark" aria-label="Smart Restro">
             <img :src="imagePath" alt="" />
-          </a>
+          </router-link>
 
-          <span class="hidden pos-brand-name sm:block">
+          <span class="pos-brand-name" :class="showChrome && 'hidden sm:block'">
             Smart <strong>Restro</strong>
           </span>
 
-          <span class="pos-brand-divider hidden sm:block" aria-hidden="true"></span>
+          <span v-if="showChrome" class="pos-brand-divider hidden sm:block" aria-hidden="true"></span>
 
           <!-- The table, or the till. Never nothing: an unlabelled bar gives
                a waiter no way to notice they are on the wrong table. -->
-          <div class="pos-context">
+          <div v-if="showChrome" class="pos-context">
             <span class="pos-context-label">{{ contextLabel }}</span>
             <span class="pos-context-value">{{ contextValue }}</span>
           </div>
         </div>
 
         <!-- User menu -->
-        <div v-if="!this.tabClick.isLoginPage" class="relative flex-shrink-0">
+        <div v-if="showChrome" class="ms-auto hidden items-center gap-2 sm:flex" :title="online ? $t('status.online') : $t('status.offline')">
+          <span class="connection-dot" :class="online ? 'connection-online' : 'connection-offline'"></span>
+          <span class="text-xs font-semibold text-white/70">{{ online ? $t('status.online') : $t('status.offline') }}</span>
+        </div>
+
+        <div v-if="showChrome" class="relative flex-shrink-0">
           <button
             type="button"
             class="pos-header-button press"
@@ -156,9 +161,23 @@ export default {
   data() {
     return {
       imagePath: smartLogo,
+      online: navigator.onLine,
     };
   },
+  mounted() {
+    window.addEventListener("online", this.updateConnection);
+    window.addEventListener("offline", this.updateConnection);
+  },
+  beforeUnmount() {
+    window.removeEventListener("online", this.updateConnection);
+    window.removeEventListener("offline", this.updateConnection);
+  },
   computed: {
+    /** Signed-in chrome (context, status, user menu): not on Login, and not before the session is known. */
+    showChrome() {
+      return !this.tabClick.isLoginPage && !this.auth.sessionLoading;
+    },
+
     /**
      * What this screen is working on.
      *
@@ -167,22 +186,15 @@ export default {
      * A cashier is not "on" a table, so they get the till instead.
      */
     contextLabel() {
-      if (this.auth.cashier) return this.$t("header.station");
-      return this.table.selectedTable
-        ? this.$t("tables.title")
-        : this.$t("header.station");
+      return this.table.selectedTable ? this.$t("tables.title") : this.$t("header.station");
     },
 
     contextValue() {
-      if (!this.auth.cashier && this.table.selectedTable) {
-        return this.table.selectedTable;
-      }
-      return this.auth.cashier
-        ? this.$t("header.till")
-        : this.$t("tables.select_table");
+      return this.table.selectedTable || this.$t("tables.select_table");
     },
   },
   methods: {
+    updateConnection() { this.online = navigator.onLine; },
     reload() {
       window.location.reload();
     },
