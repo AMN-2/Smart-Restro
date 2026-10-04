@@ -756,7 +756,16 @@
       "enable_self_ordering_hint": "عند الإيقاف يتوقف رمز QR لهذه الطاولة عن العمل، ويبقى بإمكان الموظفين تسجيل طلباتها من الكاشير.",
       "self_ordering": "الطلب الذاتي",
       "self_ordering_on": "مُفعّل",
-      "self_ordering_off": "متوقف"
+      "self_ordering_off": "متوقف",
+      "occupied_only": "المشغولة فقط",
+      "show_all_tables": "عرض كل الطاولات",
+      "no_occupied_tables": "ماكو طاولات مشغولة حالياً",
+      "all_rooms": "كل الصالات",
+      "open_for": "مفتوحة من {{time}}",
+      "seats_count": "{{count}} كراسي",
+      "free_count": "{{count}} فارغة",
+      "occupied_count": "{{count}} مشغولة",
+      "edit_table": "تعديل الطاولة"
     },
     "table_layout_view": {
       "reset_zoom_pan": "إعادة تعيين التكبير والتحريك",
