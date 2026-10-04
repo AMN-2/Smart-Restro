@@ -13,6 +13,7 @@ import { t } from '../i18n';
 import { Spinner } from '@ury/ui';
 import { TableShapeIcon } from './TableShapeIcon';
 import type { Table } from '../lib/table-api';
+import { compareNatural } from '@ury/core';
 
 interface TableTransferDialogProps {
   open: boolean;
@@ -48,7 +49,7 @@ const TableTransferDialog = ({
     () =>
       [...destinationTables].sort(
         (a, b) =>
-          a.restaurant_room.localeCompare(b.restaurant_room) || a.name.localeCompare(b.name)
+          compareNatural(a.restaurant_room, b.restaurant_room) || compareNatural(a.name, b.name)
       ),
     [destinationTables]
   );
