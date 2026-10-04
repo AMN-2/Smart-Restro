@@ -23,6 +23,7 @@ import datetime
 import os
 
 import frappe
+from ury.ury.api.floor_events import notify_floor_change
 from frappe import _
 from frappe.utils import add_to_date, cint, now_datetime
 
@@ -291,6 +292,7 @@ def complete_job(job, ok, error=None):
             already = cint(frappe.db.get_value("POS Invoice", doc.reference_name, "invoice_printed"))
             if not already:
                 frappe.db.set_value("POS Invoice", doc.reference_name, "invoice_printed", 1, update_modified=False)
+                notify_floor_change(invoices=[doc.reference_name], reason="printed")
             log_activity(doc.reference_name, (_("Bill reprinted {0}") if already else _("Bill printed {0}")).format(
                 _("on {0}").format(doc.printer)))
     else:
