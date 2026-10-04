@@ -1,5 +1,14 @@
 import { defineStore } from "pinia";
+import { t } from "../i18n";
 
+/**
+ * Blocking message with one button, resolved when it is acknowledged.
+ *
+ * Kept as plain DOM (the stores call it outside any component), but drawn
+ * with the same classes as `PosDialog`. It used to be a white box offset by
+ * `ml-64`/`md:ml-96` with a blue Tailwind-default button, which sat
+ * off-centre on a tablet and outside the screen in Arabic.
+ */
 export const useAlert = defineStore("alert", {
   state: () => ({
     okButtonClicked: false,
@@ -7,81 +16,61 @@ export const useAlert = defineStore("alert", {
   actions: {
     createAlert(title, message, buttonText) {
       return new Promise((resolve) => {
-        // Create a backdrop for the modal
-        const backdrop = document.createElement("div");
-        backdrop.classList.add(
-          "fixed",
-          "inset-0",
-          "z-50",
-          "bg-black",
-          "opacity-50",
-          "backdrop-blur-md"
-        );
-        document.body.appendChild(backdrop);
+        const overlay = document.createElement("div");
+        overlay.className = "pos-overlay z-[80] overflow-y-auto";
 
-        // Create the modal container
-        const modal = document.createElement("div");
-        modal.classList.add(
-          "fixed",
-          "top-10",
-          "z-50",
-          "lg:left-1/2",
-          "transform",
-          "lg:-translate-x-1/2",
-          "bg-white",
-          "p-6",
-          "rounded-lg",
-          "shadow-lg",
-          "w-100"
-        );
-        const mediaQuery = window.matchMedia("(max-width: 767px)");
-        if (mediaQuery.matches) {
-          modal.classList.remove("lg:left-1/2", "lg:-translate-x-1/2");
-          modal.classList.add("left-0", "right-0");
-        }
-        document.body.appendChild(modal);
+        const frame = document.createElement("div");
+        frame.className = "flex min-h-full items-end justify-center sm:items-center sm:p-4";
 
-        // Create the modal content using safe DOM construction so that
-        // untrusted alert values are rendered as text, never as markup.
-        const modalContent = document.createElement("div");
+        const panel = document.createElement("div");
+        panel.className =
+          "w-full rounded-t-3xl border border-border bg-card shadow-raised animate-scale-in sm:max-w-sm sm:rounded-2xl";
+        panel.setAttribute("role", "alertdialog");
+        panel.setAttribute("aria-modal", "true");
 
+        const body = document.createElement("div");
+        body.className = "px-5 pb-5 pt-5 sm:px-6";
+
+        // Text, never markup: alert values can come from the server.
         const heading = document.createElement("h2");
-        heading.classList.add("text-base", "font-semibold", "mb-4");
-        heading.textContent = title;
+        heading.className = "pos-title";
+        heading.textContent = title === "Message" || !title ? t("common.notice") : title;
 
-        const divider = document.createElement("hr");
-        divider.classList.add("my-6", "border-t", "border-gray-300");
+        const text = document.createElement("p");
+        text.className = "mt-2 whitespace-pre-line text-sm text-muted-foreground";
+        text.textContent = message;
 
-        const messageParagraph = document.createElement("p");
-        messageParagraph.classList.add("mb-4", "text-justify", "text-sm");
-        messageParagraph.textContent = message;
+        const footer = document.createElement("div");
+        footer.className = "flex justify-end border-t border-border bg-muted/50 px-5 py-4 sm:rounded-b-2xl sm:px-6";
 
-        const closeButton = document.createElement("button");
-        closeButton.classList.add(
-          "bg-blue-700",
-          "md:ml-96",
-          "ml-64",
-          "text-white",
-          "px-4",
-          "py-2",
-          "rounded-md"
-        );
-        closeButton.textContent = buttonText;
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "pos-btn-primary min-w-[6rem]";
+        button.textContent = !buttonText || /^ok$/i.test(buttonText) ? t("common.ok") : buttonText;
 
-        modalContent.appendChild(heading);
-        modalContent.appendChild(divider);
-        modalContent.appendChild(messageParagraph);
-        modalContent.appendChild(closeButton);
-
-        modal.appendChild(modalContent);
-
-        // Close the modal and remove the backdrop when the button is clicked
-        closeButton.addEventListener("click", () => {
-          modal.remove();
-          backdrop.remove();
-          resolve();
+        const close = () => {
+          document.removeEventListener("keydown", onKey);
+          overlay.remove();
           this.okButtonClicked = true;
-        });
+          resolve();
+        };
+        const onKey = (event) => {
+          if (event.key === "Escape" || event.key === "Enter") {
+            event.preventDefault();
+            close();
+          }
+        };
+
+        button.addEventListener("click", close);
+        document.addEventListener("keydown", onKey);
+
+        body.append(heading, text);
+        footer.appendChild(button);
+        panel.append(body, footer);
+        frame.appendChild(panel);
+        overlay.appendChild(frame);
+        document.body.appendChild(overlay);
+        button.focus();
       });
     },
   },
