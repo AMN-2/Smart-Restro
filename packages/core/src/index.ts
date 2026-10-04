@@ -11,6 +11,11 @@ export type { I18n, I18nOptions, TranslationMap, Direction } from './i18n/engine
 export { setIntlLocale, getIntlLocale } from './i18n/locale-registry';
 export { initPrinting, loadQzPrinter, disconnectQzPrinter, printWithQz, listQzPrinters, isQzConnected } from './print/qz';
 export { validateFieldValue } from './utils/validateField';
+export { compareNatural, sortByNaturalName } from './utils/naturalSort';
+export { minutesSince, formatElapsed, tableVisualState } from './utils/tableState';
+export type { TableVisualState, TableStateInput } from './utils/tableState';
 export type { ValidationMessages } from './utils/validateField';
 export { getAccess, isRouteHidden, OPEN_ACCESS } from './access';
 export type { UryAccess } from './access';
+export { createFloorSync, floorUpdateTouches, normalizeFloorUpdate, FLOOR_EVENT, FLOOR_ROOM_DOCTYPE } from './realtime/floor-sync';
+export type { FloorSync, FloorUpdate, FloorSocket, FloorListener, FloorSubscribeOptions } from './realtime/floor-sync';
