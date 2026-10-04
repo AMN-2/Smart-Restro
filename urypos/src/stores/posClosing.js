@@ -74,7 +74,7 @@ export const posClosing = defineStore("posClose", {
         .then((result) => {
           this.startDate = result.message.period_start_date;
           this.cashier = result.message.owner;
-          this.openingBalance = result.message.balance_details;
+          this.openingBalance = (result.message.balance_details || []).map(row => ({ ...row, closing_amount: 0 }));
 
           this.getInvoice();
         })
@@ -99,20 +99,26 @@ export const posClosing = defineStore("posClose", {
         pos_profile: this.invoiceData.posProfile,
         user: this.cashier,
       };
-      this.call
+      return this.call
         .get(
           "erpnext.accounts.doctype.pos_closing_entry.pos_closing_entry.get_pos_invoices",
           PosOpenEntry
         )
         .then((result) => {
           this.invoiceDetails = result.message;
+          this.grandTotal = 0;
+          this.netTotal = 0;
+          this.totalQty = 0;
+          this.totalInvoices = this.invoiceDetails.length;
+          this.taxes = [];
+          const combinedTaxes = {};
           let paymentAggregated = {};
           this.invoiceDetails.forEach((payment) => {
             this.grandTotal += parseFloat(payment.grand_total);
             this.netTotal += parseFloat(payment.net_total);
             this.totalQty += parseFloat(payment.total_qty);
             let taxes = payment.taxes;
-            let combinedTaxes = {};
+
 
             taxes.forEach((item) => {
               if (!combinedTaxes[item.account_head]) {
@@ -159,21 +165,21 @@ export const posClosing = defineStore("posClose", {
       } else {
         formattedTime = null;
       }
-      let payment_reconciliation = this.openingBalance;
+      let payment_reconciliation = this.openingBalance.map(row => ({ ...row }));
       payment_reconciliation.forEach((item) => {
         let found = false;
         this.payments.forEach((secondItem) => {
           if (secondItem.mode_of_payment === item.mode_of_payment) {
-            item.expected_amount = secondItem.expected_amount;
-            item.difference = -secondItem.expected_amount;
+            item.expected_amount = Number(item.opening_amount || 0) + Number(secondItem.expected_amount || 0);
+            item.difference = Number(item.closing_amount || 0) - item.expected_amount;
 
             found = true;
           }
         });
 
         if (!found) {
-          item.expected_amount = 0;
-          item.difference = 0;
+          item.expected_amount = Number(item.opening_amount || 0);
+          item.difference = Number(item.closing_amount || 0) - item.expected_amount;
         }
       });
 
