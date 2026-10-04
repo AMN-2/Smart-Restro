@@ -64,7 +64,7 @@ def record_event(
 	"""
 	try:
 		if event not in EVENTS:
-			frappe.log_error(f"Unknown audit event: {event}", "URY Audit Log")
+			frappe.log_error(title="URY Audit Log", message=f"Unknown audit event: {event}")
 			return None
 
 		if reference_doctype == "POS Invoice" and reference_name and not (branch and pos_profile):
