@@ -191,22 +191,42 @@ before_uninstall = "ury.uninstall.uninstall"
 # Hook on document methods and events
 
 doc_events = {
+    # `floor_events.on_pos_invoice_change` is last in every list: it only
+    # queues a realtime "something changed" for after commit, so it must see
+    # the state the other handlers leave behind (see ury/ury/api/floor_events.py).
     "POS Invoice": {
         "before_insert": "ury.ury.hooks.ury_pos_invoice.before_insert",
         "validate": "ury.ury.hooks.ury_pos_invoice.validate",
-        "after_insert":"ury.ury.api.ury_kot_order_number.set_order_number",
+        "after_insert": [
+            "ury.ury.api.ury_kot_order_number.set_order_number",
+            "ury.ury.api.floor_events.on_pos_invoice_change",
+        ],
         "before_submit": "ury.ury.hooks.ury_pos_invoice.before_submit",
         "on_submit": [
             "ury.ury.hooks.ury_pos_invoice.on_submit",
             # Recipes: take the sold products' ingredients off the shelf.
             "ury.ury.api.consumption.on_pos_invoice_submit",
+            "ury.ury.api.floor_events.on_pos_invoice_change",
         ],
-        "on_update": "ury.ury.hooks.ury_pos_invoice.on_update",
+        "on_update": [
+            "ury.ury.hooks.ury_pos_invoice.on_update",
+            "ury.ury.api.floor_events.on_pos_invoice_change",
+        ],
+        "on_update_after_submit": "ury.ury.api.floor_events.on_pos_invoice_change",
         "on_cancel": [
             "ury.ury.hooks.ury_pos_invoice.on_trash",
             "ury.ury.api.consumption.on_pos_invoice_cancel",
+            "ury.ury.api.floor_events.on_pos_invoice_change",
         ],
-        "on_trash": "ury.ury.hooks.ury_pos_invoice.on_trash",
+        "on_trash": [
+            "ury.ury.hooks.ury_pos_invoice.on_trash",
+            "ury.ury.api.floor_events.on_pos_invoice_change",
+        ],
+    },
+    "URY Table": {
+        "after_insert": "ury.ury.api.floor_events.on_ury_table_change",
+        "on_update": "ury.ury.api.floor_events.on_ury_table_change",
+        "on_trash": "ury.ury.api.floor_events.on_ury_table_change",
     },
     "POS Profile": {"validate": "ury.ury.hooks.ury_pos_profile.validate"},
     "Sales Invoice": {
