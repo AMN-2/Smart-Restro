@@ -12,6 +12,7 @@ from ury.ury.api.ury_kot_generate import kot_execute
 from ury.ury.doctype.ury_audit_log.ury_audit_log import record_event
 from ury.ury.api.loyalty import apply_loyalty_to_invoice
 from ury.ury.api.ury_kot_generate import process_items_for_cancel_kot
+from ury.ury.api.floor_events import notify_floor_change
 
 from frappe import cache
 
@@ -136,6 +137,13 @@ def merge_tables_batch(anchor_table, tables):
 
     _reconcile_open_invoices_for_tables(
         cluster
+    )
+
+    # Queued before the commit below so that commit publishes it.
+    notify_floor_change(
+        invoices=sorted(set().union(*(_open_invoice_names_for_table(t) for t in cluster))),
+        tables=cluster,
+        reason="merged",
     )
 
     frappe.db.commit()
@@ -382,6 +390,10 @@ def release_merge_cluster_tables(table_or_tables):
             update_modified=False,
         )
 
+    # Every path that frees a table comes through here (payment, print,
+    # close, cancel, transfer). Queued before the commit so it publishes.
+    notify_floor_change(tables=cluster, reason="released")
+
     frappe.db.commit()
 
 @frappe.whitelist()
@@ -415,15 +427,14 @@ TABLE_CLOSE_MANAGER_ROLES = frozenset(
 )
 
 
-def _may_close_table(pos_invoice):
-    """Whether the session user may release a table without printing.
+def _may_settle(pos_profile_name):
+    """Whether the session user may settle, void or close out a bill.
 
-    This is money-adjacent: closing a table is what takes an open bill out of
-    the "still owes" list, so it is gated rather than offered to everyone with
-    write access to the invoice.
+    Money leaves the "still owes" list in all three, so they share one rule:
+    Administrator, a manager role, or a billing role on the POS Profile the
+    bill belongs to. A captain takes orders and never holds that role.
     """
-    user = frappe.session.user
-    if user == "Administrator":
+    if frappe.session.user == "Administrator":
         return True
 
     roles = set(frappe.get_roles())
@@ -431,13 +442,13 @@ def _may_close_table(pos_invoice):
         return True
 
     # A cashier on this branch's POS Profile settles bills for a living.
-    if pos_invoice.pos_profile:
+    if pos_profile_name:
         billing_roles = {
             row.role
             for row in frappe.get_all(
                 "Role Permitted",
                 filters={
-                    "parent": pos_invoice.pos_profile,
+                    "parent": pos_profile_name,
                     "parenttype": "POS Profile",
                     "parentfield": "role_allowed_for_billing",
                 },
@@ -448,6 +459,25 @@ def _may_close_table(pos_invoice):
             return True
 
     return False
+
+
+def _require_settle_permission(pos_profile_name, action):
+    """Throw unless `_may_settle`. `action` is the user-facing verb."""
+    if not _may_settle(pos_profile_name):
+        frappe.throw(
+            _("Only a cashier or manager can {0}.").format(action),
+            frappe.PermissionError,
+        )
+
+
+def _may_close_table(pos_invoice):
+    """Whether the session user may release a table without printing.
+
+    This is money-adjacent: closing a table is what takes an open bill out of
+    the "still owes" list, so it is gated rather than offered to everyone with
+    write access to the invoice.
+    """
+    return _may_settle(pos_invoice.pos_profile)
 
 
 @frappe.whitelist(methods=["POST"])
@@ -566,6 +596,7 @@ def close_table(invoice=None, table=None, reason=None):
         "custom_closed_at": frappe.utils.now_datetime(),
     }
     frappe.db.set_value("POS Invoice", invoice, values, update_modified=False)
+    notify_floor_change(invoices=[invoice], reason="closed")
 
     release_merge_cluster_tables(
         _get_table_group(
@@ -740,6 +771,8 @@ def unmerge_tables(table):
             "merged_with",
             None,
         )
+
+    notify_floor_change(tables=cluster, reason="unmerged")
 
     frappe.db.commit()
 
@@ -1146,11 +1179,17 @@ def price_items_for_invoice(items, price_list, pos_profile, branch, menu):
             # branch could not take a single order because one published row
             # was missing, and it was the customer's turn to wait for it.
             rate = menu_row.rate
+            # Keyword arguments: `log_error` is (title, message). Passed the
+            # other way round, this sentence became the Error Log *title*,
+            # which is capped at 140 characters — an Arabic item name pushed
+            # it over, the log insert threw, and the whole order failed (417).
             frappe.log_error(
-                f"Item {d.get('item')} has no Item Price in '{price_list}'; "
-                f"charged the menu rate {menu_row.rate} from '{menu}'. "
-                f"Save the menu to republish its price list.",
-                "Menu price out of sync",
+                title="Menu price out of sync",
+                message=(
+                    f"Item {d.get('item')} has no Item Price in '{price_list}'; "
+                    f"charged the menu rate {menu_row.rate} from '{menu}'. "
+                    f"Save the menu to republish its price list."
+                ),
             )
         else:
             frappe.throw(
@@ -1971,7 +2010,7 @@ def sync_order(
     except Exception as e:
         # If an exception occurs (e.g., "kot" app not found), it will be caught here without affect the code execution.
         error_msg = f"KOT Creation Failes {str(e)}"            
-        frappe.log_error(error_msg, "KOT Error")
+        frappe.log_error(title="KOT Error", message=error_msg)
 
     # table status
     if invoice.invoice_printed == 0:
@@ -2349,6 +2388,10 @@ def cancel_order(invoice_id, reason):
             frappe.PermissionError,
         )
 
+    # Doctype cancel rights are not enough on their own: voiding an order is
+    # billing, and a captain only takes orders.
+    _require_settle_permission(pos_invoice.pos_profile, _("cancel an order"))
+
     # Branch scoping: the invoice must belong to the session user's branch
     # (mirrors the getBranch() pattern used across the URY APIs).
     if frappe.session.user != "Administrator":
@@ -2411,6 +2454,12 @@ def cancel_order(invoice_id, reason):
 
         frappe.db.set_value("POS Invoice", invoice_id, "docstatus", 2)
         frappe.db.set_value("POS Invoice", invoice_id, "status", "Cancelled")
+        notify_floor_change(
+            invoices=[invoice_id],
+            tables=[pos_invoice.restaurant_table] if pos_invoice.restaurant_table else None,
+            branch=pos_invoice.branch,
+            reason="cancelled",
+        )
         frappe.db.set_value("POS Invoice", invoice_id, "cancel_reason", reason)
 
 # Roles permitted to authorize an additional discount when settling an order.
@@ -2485,6 +2534,10 @@ def make_invoice(customer, payments, cashier, pos_profile,owner, additionalDisco
     instruction, and answering it with an error is what pushes a cashier
     into collecting twice.
     """
+    # Settling a bill is billing. A captain could reach this endpoint directly
+    # even though the POS hides the button from them.
+    _require_settle_permission(pos_profile, _("take payment"))
+
     additionalDiscount = _validate_additional_discount(additionalDiscount, pos_profile)
 
     order_type =  invoice_name = frappe.get_value("POS Invoice",invoice , "order_type")
