@@ -1,61 +1,67 @@
 import { defineStore } from "pinia";
+import { t } from "../i18n";
 
+const DURATION_MS = 3000;
+const MAX_VISIBLE = 3;
+
+/** One live region for every toast, created on first use. */
+function toastRegion() {
+  let region = document.getElementById("pos-toast-region");
+  if (!region) {
+    region = document.createElement("div");
+    region.id = "pos-toast-region";
+    region.className = "pos-toast-region";
+    region.setAttribute("role", "status");
+    region.setAttribute("aria-live", "polite");
+    document.body.appendChild(region);
+  }
+  return region;
+}
+
+/**
+ * Toasts.
+ *
+ * These used to be a fixed 400×65px green box pinned to the right edge (the
+ * wrong side in Arabic) that removed itself after 900ms — too fast to read,
+ * and every toast looked like a success, errors included. They now share
+ * one stacked region, use the design tokens, stay long enough to read, and
+ * take a tone: "success" (default), "error" or "info".
+ */
 export const useNotifications = defineStore("notification", {
   state: () => ({}),
   actions: {
-    createNotification(message) {
-      const container = document.createElement("div");
-      container.classList.add("fixed", "bottom-20", "right-5");
-      document.body.appendChild(container); // Append the container to the body element
+    createNotification(message, tone = "success") {
+      if (!message) return;
+      const region = toastRegion();
 
-      const notif = document.createElement("div");
-      notif.classList.add("bg-green-100", "text-dark", "py-2", "px-2", "mr-3");
-      notif.style.borderRadius = "5px";
-      notif.style.width = "400px";
-      notif.style.height = "65px";
-      // Add a media query to adjust the width on smaller screens
-      const mq = window.matchMedia("(max-width: 640px)");
-      if (mq.matches) {
-        notif.style.width = "300px";
+      while (region.children.length >= MAX_VISIBLE) {
+        region.firstElementChild.remove();
       }
 
-      // Create close button
-      const closeBtn = document.createElement("span");
-      closeBtn.innerHTML = `
-          <span class="sr-only">Close</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>`;
-      closeBtn.classList.add(
-        "cursor-pointer",
-        "ml-12",
-        "absolute",
-        "top-4",
-        "right-7"
-      );
-      closeBtn.addEventListener("click", () => {
-        notif.remove();
-        container.remove(); // Remove the container after the notification is removed
-      });
+      const toast = document.createElement("div");
+      toast.className = `pos-toast pos-toast-${tone}`;
 
-      // Add close button to notification element
-      notif.appendChild(closeBtn);
+      const dot = document.createElement("span");
+      dot.className = "pos-toast-dot";
+      dot.setAttribute("aria-hidden", "true");
 
-      // Add message to notification element
-      const messageEl = document.createElement("h2");
-      messageEl.textContent = message;
-      messageEl.classList.add("mt-2");
+      // Text, never markup: messages can carry server or item data.
+      const text = document.createElement("p");
+      text.className = "min-w-0 flex-1";
+      text.textContent = message;
 
-      // Add message to notification element
-      notif.appendChild(messageEl);
+      const close = document.createElement("button");
+      close.type = "button";
+      close.className = "-me-1 -mt-0.5 rounded-md px-1.5 text-base leading-none text-muted-foreground hover:bg-muted";
+      close.setAttribute("aria-label", t("common.close"));
+      close.textContent = "✕";
 
-      // Add notification element to the container
-      container.appendChild(notif);
+      const dismiss = () => toast.remove();
+      close.addEventListener("click", dismiss);
 
-      setTimeout(() => {
-        notif.remove();
-        container.remove(); // Remove the container after the notification is removed
-      }, 900);
+      toast.append(dot, text, close);
+      region.appendChild(toast);
+      setTimeout(dismiss, tone === "error" ? DURATION_MS * 1.6 : DURATION_MS);
     },
   },
 });
