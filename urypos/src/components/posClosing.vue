@@ -1,419 +1,193 @@
 <template>
-  <div class="mt-10 flex items-center justify-between">
-    <div class="flex items-center">
-      <h3 class="mr-3 text-lg font-semibold text-foreground">
-        {{ $t('pos.closing_entry') }}
-      </h3>
-      <span
-        class="me-2 rounded-xl px-2.5 py-0.5 text-sm font-medium"
-        :class="{
-          'bg-destructive/10 text-destructive':
-            this.posClose.getBadgeType() === 'red',
-          'bg-secondary text-primary':
-            this.posClose.getBadgeType() === 'default',
-
-          'bg-warning/10 text-warning':
-            this.posClose.getBadgeType() === 'yellow',
-        }"
-      >
-        <span class="text-xs">{{ this.posClose.getBadgeText() }}</span>
-      </span>
+  <header class="pos-page-header">
+    <div class="flex flex-wrap items-center gap-3">
+      <h1 class="text-xl font-bold text-foreground">{{ $t('pos.closing_entry') }}</h1>
+      <span v-if="posClose.getBadgeText()" :class="badge">{{ statusText }}</span>
     </div>
-    <div class="flex space-x-4">
-      <button
-        @click="this.posClose.savePosClosing()"
-        class="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary focus:outline-none"
-        v-if="this.posClose.posClosing"
-      >
+    <div class="flex gap-2">
+      <button v-if="posClose.posClosing" type="button" class="pos-btn-primary" @click="posClose.savePosClosing()">
         {{ $t('common.save') }}
       </button>
-      <button
-        v-if="this.posClose.posCloseSaved"
-        @click="this.posClose.showSumbitPosCloseModal()"
-        class="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary focus:outline-none"
-      >
+      <button v-if="posClose.posCloseSaved" type="button" class="pos-btn-primary" @click="posClose.showSumbitPosCloseModal()">
         {{ $t('common.submit') }}
       </button>
     </div>
-  </div>
-  <h3 class="text-base font-normal text-foreground">
-    {{ $t('pos.period_details') }}
-  </h3>
+  </header>
 
-  <div class="mb-6 mt-6 grid gap-6 md:grid-cols-2">
-    <div>
-      <label
-        for="startDate"
-        class="mb-2 block text-sm font-medium text-foreground"
-        >{{ $t('pos.period_start') }}</label
-      >
-      <input
-        v-model="this.posClose.startDate"
-        readonly
-        class="block w-full rounded-md border border-input text-sm text-foreground focus:border-ring focus:ring-ring"
-        type="text"
-      />
-    </div>
-    <div>
-      <label
-        for="postingDate"
-        class="mb-2 block text-sm font-medium text-foreground"
-      >
-        <label
-          for="postingDate"
-          class="mb-2 block text-sm font-medium text-foreground"
-          >{{ $t('pos.posting_date') }}</label
-        >
-      </label>
-      <input
-        v-model="this.posClose.postingDate"
-        readonly
-        class="block w-full rounded-md border border-input text-sm text-foreground focus:border-ring focus:ring-ring"
-        type="text"
-      />
-    </div>
-    <div>
-      <label
-        for="endDate"
-        class="mb-2 block text-sm font-medium text-foreground"
-        >{{ $t('pos.period_end') }}</label
-      >
-
-      <date-picker
-        v-model:value="this.posClose.periodEndDate"
-        :default-value="new Date()"
-        class="my-custom-date-picker"
-        type="datetime"
-      ></date-picker>
-    </div>
-    <div>
-      <label
-        for="postingTime"
-        class="mb-2 block text-sm font-medium text-foreground"
-        >{{ $t('pos.posting_time') }}</label
-      >
-      <date-picker
-        v-model:value="this.posClose.postingTime"
-        :default-value="this.posClose.postingTime"
-        type="time"
-        class="my-custom-time-picker"
-      ></date-picker>
-    </div>
-
-    <div class="mb-6 gap-6 md:grid-cols-2">
-      <div class="relative" ref="container">
-        <label
-          for="posOpen"
-          class="block text-sm font-medium text-foreground"
-        >
-          {{ $t('pos.opening_entry') }}
-        </label>
-        <input
-          type="text"
-          id="posOpen"
-          class="block w-full rounded-md border border-input text-sm text-foreground focus:border-ring focus:ring-ring"
-          v-model="this.posClose.selectedPosOpenEntry"
-          @click="this.posClose.selectPosOpen()"
-          required
-        />
-        <div
-          v-if="this.posClose.showPosOpen"
-          class="block w-full rounded-lg border border-input bg-muted p-2.5 text-sm text-foreground focus:border-ring focus:ring-ring"
-          ref="dropdown"
-        >
-          <div
-            class="h-10 rounded-lg p-2 hover:bg-muted"
-            v-for="(posOpen, index) in this.posClose.posOpenEntries"
-            :key="index"
-            @click="this.posClose.selectPos(posOpen)"
-          >
-            <h1 class="text-base font-medium leading-normal">
-              {{ posOpen.name }}
-            </h1>
+  <div class="space-y-5">
+    <section class="pos-card p-4 sm:p-5">
+      <p class="pos-section-title">{{ $t('pos.period_details') }}</p>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div>
+          <label for="startDate" class="pos-form-label">{{ $t('pos.period_start') }}</label>
+          <input id="startDate" v-model="posClose.startDate" readonly class="pos-input bg-muted/60" type="text" />
+        </div>
+        <div>
+          <label for="postingDate" class="pos-form-label">{{ $t('pos.posting_date') }}</label>
+          <input id="postingDate" v-model="posClose.postingDate" readonly class="pos-input bg-muted/60" type="text" />
+        </div>
+        <div>
+          <span class="pos-form-label">{{ $t('pos.period_end') }}</span>
+          <date-picker v-model:value="posClose.periodEndDate" :default-value="new Date()" type="datetime" />
+        </div>
+        <div>
+          <span class="pos-form-label">{{ $t('pos.posting_time') }}</span>
+          <date-picker v-model:value="posClose.postingTime" :default-value="posClose.postingTime" type="time" />
+        </div>
+        <div class="relative md:col-span-2" data-autocomplete>
+          <label for="posOpen" class="pos-form-label">{{ $t('pos.opening_entry') }}</label>
+          <input
+            id="posOpen"
+            type="text"
+            class="pos-input"
+            autocomplete="off"
+            v-model="posClose.selectedPosOpenEntry"
+            @click="posClose.selectPosOpen()"
+            required
+          />
+          <div v-if="posClose.showPosOpen && posClose.posOpenEntries.length" class="pos-menu" role="listbox">
+            <button
+              v-for="entry in posClose.posOpenEntries"
+              :key="entry.name"
+              type="button"
+              role="option"
+              class="pos-menu-item"
+              @click="posClose.selectPos(entry)"
+            >
+              {{ entry.name }}
+            </button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <hr class="my-6 border-t border-input" />
+    </section>
 
-  <h3 class="text-base font-semibold text-foreground">
-    {{ $t('pos.user_details') }}
-  </h3>
-  <div class="mb-6 mt-5 grid gap-6 md:grid-cols-2">
-    <div class="md:col-span-1">
-      <label
-        for="company"
-        class="mb-2 block text-sm font-medium text-foreground"
-      >
-        {{ $t('pos.company') }}
-      </label>
-      <input
-        type="text"
-        id="company"
-        v-model="this.invoiceData.company"
-        class="block w-full rounded-md border border-input text-sm text-foreground focus:border-ring focus:ring-ring"
-        required
-      />
-    </div>
-    <div class="flex flex-col justify-between md:col-span-1">
-      <div class="mb-6">
-        <label
-          for="posProfile"
-          class="mb-2 block text-sm font-medium text-foreground"
-          >{{ $t('pos.profile') }}</label
-        >
-        <input
-          type="text"
-          id="posProfile"
-          class="block w-full rounded-md border border-input text-sm text-foreground focus:border-ring focus:ring-ring"
-          v-model="this.invoiceData.posProfile"
-          required
-        />
+    <section class="pos-card p-4 sm:p-5">
+      <p class="pos-section-title">{{ $t('pos.user_details') }}</p>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div>
+          <label for="company" class="pos-form-label">{{ $t('pos.company') }}</label>
+          <input id="company" type="text" class="pos-input" v-model="invoiceData.company" required />
+        </div>
+        <div>
+          <label for="posProfile" class="pos-form-label">{{ $t('pos.profile') }}</label>
+          <input id="posProfile" type="text" class="pos-input" v-model="invoiceData.posProfile" required />
+        </div>
+        <div>
+          <label for="cashier" class="pos-form-label">{{ $t('pos.cashier') }}</label>
+          <input id="cashier" type="text" class="pos-input" v-model="posClose.cashier" required />
+        </div>
       </div>
-      <div>
-        <label
-          for="cashier"
-          class="mb-2 block text-sm font-medium text-foreground"
-          >{{ $t('pos.cashier') }}</label
-        >
-        <input
-          type="text"
-          id="cashier"
-          v-model="this.posClose.cashier"
-          class="block w-full rounded-md border border-input text-sm text-foreground focus:border-ring focus:ring-ring"
-          required
-        />
+    </section>
+
+    <section v-if="posClose.openingBalance.length > 0" class="pos-card overflow-hidden">
+      <div class="px-4 pt-4 sm:px-5">
+        <p class="pos-section-title mb-1">{{ $t('payment.modes') }}</p>
+        <p class="mb-3 text-sm text-muted-foreground">{{ $t('payment.reconciliation') }}</p>
       </div>
-    </div>
-  </div>
-  <div v-if="this.posClose.openingBalance.length > 0">
-    <hr class="my-6 border-t border-input" />
-    <h3 class="mb-3 text-base font-semibold text-foreground">
-      {{ $t('payment.modes') }}
-    </h3>
-
-    <h3 class="mb-3 text-sm font-normal text-foreground">
-      {{ $t('payment.reconciliation') }}
-    </h3>
-
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table class="w-full text-left text-sm text-muted-foreground">
-        <thead
-          class="bg-muted text-base font-semibold uppercase text-foreground"
-        >
-          <tr>
-            <th scope="col" class="px-6 py-3">{{ $t('payment.mode') }}</th>
-            <th scope="col" class="px-6 py-3 text-center">{{ $t('pos.opening_amount') }}</th>
-            <th scope="col" class="px-6 py-3 text-center">{{ $t('pos.closing_amount') }}</th>
-            <th scope="col" class="px-6 py-3"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="border-b bg-card"
-            v-for="(modeOfPayment, index) in posClose.openingBalance"
-            :key="index"
-          >
-            <th
-              scope="row"
-              class="whitespace-nowrap px-6 py-4 font-medium text-foreground"
-            >
-              {{ modeOfPayment.mode_of_payment }}
-            </th>
-            <td
-              class="px-6 py-4 text-center font-medium text-foreground"
-            >
-              <input
-                type="number"
-                id="amount"
-                name="amount"
-                v-model="modeOfPayment.opening_amount"
-                class="border-none text-center"
-              />
-            </td>
-            <td
-              class="px-6 py-4 text-center font-medium text-foreground"
-            >
-              <input
-                type="number"
-                id="amount"
-                name="amount"
-                v-model="this.posClose.closingAmount"
-                class="border-none text-center"
-              />
-            </td>
-
-            <td class="px-6 py-4">
-              <button
-                class="p-2 text-center"
-                type="button"
-                @click="this.posClose.deleteRow(index)"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor border"
-                  class="bi bi-trash"
-                  viewBox="0 0 16 16"
+      <div class="overflow-x-auto">
+        <table class="pos-table">
+          <thead>
+            <tr>
+              <th scope="col">{{ $t('payment.mode') }}</th>
+              <th scope="col" class="w-44 text-end">{{ $t('pos.opening_amount') }}</th>
+              <th scope="col" class="w-44 text-end">{{ $t('pos.closing_amount') }}</th>
+              <th scope="col" class="w-14"><span class="sr-only">{{ $t('common.delete') }}</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(mode, index) in posClose.openingBalance" :key="mode.mode_of_payment">
+              <th scope="row" class="whitespace-nowrap px-4 py-2.5 text-start font-semibold text-foreground">{{ mode.mode_of_payment }}</th>
+              <td><input type="number" inputmode="decimal" :aria-label="$t('pos.opening_amount')" v-model="mode.opening_amount" /></td>
+              <td><input type="number" inputmode="decimal" :aria-label="$t('pos.closing_amount')" v-model.number="mode.closing_amount" /></td>
+              <td class="text-end">
+                <button
+                  type="button"
+                  class="pos-icon-btn h-9 w-9 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                  :aria-label="$t('common.delete')"
+                  @click="posClose.deleteRow(index)"
                 >
-                  <path
-                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"
-                  ></path>
-                  <path
-                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"
-                  ></path>
-                </svg>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <hr class="my-6 border-t border-input" />
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-  <h3 class="text-base font-semibold text-foreground">{{ $t('totals.title') }}</h3>
-  <div class="mb-6 mt-6 grid gap-6 md:grid-cols-2">
-    <div>
-      <label
-        for="grandTotal"
-        class="mb-2 block text-sm font-medium text-foreground"
-      >
-        {{ $t('totals.grand_total') }}</label
-      >
-      <input
-        type="text"
-        id="grandTotal"
-        v-model="this.posClose.grandTotal"
-        class="b block w-full rounded-md border border-input text-sm text-foreground focus:border-ring focus:ring-ring"
-        required
-      />
-    </div>
-    <div>
-      <label
-        for="totalInvoices"
-        class="mb-2 block text-sm font-medium text-foreground"
-        >{{ $t('totals.total_invoices') }}</label
-      >
-      <input
-        type="text"
-        id="totalInvoices"
-        v-model="this.posClose.totalInvoices"
-        class="block w-full rounded-md border border-input text-sm text-foreground focus:border-ring focus:ring-ring"
-        required
-      />
-    </div>
-    <div>
-      <label
-        for="netTotak"
-        class="mb-2 block text-sm font-medium text-foreground"
-        >{{ $t('totals.net_total') }}</label
-      >
-      <input
-        type="text"
-        id="netTotak"
-        class="block w-full rounded-md border border-input text-sm text-foreground focus:border-ring focus:ring-ring"
-        v-model="this.posClose.netTotal"
-        required
-      />
-    </div>
-    <div>
-      <label
-        for="totalQty"
-        class="mb-2 block text-sm font-medium text-foreground"
-        >{{ $t('totals.total_quantity') }}</label
-      >
-      <input
-        type="text"
-        id="totalQty"
-        class="block w-full rounded-md border border-input text-sm text-foreground focus:border-ring focus:ring-ring"
-        v-model="this.posClose.totalQty"
-        required
-      />
-    </div>
-  </div>
-  <hr class="my-6 border-t border-input" />
-  <div
-    v-if="this.posClose.showSumbitPosclose"
-    class="fixed inset-0 z-10 mt-20 overflow-y-auto bg-muted"
-  >
-    <div class="mt-3 flex items-center justify-center">
-      <div class="w-full rounded-lg bg-card p-6 shadow-raised md:max-w-md">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xl text-foreground">{{ $t('common.confirm') }}</h3>
-          <span class="sr-only">{{ $t('common.close') }}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5 cursor-pointer"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            @click="this.posClose.showSumbitPosclose = false"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+    <section class="pos-card p-4 sm:p-5">
+      <p class="pos-section-title">{{ $t('totals.title') }}</p>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <label for="grandTotal" class="pos-form-label">{{ $t('totals.grand_total') }}</label>
+          <input id="grandTotal" type="text" class="pos-input tabular-nums" v-model="posClose.grandTotal" required />
         </div>
-
-        <h3
-          class="mt-5 block text-left text-base text-foreground"
-        >
-          Permanently Submit{{ this.posClose.posClosingEntry }}?
-        </h3>
-        <div class="flex justify-end">
-          <button
-            @click="this.posClose.showSumbitPosclose = false"
-            class="mr-3 mt-6 rounded-xl border border-input bg-muted px-3 py-2"
-          >
-            {{ $t('common.no') }}
-          </button>
-          <button
-            @click="this.posClose.sumbitPosClosing()"
-            class="mt-6 rounded-xl bg-primary px-3 py-2 text-primary-foreground hover:bg-primary"
-          >
-            {{ $t('common.yes') }}
-          </button>
+        <div>
+          <label for="netTotal" class="pos-form-label">{{ $t('totals.net_total') }}</label>
+          <input id="netTotal" type="text" class="pos-input tabular-nums" v-model="posClose.netTotal" required />
+        </div>
+        <div>
+          <label for="totalInvoices" class="pos-form-label">{{ $t('totals.total_invoices') }}</label>
+          <input id="totalInvoices" type="text" class="pos-input tabular-nums" v-model="posClose.totalInvoices" required />
+        </div>
+        <div>
+          <label for="totalQty" class="pos-form-label">{{ $t('totals.total_quantity') }}</label>
+          <input id="totalQty" type="text" class="pos-input tabular-nums" v-model="posClose.totalQty" required />
         </div>
       </div>
-    </div>
+    </section>
   </div>
+
+  <PosDialog
+    :open="posClose.showSumbitPosclose"
+    :title="$t('common.confirm')"
+    :description="$t('pos.confirm_submit', { name: posClose.posClosingEntry || '' })"
+    size="sm"
+    @close="posClose.showSumbitPosclose = false"
+  >
+    <template #footer>
+      <button type="button" class="pos-btn-ghost" @click="posClose.showSumbitPosclose = false">{{ $t('common.no') }}</button>
+      <button type="button" class="pos-btn-primary" @click="posClose.sumbitPosClosing()">{{ $t('common.submit') }}</button>
+    </template>
+  </PosDialog>
 </template>
 
 <script>
 import { useInvoiceDataStore } from "@/stores/invoiceData.js";
 import { posClosing } from "@/stores/posClosing.js";
+import PosDialog from "./ui/PosDialog.vue";
 import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
-import { Badge } from "flowbite-vue";
 
 export default {
   name: "posClose",
-  components: { DatePicker, Badge },
+  components: { DatePicker, PosDialog },
   setup() {
-    const invoiceData = useInvoiceDataStore();
-    const posClose = posClosing();
-    return { invoiceData, posClose };
+    return { invoiceData: useInvoiceDataStore(), posClose: posClosing() };
+  },
+  computed: {
+    badge() {
+      return this.posClose.getBadgeType() === "red" ? "pos-badge-danger" : "pos-badge-accent";
+    },
+    statusText() {
+      const text = this.posClose.getBadgeText();
+      return { Draft: this.$t("status.draft"), Submitted: this.$t("status.submitted") }[text] || text;
+    },
   },
   mounted() {
     this.posClose.setFormattedDate();
+    document.addEventListener("click", this.closeMenus);
   },
-  data() {
-    return {
-      search: "",
-      selectedCustomer: null,
-    };
+  beforeUnmount() {
+    document.removeEventListener("click", this.closeMenus);
+  },
+  methods: {
+    closeMenus(event) {
+      const target = event.target;
+      if (target instanceof Element && !target.closest("[data-autocomplete]")) this.posClose.showPosOpen = false;
+    },
   },
 };
 </script>
-<style>
-.my-custom-time-picker {
-  width: 100%;
-  color: black;
-}
-</style>
