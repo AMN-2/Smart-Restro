@@ -1,19 +1,35 @@
 import React, { type MouseEvent } from 'react';
-import { CalendarClock, Eye, Loader2, Printer, Users } from 'lucide-react';
-import { cn } from '@ury/ui';
-import { formatInvoiceTime } from '@ury/core';
+import { ArrowRight, CalendarClock, Clock, Eye, Link2, Loader2, Printer, Users } from 'lucide-react';
+import { cn, TableScene } from '@ury/ui';
+import { formatElapsed, minutesSince, tableVisualState, type TableVisualState } from '@ury/core';
 import type { Table } from '../lib/table-api';
-import { Badge } from '@ury/ui';
-import { TableShapeIcon } from './TableShapeIcon';
 import TableActionsMenu from './TableActionsMenu';
 import { t } from '../i18n';
 import type { TableReservationHint } from '../lib/reservation-api';
 
-export const TABLE_STATE_STYLES = {
-  available: 'border-emerald-300 bg-emerald-50 text-emerald-900 hover:border-emerald-400',
-  occupied: 'border-amber-400 bg-amber-50 text-amber-900',
-  restricted: 'border-emerald-300 bg-emerald-50 text-emerald-900 opacity-60 cursor-not-allowed',
-} as const;
+/**
+ * One look per state, shared with the waiter app's TableTile: a rail down the
+ * leading edge, a badge, and the 3D table painted in the same colour.
+ */
+export const TABLE_STATE_STYLES: Record<TableVisualState, { rail: string; badge: string; label: string }> = {
+  free: {
+    rail: 'bg-emerald-500',
+    badge: 'border-emerald-200 bg-emerald-50 text-emerald-800',
+    label: 'tables.available',
+  },
+  occupied: {
+    rail: 'bg-amber-400',
+    badge: 'border-amber-200 bg-amber-50 text-amber-800',
+    label: 'tables.occupied',
+  },
+  // The one state that needs someone to move; it pulses so it is findable
+  // in a room of thirty cards.
+  attention: {
+    rail: 'bg-red-500 animate-pulse-soft',
+    badge: 'border-red-200 bg-red-50 text-red-700',
+    label: 'tables.needs_attention',
+  },
+};
 
 interface TableCardProps {
   table: Table;
@@ -35,6 +51,10 @@ interface TableCardProps {
   index?: number;
   /** Set when this table is booked now or within the next 45 minutes. */
   reservation?: TableReservationHint;
+  /** POS Profile "table attention time", in minutes; 0 turns the red state off. */
+  attentionMinutes?: number;
+  /** The page's ticking clock, so open times move while the screen is up. */
+  now?: Date;
 }
 
 const TableCard = ({
@@ -55,178 +75,183 @@ const TableCard = ({
   isRestricted = false,
   index = 0,
   reservation,
+  attentionMinutes = 0,
+  now,
 }: TableCardProps) => {
   const isOccupied = table.occupied === 1;
+  const state = tableVisualState(table, attentionMinutes, now);
+  const style = TABLE_STATE_STYLES[state];
+  const elapsed = isOccupied ? formatElapsed(minutesSince(table.latest_invoice_time, now)) : null;
+  const isMerged = Boolean(mergeGroupLabel && mergeGroupLabel !== table.name);
 
   // An available table is opened by a real <button> laid over the card rather
-  // than a div carrying role="button". The div announced itself as a button
-  // and took focus, but had no key handler, so Enter and Space did nothing —
-  // the card was reachable by keyboard and then unusable from it (UX-07).
-  // The button is a sibling of the content, not a wrapper, because the card
-  // already contains buttons and a button cannot nest inside one.
+  // than a div carrying role="button", so Enter and Space work (UX-07). It is
+  // a sibling of the content, not a wrapper, because the card already
+  // contains buttons and a button cannot nest inside one.
   const isOpenable = !isOccupied && !isRestricted;
 
   return (
-    <div
-      role={isOccupied ? 'group' : undefined}
+    <article
       style={{ '--i': index } as React.CSSProperties}
       className={cn(
-        'relative flex min-h-[15.5rem] flex-col rounded-lg border-2 bg-card p-4',
+        'group relative flex min-h-[17rem] flex-col rounded-2xl border border-gray-200 bg-white shadow-sm',
         'focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ring-offset-background',
-        // Scoped rather than `transition-all`: that animated every property
-        // including layout ones, which is what made the grid shimmer as the
-        // pointer crossed it.
-        'transition-[box-shadow,border-color,transform] duration-fast ease-out',
+        'transition-[box-shadow,transform] duration-fast ease-out',
         'animate-fade-in-up stagger-fast',
-        isOccupied
-          ? TABLE_STATE_STYLES.occupied
-          : isRestricted
-            ? TABLE_STATE_STYLES.restricted
-            : cn(
-                TABLE_STATE_STYLES.available,
-                'cursor-pointer hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-[0.99]'
-              ),
+        isOpenable && 'cursor-pointer hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-[0.99]',
+        isRestricted && !isOccupied && 'cursor-not-allowed opacity-60',
         menuOpen ? 'z-20' : 'z-0',
         className
       )}
     >
+      <span className={cn('absolute inset-y-0 start-0 w-1.5 rounded-s-2xl', style.rail)} aria-hidden="true" />
+
       {isOpenable && (
         <button
           type="button"
           onClick={onNavigate}
           aria-label={t('tables.open_table', { table: table.name })}
-          className="absolute inset-0 z-[1] rounded-lg focus:outline-none"
+          className="absolute inset-0 z-[1] rounded-2xl focus:outline-none"
         />
       )}
 
-      <div className="pointer-events-none relative z-[2] flex flex-1 flex-col">
-        <div className="mb-3 flex items-start justify-between gap-1">
-          <div className="flex min-w-0 items-center gap-2">
-            <div className="shrink-0">
-              <TableShapeIcon shape={table.table_shape || 'Rectangle'} />
-            </div>
-            <span className="truncate text-lg font-semibold text-gray-900" title={mergeGroupLabel ?? table.name}>
-              {table.name}
-            </span>
-          </div>
-          <div className="flex shrink-0 items-center gap-1">
-            <Badge
-              variant={isOccupied ? 'warning' : 'success'}
-              className="gap-1.5 whitespace-nowrap"
-            >
-              {isOccupied ? (
-                <span
-                  aria-hidden="true"
-                  className="h-1.5 w-1.5 shrink-0 rounded-full bg-current animate-pulse-soft"
-                />
-              ) : null}
-              {isOccupied ? t('tables.occupied') : t('tables.available')}
-            </Badge>
-            {/* A booking on a free table is the only thing that changes what
-                a cashier should do with it, so it sits next to the status
-                rather than on a screen they would have to go and open. */}
-            {reservation && !isOccupied && (
-              <Badge
-                variant="outline"
-                className="gap-1 whitespace-nowrap border-violet-300 bg-violet-50 text-violet-900"
-                title={t('tables.reserved_for', {
-                  guest: reservation.guest_name,
-                  time: reservation.reserved_from.slice(11, 16),
-                })}
-              >
-                <CalendarClock className="h-3 w-3 shrink-0" aria-hidden="true" />
-                {reservation.in_progress
-                  ? t('tables.reserved_now')
-                  : reservation.reserved_from.slice(11, 16)}
-              </Badge>
+      <header className="pointer-events-none relative z-[2] flex items-start justify-between gap-1 pe-1 ps-4 pt-3">
+        <div className="flex min-w-0 flex-wrap items-center gap-1">
+          <span
+            className={cn(
+              'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border px-2 py-0.5 text-xs font-semibold',
+              style.badge
             )}
-            <div className="pointer-events-auto">
-            <TableActionsMenu
-              table={table}
-              isOpen={menuOpen}
-              onOpenChange={onMenuOpenChange}
-              onMerge={onMerge}
-              onUnmerge={onUnmerge}
-              onTransferTable={onTransferTable}
-              onTransferCaptain={onTransferCaptain}
-              showCaptainTransfer={showCaptainTransfer}
+          >
+            <span
+              aria-hidden="true"
+              className={cn('h-1.5 w-1.5 shrink-0 rounded-full bg-current', isOccupied && 'animate-pulse-soft')}
             />
-            </div>
-          </div>
-        </div>
-
-        <p
-          className={cn(
-            'mb-2 min-h-[1.25rem] truncate text-xs font-medium',
-            mergeGroupLabel && mergeGroupLabel !== table.name
-              ? 'text-primary-700'
-              : 'invisible'
+            {t(style.label)}
+          </span>
+          {/* A booking on a free table is the only thing that changes what
+              a cashier should do with it, so it sits next to the status. */}
+          {reservation && !isOccupied && (
+            <span
+              className="inline-flex items-center gap-1 whitespace-nowrap rounded-full border border-violet-300 bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-900"
+              title={t('tables.reserved_for', {
+                guest: reservation.guest_name,
+                time: reservation.reserved_from.slice(11, 16),
+              })}
+            >
+              <CalendarClock className="h-3 w-3 shrink-0" aria-hidden="true" />
+              {reservation.in_progress ? t('tables.reserved_now') : reservation.reserved_from.slice(11, 16)}
+            </span>
           )}
-          title={mergeGroupLabel ?? undefined}
+        </div>
+        <div className="pointer-events-auto shrink-0">
+          <TableActionsMenu
+            table={table}
+            isOpen={menuOpen}
+            onOpenChange={onMenuOpenChange}
+            onMerge={onMerge}
+            onUnmerge={onUnmerge}
+            onTransferTable={onTransferTable}
+            onTransferCaptain={onTransferCaptain}
+            showCaptainTransfer={showCaptainTransfer}
+          />
+        </div>
+      </header>
+
+      <div className="pointer-events-none relative z-[2] flex flex-1 flex-col px-4 pt-1 text-center">
+        <TableScene state={state} />
+
+        <h2
+          className="flex items-center justify-center gap-1.5 text-2xl font-bold leading-tight text-gray-900"
+          title={mergeGroupLabel ?? table.name}
         >
-          {mergeGroupLabel && mergeGroupLabel !== table.name
-            ? t('tables.merged_with_list', { tables: mergeGroupLabel })
-            : '\u00a0'}
-        </p>
+          <span className="truncate">{table.name}</span>
+          {isMerged && (
+            <Link2 className="h-4 w-4 shrink-0 text-gray-400" aria-label={t('tables.merged')} />
+          )}
+        </h2>
 
-        <div className="space-y-2 text-sm text-gray-700">
-          <div className="flex items-center justify-between">
-            <span className="font-medium">{t('tables.room')}</span>
-            <span>{table.restaurant_room}</span>
-          </div>
-          <div className="flex min-h-[1.25rem] items-center justify-between">
-            <span className="font-medium">{t('tables.started_at')}</span>
-            <span>{isOccupied ? formatInvoiceTime(table.latest_invoice_time) : '—'}</span>
-          </div>
-          {typeof table.no_of_seats === 'number' && (
-            <div className="flex items-center justify-between">
-              <span className="font-medium">{t('tables.seats')}</span>
-              <span className="flex items-center gap-1">
-                <Users className="h-3 w-3" />
-                {table.no_of_seats}
-              </span>
-            </div>
-          )}
-          {table.is_take_away === 1 && (
-            <Badge variant="pending" className="mt-2">{t('tables.take_away')}</Badge>
-          )}
-        </div>
+        {isMerged ? (
+          <p className="mt-0.5 truncate text-xs font-medium text-primary-700" title={mergeGroupLabel}>
+            {t('tables.merged_with_list', { tables: mergeGroupLabel ?? '' })}
+          </p>
+        ) : null}
+
+        {isOccupied ? (
+          <p
+            className={cn(
+              'mt-1 flex items-center justify-center gap-1 text-sm font-semibold tabular-nums',
+              state === 'attention' ? 'text-red-600' : 'text-gray-500'
+            )}
+            title={t('tables.seated_for', { time: elapsed ?? '' })}
+          >
+            <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+            <bdi>{elapsed}</bdi>
+          </p>
+        ) : (
+          <p className="mt-1 flex min-h-[1.25rem] items-center justify-center gap-1 text-sm text-gray-500">
+            {typeof table.no_of_seats === 'number' && table.no_of_seats > 0 ? (
+              <>
+                <Users className="h-3.5 w-3.5" aria-hidden="true" />
+                {t('tables.seats_count', { count: table.no_of_seats })}
+              </>
+            ) : (
+              ' '
+            )}
+          </p>
+        )}
+
+        {table.is_take_away === 1 && (
+          <span className="mx-auto mt-1 rounded-full bg-sky-50 px-2 py-0.5 text-xs font-semibold text-sky-800">
+            {t('tables.take_away')}
+          </span>
+        )}
       </div>
 
-      <div
-        className={cn(
-          'relative z-[2] mt-auto flex min-h-[2.75rem] gap-2 border-t pt-3',
-          isOccupied ? 'border-amber-200' : 'border-transparent'
-        )}
-      >
+      <footer className="relative z-[2] mt-auto flex gap-2 p-3 pt-2">
         {isOccupied ? (
           <>
             <button
+              type="button"
               onClick={onPreview}
               disabled={isRestricted}
-              className={cn(
-                "flex flex-1 items-center justify-center gap-2 rounded bg-white py-2 text-xs font-semibold transition hover:bg-amber-100",
-                isRestricted ? "opacity-50 cursor-not-allowed hover:bg-white" : ""
-              )}
+              className="flex h-10 min-w-0 flex-1 items-center justify-center gap-1.5 truncate rounded-xl px-2 border border-gray-200 bg-white text-xs font-semibold text-gray-800 transition-colors hover:bg-amber-50 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              <Eye className="h-3 w-3" />{t('common.preview')}</button>
+              <Eye className="h-3.5 w-3.5" />
+              {t('common.preview')}
+            </button>
             <button
+              type="button"
               onClick={onPrint}
               disabled={isPrinting}
-              className="flex flex-1 items-center justify-center gap-2 rounded bg-white py-2 text-xs font-semibold transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex h-10 min-w-0 flex-1 items-center justify-center gap-1.5 truncate rounded-xl px-2 border border-gray-200 bg-white text-xs font-semibold text-gray-800 transition-colors hover:bg-amber-50 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isPrinting ? (
                 <>
-                  <Loader2 className="h-3 w-3 animate-spin" />{t('tables.printing')}</>
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  {t('tables.printing')}
+                </>
               ) : (
                 <>
-                  <Printer className="h-3 w-3" />{t('order.print')}</>
+                  <Printer className="h-3.5 w-3.5" />
+                  {t('order.print')}
+                </>
               )}
             </button>
           </>
-        ) : null}
-      </div>
-    </div>
+        ) : (
+          // Visual only: the overlay button above is what takes the click
+          // and the focus, so this is not a second tab stop.
+          <span
+            aria-hidden="true"
+            className="pointer-events-none flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-colors group-hover:bg-primary/90"
+          >
+            {t('tables.open')}
+            <ArrowRight className="h-4 w-4 rtl:-scale-x-100" />
+          </span>
+        )}
+      </footer>
+    </article>
   );
 };
 
