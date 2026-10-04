@@ -1,4 +1,6 @@
 import { defineStore } from "pinia";
+import { t } from "../i18n";
+import { trackLocalWrite } from "../realtime/floorSync.js";
 import router from "../router";
 import { useTableStore } from "./Table.js";
 import { useMenuStore } from "./Menu.js";
@@ -116,9 +118,7 @@ export const useInvoiceDataStore = defineStore("invoiceData", {
           this.enableKotReprint=this.invoiceDetails.enable_kot_reprint;
           this.multipleCashier=this.invoiceDetails.multiple_cashier
           this.editOrderType=this.invoiceDetails.edit_order_type
-          if (this.qz_host) {
-            loadQzPrinter(this.qz_host);
-          }
+          // No QZ Tray connection: this interface sends no print commands.
           this.db
             .getDoc("Company", this.company)
             .then((doc) => {
@@ -166,6 +166,7 @@ export const useInvoiceDataStore = defineStore("invoiceData", {
 
     // Method for creating an invoice
     async invoiceCreation() {
+      if (this.invoiceUpdating || !this.showUpdateButtton || !this.menu.cart.length) return;
       this.showUpdateButtton = false;
       this.invoiceUpdating = true;
       let selectedTables = "";
@@ -263,7 +264,7 @@ export const useInvoiceDataStore = defineStore("invoiceData", {
           }
     
           // Show confirmation modal and wait for user response
-          await new Promise((resolve, reject) => {
+          const confirmed = await new Promise((resolve) => {
             this.notificationModal.showModal({
               title: "Are You Sure to remove these items?",
               message: errorMsg.join('\n'),
@@ -271,16 +272,17 @@ export const useInvoiceDataStore = defineStore("invoiceData", {
               showCancelButton: true,
               onConfirm: () => {
                 this.invoiceUpdating = true;
-                this.showUpdateButtton = true;
-                resolve();
+                this.showUpdateButtton = false;
+                resolve(true);
               },
               onCancel: () => {
                 this.showUpdateButtton = true;
                 this.invoiceUpdating = false;
-                reject('User cancelled the operation');
+                resolve(false);
               }
             });
           });
+          if (!confirmed) return;
         }
       }
     
@@ -315,25 +317,23 @@ export const useInvoiceDataStore = defineStore("invoiceData", {
         return;
       }
     
-      if (!this.auth.cashier && !selectedTables) {
+      // Orders are table-only: the server takes "Dine In" / "Take Away" from
+      // the table. Only an order reopened from the log may lack one, and it
+      // keeps the type it was created with.
+      if (!selectedTables && !ordeType) {
         this.alert.createAlert("Message", "Please Select a Table", "OK");
         this.showUpdateButtton = true;
         this.invoiceUpdating = false;
         return;
       }
     
-      if (this.auth.cashier && !ordeType && !selectedTables) {
-        this.alert.createAlert("Message", "Please Select Order Type", "OK");
-        this.showUpdateButtton = true;
-        this.invoiceUpdating = false;
-        return;
-      }
-    
       try {
-        const response = await this.call.post(
+        // Tracked so this tab's own save is not mistaken for another
+        // device's change when its realtime echo arrives.
+        const response = await trackLocalWrite(() => this.call.post(
           "ury.ury.doctype.ury_order.ury_order.sync_order",
           creatingInvoice
-        );
+        ));
     
         this.showUpdateButtton = true;
         if (response.message.status === "Failure") {
@@ -381,6 +381,8 @@ export const useInvoiceDataStore = defineStore("invoiceData", {
           const messages = JSON.parse(error._server_messages);
           const message = JSON.parse(messages[0]);
           await this.alert.createAlert("Message", message.message, "OK");
+        } else {
+          this.notification.createNotification(t("order.send_failed"), "error");
         }
       }
     },
