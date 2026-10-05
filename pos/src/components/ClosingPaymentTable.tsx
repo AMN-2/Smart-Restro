@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Calculator } from 'lucide-react';
 import { ClosingPaymentSummary } from '../lib/pos-closing-api';
-import { Input } from '@ury/ui';
+import { Button, Input } from '@ury/ui';
+import { usePOSStore } from '../store/pos-store';
+import { useCashModes } from '../hooks/useCashModes';
+import DenominationCounter from './DenominationCounter';
 import { formatCurrency } from '@ury/core';
 import { cn } from '@ury/ui';
 import { t } from '../i18n';
@@ -17,6 +21,13 @@ const ClosingPaymentTable: React.FC<ClosingPaymentTableProps> = ({
   touchedModes,
   onChange,
 }) => {
+  const currency = usePOSStore((state) => state.posProfile?.currency || state.currency);
+  const cashModes = useCashModes();
+  // Note counts per cash mode, kept while the dialog is open so closing and
+  // reopening the counter does not lose a half-counted drawer.
+  const [counts, setCounts] = useState<Record<string, Record<number, number>>>({});
+  const [counting, setCounting] = useState<string | null>(null);
+
   const handleClosingAmountChange = (modeOfPayment: string, value: string) => {
     const parsed = parseFloat(value);
     // Clamp to non-negative in JS -- the HTML `min="0"` attribute alone does
@@ -79,9 +90,12 @@ const ClosingPaymentTable: React.FC<ClosingPaymentTableProps> = ({
             const hasDifference = Math.abs(difference) > 0.001;
             const isTouched = touchedModes.has(row.mode_of_payment);
 
+            const isCash = cashModes.has(row.mode_of_payment);
+            const isCounting = counting === row.mode_of_payment;
+
             return (
+              <React.Fragment key={row.mode_of_payment}>
               <tr
-                key={row.mode_of_payment}
                 className={cn(
                   'border-b border-gray-200 hover:bg-gray-50 transition-colors',
                   !isTouched && 'bg-amber-50/60'
@@ -97,6 +111,7 @@ const ClosingPaymentTable: React.FC<ClosingPaymentTableProps> = ({
                   {formatCurrency(row.expected_amount)}
                 </td>
                 <td className="py-3 px-4">
+                  <div className="flex items-center gap-2">
                   <Input
                     type="number"
                     min="0"
@@ -109,6 +124,21 @@ const ClosingPaymentTable: React.FC<ClosingPaymentTableProps> = ({
                     className={cn('w-full text-center', !isTouched && 'border-amber-400')}
                     size="sm"
                   />
+                  {isCash && (
+                    <Button
+                      type="button"
+                      variant={isCounting ? 'default' : 'outline'}
+                      size="icon-sm"
+                      className="shrink-0"
+                      aria-expanded={isCounting}
+                      aria-label={t('pos_closing.count_notes')}
+                      title={t('pos_closing.count_notes')}
+                      onClick={() => setCounting(isCounting ? null : row.mode_of_payment)}
+                    >
+                      <Calculator className="h-4 w-4" />
+                    </Button>
+                  )}
+                  </div>
                 </td>
                 <td
                   className={cn(
@@ -119,6 +149,21 @@ const ClosingPaymentTable: React.FC<ClosingPaymentTableProps> = ({
                   {formatCurrency(difference)}
                 </td>
               </tr>
+              {isCash && isCounting && (
+                <tr className="border-b border-gray-200 bg-gray-50">
+                  <td colSpan={5} className="px-4 py-3">
+                    <DenominationCounter
+                      currency={currency}
+                      counts={counts[row.mode_of_payment] || {}}
+                      onChange={(next, total) => {
+                        setCounts((prev) => ({ ...prev, [row.mode_of_payment]: next }));
+                        onChange(row.mode_of_payment, total);
+                      }}
+                    />
+                  </td>
+                </tr>
+              )}
+              </React.Fragment>
             );
           })}
         </tbody>
