@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AlertTriangle, Filter, Layout, Loader2, RefreshCw } from 'lucide-react';
+import { AlertTriangle, Layout, LayoutGrid, Loader2, RefreshCw } from 'lucide-react';
 import { usePOSStore } from '../store/pos-store';
 import { useRootStore } from '../store/root-store';
 import { getRooms, getTableCount, getVacantTablesForBranch, mergeTablesBatch, unmergeTables, type Room, type Table } from '../lib/table-api';
@@ -22,19 +22,31 @@ import TableUnmergeDialog from '../components/TableUnmergeDialog';
 import TableTransferDialog from '../components/TableTransferDialog';
 import CaptainTransferDialog from '../components/CaptainTransferDialog';
 import TableCard from '../components/TableCard';
-import { useRoomTables } from '../hooks/useRoomTables';
+import { ALL_ROOMS, useRoomTables } from '../hooks/useRoomTables';
 import MergeLinkConnector from '../components/MergeLinkConnector';
 
+type StatusFilter = 'all' | 'occupied' | 'available';
+
+const STATUS_FILTER_KEY = 'ury_pos_tables_status_filter';
+/** The earlier on/off "occupied only" toggle; still honoured on first read. */
 const OCCUPIED_ONLY_KEY = 'ury_pos_tables_occupied_only';
 
 /** Per-device convenience: storage can be blocked, and that is fine. */
-function readOccupiedOnly(): boolean {
+function readStatusFilter(): StatusFilter {
   try {
-    return localStorage.getItem(OCCUPIED_ONLY_KEY) === '1';
+    const stored = localStorage.getItem(STATUS_FILTER_KEY);
+    if (stored === 'all' || stored === 'occupied' || stored === 'available') return stored;
+    return localStorage.getItem(OCCUPIED_ONLY_KEY) === '1' ? 'occupied' : 'all';
   } catch {
-    return false;
+    return 'all';
   }
 }
+
+const STATUS_FILTERS: Array<{ value: StatusFilter; labelKey: string; dot?: string }> = [
+  { value: 'all', labelKey: 'tables.filter_all' },
+  { value: 'occupied', labelKey: 'tables.occupied', dot: 'bg-amber-400' },
+  { value: 'available', labelKey: 'tables.available', dot: 'bg-emerald-500' },
+];
 
 const TableView = () => {
   const navigate = useNavigate();
@@ -46,19 +58,17 @@ const TableView = () => {
   const branch = posProfile?.branch ?? null;
   const attentionMinutes = Number(posProfile?.tableAttention) || 0;
 
-  // "Occupied only" is how a busy floor is worked: the free tables are
-  // noise while bills are being chased. Remembered per device.
-  const [occupiedOnly, setOccupiedOnly] = useState<boolean>(readOccupiedOnly);
-  const toggleOccupiedOnly = () => {
-    setOccupiedOnly((prev) => {
-      const next = !prev;
-      try {
-        localStorage.setItem(OCCUPIED_ONLY_KEY, next ? '1' : '0');
-      } catch {
-        /* blocked storage: the toggle still works for this visit */
-      }
-      return next;
-    });
+  // "Occupied" is how a busy floor is worked: the free tables are noise
+  // while bills are being chased; "available" is for seating a walk-in.
+  // Remembered per device.
+  const [statusFilter, setStatusFilterState] = useState<StatusFilter>(readStatusFilter);
+  const setStatusFilter = (next: StatusFilter) => {
+    setStatusFilterState(next);
+    try {
+      localStorage.setItem(STATUS_FILTER_KEY, next);
+    } catch {
+      /* blocked storage: the filter still works for this visit */
+    }
   };
 
   // A minute clock, so open times and the red "needs attention" state move
@@ -164,7 +174,9 @@ const TableView = () => {
     fetchRoomCounts();
   }, [branch, rooms, persistRoomCounts]);
 
-  const handleNavigateToPOS = (tableName: string) => {
+  const isAllRooms = selectedRoom === ALL_ROOMS;
+
+  const handleNavigateToPOS = (table: Table) => {
     if (!selectedRoom) return;
 
     // Check if user is restricted from taking table orders
@@ -174,13 +186,13 @@ const TableView = () => {
     }
 
     setSelectedOrderType(DINE_IN);
-    setSelectedTable(tableName, selectedRoom);
+    setSelectedTable(table.name, table.restaurant_room || selectedRoom);
     navigate('/pos');
   };
 
   const handlePreviewTable = (table: Table, event?: MouseEvent<HTMLButtonElement>) => {
     event?.stopPropagation();
-    handleNavigateToPOS(table.name);
+    handleNavigateToPOS(table);
   };
 
   const handlePrintTable = async (table: Table, event: MouseEvent<HTMLButtonElement>) => {
@@ -210,7 +222,7 @@ const TableView = () => {
         ),
       });
       showToast.success('Printed successfully');
-      await loadTables(table.restaurant_room, { useCache: false });
+      await loadTables(selectedRoom, { useCache: false });
     } catch (error) {
       showToast.error(error instanceof Error ? error.message : 'Failed to print order');
     } finally {
@@ -349,6 +361,8 @@ const TableView = () => {
     return tables.filter((table) => {
       if (table.name === mergeSourceTable.name) return false;
       if (sourceCluster.has(table.name)) return false;
+      // The "All rooms" floor lists every room; a merge stays within one.
+      if (table.restaurant_room !== mergeSourceTable.restaurant_room) return false;
       if (table.occupied === 1 && mergeSourceTable.occupied === 1) return false;
       return true;
     });
@@ -357,7 +371,10 @@ const TableView = () => {
   const tablesToDisplay = useMemo(() => {
     // Already grouped by merge cluster when it was fetched (useRoomTables).
     const needle = tableSearchQuery.trim().toLowerCase();
-    const scoped = occupiedOnly ? tables.filter((table) => table.occupied === 1) : tables;
+    const scoped =
+      statusFilter === 'all'
+        ? tables
+        : tables.filter((table) => (table.occupied === 1) === (statusFilter === 'occupied'));
     if (!needle) return scoped;
     // Name and room both: staff say "table 12" and "the terrace", and the
     // header box gives no hint that only one of them would work.
@@ -366,9 +383,12 @@ const TableView = () => {
         table.name.toLowerCase().includes(needle) ||
         (table.restaurant_room || '').toLowerCase().includes(needle)
     );
-  }, [tables, tableSearchQuery, occupiedOnly]);
+  }, [tables, tableSearchQuery, statusFilter]);
 
-  const occupiedCount = useMemo(() => tables.filter((table) => table.occupied === 1).length, [tables]);
+  const statusCounts = useMemo(() => {
+    const occupied = tables.filter((table) => table.occupied === 1).length;
+    return { all: tables.length, occupied, available: tables.length - occupied };
+  }, [tables]);
 
   const unmergeGroupMembers = useMemo(() => {
     if (!unmergeSourceTable) return [];
@@ -376,6 +396,24 @@ const TableView = () => {
   }, [unmergeSourceTable, tablesToDisplay]);
 
   const tableRenderGroups = useMemo(() => getTableRenderGroups(tablesToDisplay), [tablesToDisplay]);
+
+  // One section per room, rooms in the order they were fetched (natural
+  // name order). A single room still renders as one unlabelled section.
+  const roomSections = useMemo(() => {
+    const sections = new Map<string, Table[][]>();
+    for (const group of tableRenderGroups) {
+      const room = isAllRooms ? group[0]?.restaurant_room || '' : '';
+      const list = sections.get(room);
+      if (list) list.push(group);
+      else sections.set(room, [group]);
+    }
+    return [...sections.entries()].map(([room, groups]) => ({
+      room,
+      groups,
+      occupied: groups.flat().filter((table) => table.occupied === 1).length,
+      total: groups.flat().length,
+    }));
+  }, [tableRenderGroups, isAllRooms]);
 
   // Refreshed on a timer, not once: "booked in twenty minutes" becomes
   // "booked now" while the cashier is looking at the same screen, and a
@@ -418,7 +456,7 @@ const TableView = () => {
       onTransferTable={canTransferTable ? () => void handleOpenTransferTable(table) : undefined}
       onTransferCaptain={() => void handleOpenCaptainTransfer(table)}
       showCaptainTransfer={showCaptainTransfer}
-      onNavigate={() => handleNavigateToPOS(table.name)}
+      onNavigate={() => handleNavigateToPOS(table)}
       onPreview={(event) => handlePreviewTable(table, event)}
       onPrint={(event) => handlePrintTable(table, event)}
       isPrinting={printingTable === table.name}
@@ -446,13 +484,13 @@ const TableView = () => {
   const [isLayoutView, setIsLayoutView] = useState(false);
 
   const handleLayoutView = () => {
-    if (selectedRoom) {
+    if (selectedRoom && !isAllRooms) {
       loadTables(selectedRoom, { useCache: false });
     }
     setIsLayoutView(true);
   };
 
-  if (isLayoutView && selectedRoom) {
+  if (isLayoutView && selectedRoom && !isAllRooms) {
     return (
       <LayoutView
         selectedRoom={selectedRoom}
@@ -468,7 +506,7 @@ const TableView = () => {
       <div className="p-4 bg-white border-b border-gray-200">
         <div className="max-w-screen-xl mx-auto">
           <div className="flex flex-col gap-3">
-            <div className="flex justify-between items-start gap-4">
+            <div className="flex flex-wrap justify-between items-start gap-4">
               <div className="flex flex-wrap gap-2">
                 {loadingRooms && (
                   <div className="flex-1 min-w-[160px]">
@@ -479,6 +517,23 @@ const TableView = () => {
                 {!loadingRooms && !hasRooms && (
                   <div className="flex items-center gap-2 text-gray-500 text-sm">
                     <AlertTriangle className="w-4 h-4" />{t('tables.no_rooms_for_branch')}</div>
+                )}
+
+                {rooms.length > 1 && (
+                  <Button
+                    variant="tab"
+                    data-selected={isAllRooms}
+                    onClick={() => handleRoomChange(ALL_ROOMS)}
+                    className="h-fit"
+                  >
+                    <LayoutGrid className="me-1.5 h-4 w-4" />
+                    {t('tables.all_rooms')}
+                    {rooms.every((room) => typeof roomCounts[room.name] === 'number') ? (
+                      <Badge variant="outline" className="ms-2 bg-white/60">
+                        {rooms.reduce((sum, room) => sum + roomCounts[room.name], 0)}
+                      </Badge>
+                    ) : null}
+                  </Button>
                 )}
 
                 {rooms.map((room) => (
@@ -499,24 +554,40 @@ const TableView = () => {
                 ))}
               </div>
 
-              <div className="flex shrink-0 gap-2">
-                <Button
-                  variant={occupiedOnly ? 'default' : 'outline'}
-                  className="flex items-center gap-2 text-sm"
-                  aria-pressed={occupiedOnly}
-                  onClick={toggleOccupiedOnly}
-                  disabled={!selectedRoom}
-                  title={occupiedOnly ? t('tables.show_all_tables') : t('tables.occupied_only')}
+              <div className="flex shrink-0 flex-wrap gap-2">
+                <div
+                  role="radiogroup"
+                  aria-label={t('tables.status_filter')}
+                  className="flex items-center rounded-lg border border-gray-200 bg-gray-50 p-0.5"
                 >
-                  <Filter className="h-4 w-4" />
-                  {t('tables.occupied_only')}
-                  <Badge
-                    variant="outline"
-                    className={occupiedOnly ? 'border-white/40 bg-white/20 text-white' : 'border-amber-300 bg-amber-50 text-amber-800'}
-                  >
-                    {occupiedCount}
-                  </Badge>
-                </Button>
+                  {STATUS_FILTERS.map(({ value, labelKey, dot }) => {
+                    const active = statusFilter === value;
+                    return (
+                      <Button
+                        key={value}
+                        variant="ghost"
+                        size="sm"
+                        role="radio"
+                        aria-checked={active}
+                        disabled={!selectedRoom}
+                        onClick={() => setStatusFilter(value)}
+                        className={`flex items-center gap-1.5 ${
+                          active ? 'bg-white text-gray-900 shadow-sm hover:bg-white' : 'text-gray-500 hover:text-gray-800'
+                        }`}
+                      >
+                        {dot && <span className={`h-2 w-2 rounded-full ${dot}`} aria-hidden="true" />}
+                        {t(labelKey)}
+                        <span
+                          className={`min-w-[1.25rem] rounded-full px-1.5 text-center text-xs tabular-nums ${
+                            active ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-600'
+                          }`}
+                        >
+                          {statusCounts[value]}
+                        </span>
+                      </Button>
+                    );
+                  })}
+                </div>
                 <Button variant="outline" size="icon" disabled={loadingRooms || loadingTables || refreshingTables}
                   aria-label={t('common.refresh')}
                   onClick={() => selectedRoom ? loadTables(selectedRoom) : fetchRooms()}>
@@ -526,7 +597,7 @@ const TableView = () => {
                   variant="tab"
                   className="flex items-center gap-2 text-sm"
                   onClick={() => handleLayoutView()}
-                  disabled={!selectedRoom}
+                  disabled={!selectedRoom || isAllRooms}
                 >
                   <Layout className="w-4 h-4" />
                   {t('tables.layout_view')}
@@ -578,43 +649,62 @@ const TableView = () => {
             <EmptyState
               className="h-full"
               illustration="tables"
-              title={t(occupiedOnly && tables.length > 0 ? 'tables.no_occupied_tables' : 'tables.no_tables_found')}
+              title={t(
+                statusFilter !== 'all' && tables.length > 0
+                  ? statusFilter === 'occupied' ? 'tables.no_occupied_tables' : 'tables.no_available_tables'
+                  : 'tables.no_tables_found'
+              )}
               action={
-                occupiedOnly && tables.length > 0 ? (
-                  <Button variant="outline" onClick={toggleOccupiedOnly}>
+                statusFilter !== 'all' && tables.length > 0 ? (
+                  <Button variant="outline" onClick={() => setStatusFilter('all')}>
                     {t('tables.show_all_tables')}
                   </Button>
                 ) : undefined
               }
             />
           ) : (
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,13rem),1fr))] gap-4 pb-10">
-              {tableRenderGroups.map((group, groupIndex) =>
-                group.length === 1 ? (
-                  renderTableCard(group[0], undefined, groupIndex)
-                ) : (
-                  <div
-                    key={group.map((t) => t.name).join('-')}
-                    className="col-span-full flex flex-wrap items-stretch gap-y-2 rounded-lg border border-blue-200/70 bg-blue-50/40 p-2"
-                  >
-                    {group.map((table, index) => (
-                      <Fragment key={table.name}>
-                        {renderTableCard(
-                          table,
-                          'min-w-[9.5rem] flex-1 basis-[calc(50%-1.5rem)] sm:basis-[calc(33.333%-1.5rem)] md:min-w-[10rem] md:max-w-[14rem]',
-                          groupIndex
-                        )}
-                        {index < group.length - 1 && (
-                          <MergeLinkConnector
-                            leftTable={table.name}
-                            rightTable={group[index + 1].name}
-                          />
-                        )}
-                      </Fragment>
-                    ))}
+            <div className="space-y-6 pb-10">
+              {roomSections.map((section) => (
+                <section key={section.room || 'room'} aria-label={section.room || undefined}>
+                  {section.room && (
+                    <div className="mb-3 flex items-center gap-3">
+                      <h2 className="text-sm font-semibold text-gray-800">{section.room}</h2>
+                      <span className="text-xs text-gray-500 tabular-nums">
+                        {t('tables.room_summary', { occupied: section.occupied, total: section.total })}
+                      </span>
+                      <div className="h-px flex-1 bg-gray-200" aria-hidden="true" />
+                    </div>
+                  )}
+                  <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,13rem),1fr))] gap-4">
+                    {section.groups.map((group, groupIndex) =>
+                      group.length === 1 ? (
+                        renderTableCard(group[0], undefined, groupIndex)
+                      ) : (
+                        <div
+                          key={group.map((t) => t.name).join('-')}
+                          className="col-span-full flex flex-wrap items-stretch gap-y-2 rounded-lg border border-blue-200/70 bg-blue-50/40 p-2"
+                        >
+                          {group.map((table, index) => (
+                            <Fragment key={table.name}>
+                              {renderTableCard(
+                                table,
+                                'min-w-[9.5rem] flex-1 basis-[calc(50%-1.5rem)] sm:basis-[calc(33.333%-1.5rem)] md:min-w-[10rem] md:max-w-[14rem]',
+                                groupIndex
+                              )}
+                              {index < group.length - 1 && (
+                                <MergeLinkConnector
+                                  leftTable={table.name}
+                                  rightTable={group[index + 1].name}
+                                />
+                              )}
+                            </Fragment>
+                          ))}
+                        </div>
+                      )
+                    )}
                   </div>
-                )
-              )}
+                </section>
+              ))}
             </div>
           )}
         </div>
