@@ -1,6 +1,6 @@
 import { ChevronUp, ShoppingBasket } from 'lucide-react';
-import { formatCurrency, flt } from '@ury/core';
-import { usePOSStore } from '../store/pos-store';
+import { formatCurrency } from '@ury/core';
+import { useOrderTotal } from '../hooks/useOrderTotal';
 import { t, tPlural } from '../i18n';
 
 interface OrderSummaryBarProps {
@@ -17,16 +17,7 @@ interface OrderSummaryBarProps {
  * is a real button with a full-width touch target rather than a status strip.
  */
 export default function OrderSummaryBar({ onOpen }: OrderSummaryBarProps) {
-  const { activeOrders } = usePOSStore();
-
-  const total = flt(
-    activeOrders.reduce((sum, item) => {
-      const basePrice = item.selectedVariant?.price || item.price;
-      const addons = item.selectedAddons?.reduce((a, addon) => a + addon.price, 0) || 0;
-      return sum + (basePrice + addons) * item.quantity;
-    }, 0),
-    2
-  );
+  const { count, total } = useOrderTotal();
 
   return (
     <button
@@ -43,7 +34,7 @@ export default function OrderSummaryBar({ onOpen }: OrderSummaryBarProps) {
             {t('order_panel.current_ticket')}
           </span>
           <span className="text-sm font-semibold text-[#3f2a20]">
-            {tPlural('order_panel.item_count', activeOrders.length)}
+            {tPlural('order_panel.item_count', count)}
           </span>
         </span>
       </span>
