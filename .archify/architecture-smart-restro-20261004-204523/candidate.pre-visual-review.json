@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "الهيكل المعماري لمنصة Smart Restro",
+    "subtitle": "مسارات الطلب والتشغيل والمطبخ والطباعة والتزامن اللحظي — موثقة من الكود",
+    "locale": "ar",
+    "translations": {
+      "page.title": "{title} · مخطط معماري",
+      "diagram.description.architecture": "مخطط معماري تفاعلي مولد بواسطة Archify.",
+      "node.focus": "تركيز على {label}",
+      "node.focus.detail": "تركيز على {label}، {detail}",
+      "node.context.architecture": "مكوّن معماري",
+      "legend.title": "دليل الرموز",
+      "legend.architecture.frontend": "واجهة مستخدم",
+      "legend.architecture.backend": "خدمة خلفية",
+      "legend.architecture.database": "بيانات دائمة",
+      "legend.architecture.cloud": "منصة تشغيل",
+      "legend.architecture.security": "أمان وهوية",
+      "legend.architecture.messagebus": "رسائل وطوابير",
+      "legend.architecture.external": "نظام خارجي",
+      "viewer.kind.frontend": "واجهة مستخدم",
+      "viewer.kind.backend": "خدمة خلفية",
+      "viewer.kind.database": "بيانات دائمة",
+      "viewer.kind.cloud": "منصة تشغيل",
+      "viewer.kind.security": "أمان وهوية",
+      "viewer.kind.messagebus": "رسائل وطوابير",
+      "viewer.kind.external": "نظام خارجي",
+      "viewer.toolbar.actions": "إجراءات المخطط",
+      "viewer.theme.toggle.title": "تبديل السمة (T)",
+      "viewer.theme.toggle": "تبديل سمة الألوان",
+      "viewer.theme.dark": "داكن",
+      "viewer.theme.light": "فاتح",
+      "viewer.motion.live": "متحرك",
+      "viewer.motion.still": "ثابت",
+      "viewer.motion.pause": "إيقاف الحركة",
+      "viewer.motion.resume": "استئناف الحركة",
+      "viewer.present.enter": "بدء وضع العرض",
+      "viewer.present.exit": "إنهاء وضع العرض",
+      "viewer.export.button": "تصدير",
+      "viewer.export.button.title": "تصدير المخطط (E)",
+      "viewer.export.diagram": "تصدير المخطط",
+      "viewer.export.menu": "تصدير",
+      "viewer.export.subtitle": "ملفات نظيفة وقابلة للنقل",
+      "viewer.guide.title": "استكشف هذا النظام",
+      "viewer.guide.eyebrow": "دليل المخطط",
+      "viewer.guide.find": "ابحث عن أي مكوّن",
+      "viewer.guide.route": "تتبّع مسارًا",
+      "viewer.guide.map": "اعرض النظام كاملًا",
+      "viewer.guide.lens": "قارن الأنواع المعمارية",
+      "viewer.guide.present": "ابدأ وضع العرض",
+      "viewer.finder.title": "البحث عن مكوّن",
+      "viewer.finder.placeholder": "ابحث بالاسم أو المعرّف",
+      "viewer.finder.empty": "لا توجد نتائج مطابقة",
+      "viewer.passport.eyebrow": "بطاقة المكوّن",
+      "viewer.passport.evidence": "دليل موثق من المصدر",
+      "viewer.passport.verified": "مصدر موثق",
+      "viewer.passport.upstream": "ما قبله",
+      "viewer.passport.downstream": "ما بعده",
+      "viewer.passport.copy": "نسخ الرابط",
+      "viewer.route.eyebrow": "مستكشف المسار",
+      "viewer.common.close": "إغلاق",
+      "viewer.common.copyLink": "نسخ الرابط",
+      "viewer.nav.reset": "إعادة الضبط",
+      "viewer.nav.zoomIn": "تكبير",
+      "viewer.nav.zoomOut": "تصغير"
+    },
+    "output": ".archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+    "animation": "trace",
+    "visual_preset": "signal-flow",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/AMN-2/Smart-Restro.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "6fb4be6a9c0b00ee484ec61beeef4b46f83fd7bb"
+    },
+    "views": [
+      {
+        "id": "orderJourney",
+        "label": "رحلة الطلب",
+        "focus": ["selfOrder", "staffPos", "access", "appServer", "records", "erpnext"],
+        "note": "من واجهة الطلب إلى الفاتورة والسجلات التشغيلية."
+      },
+      {
+        "id": "kitchenOps",
+        "label": "تشغيل المطبخ",
+        "focus": ["appServer", "kitchenDisplay", "liveEvents", "printQueue", "qzStation"],
+        "note": "التحديثات الحية وتذاكر المطبخ والطباعة المحلية."
+      },
+      {
+        "id": "management",
+        "label": "الإدارة والمراقبة",
+        "focus": ["managementUi", "access", "appServer", "records", "liveEvents"],
+        "note": "لوحة الإدارة والبيانات المصرح بها والتحديث بعد الحفظ."
+      }
+    ],
+    "legend": {
+      "mode": "all"
+    }
+  },
+  "components": [
+    {
+      "id": "selfOrder",
+      "type": "frontend",
+      "label": "الطلب الذاتي",
+      "sublabel": "React · /order · عميل أو كشك",
+      "tag": "QR / جهاز",
+      "pos": [40, 90],
+      "size": [172, 70],
+      "sources": [
+        {"path": "package.json", "line": 3, "end_line": 7, "label": "مساحة العمل"},
+        {"path": "ury/hooks.py", "line": 77, "end_line": 84, "label": "مسارات الويب"},
+        {"path": "ury/www/order.py", "line": 14, "end_line": 24, "label": "سياق الضيف"}
+      ]
+    },
+    {
+      "id": "staffPos",
+      "type": "frontend",
+      "label": "نقطة البيع والطاقم",
+      "sublabel": "React POS + Captain · /pos",
+      "tag": "موظفون",
+      "pos": [40, 250],
+      "size": [172, 70],
+      "sources": [
+        {"path": "package.json", "line": 16, "end_line": 21, "label": "بناء POS"},
+        {"path": "ury/hooks.py", "line": 77, "end_line": 84, "label": "مسار POS"},
+        {"path": "ury/www/pos.py", "line": 15, "end_line": 39, "label": "جلسة وCSRF"}
+      ]
+    },
+    {
+      "id": "managementUi",
+      "type": "frontend",
+      "label": "لوحة الإدارة",
+      "sublabel": "React · /ury · تقارير وإعدادات",
+      "tag": "مديرون",
+      "pos": [40, 410],
+      "size": [172, 70],
+      "sources": [
+        {"path": "package.json", "line": 18, "end_line": 21, "label": "بناء الإدارة"},
+        {"path": "ury/hooks.py", "line": 29, "end_line": 36, "label": "شاشة التطبيق"},
+        {"path": "ury/www/ury.py", "line": 15, "end_line": 39, "label": "تسجيل الدخول"}
+      ]
+    },
+    {
+      "id": "access",
+      "type": "security",
+      "label": "بوابة الهوية والثقة",
+      "sublabel": "جلسات Frappe + QR موقّع + جهاز",
+      "tag": "صلاحيات",
+      "pos": [292, 250],
+      "size": [188, 78],
+      "sources": [
+        {"path": "ury/www/ury.py", "line": 15, "end_line": 39, "label": "جلسة الموظف"},
+        {"path": "ury/ury/api/self_ordering.py", "line": 178, "end_line": 215, "label": "تحقق QR"},
+        {"path": "ury/ury/api/self_ordering.py", "line": 242, "end_line": 265, "label": "تحقق الجهاز"}
+      ]
+    },
+    {
+      "id": "appServer",
+      "type": "backend",
+      "label": "Smart Restro على Frappe",
+      "sublabel": "واجهات API وقواعد العمل والأحداث",
+      "tag": "Python",
+      "pos": [582, 250],
+      "size": [196, 78],
+      "sources": [
+        {"path": "ury/hooks.py", "line": 3, "end_line": 26, "label": "هوية التطبيق"},
+        {"path": "ury/hooks.py", "line": 193, "end_line": 249, "label": "أحداث المستندات"},
+        {"path": "ury/ury/doctype/ury_order/ury_order.py", "line": 4, "end_line": 13, "label": "منطق الطلب"}
+      ]
+    },
+    {
+      "id": "erpnext",
+      "type": "external",
+      "label": "ERPNext",
+      "sublabel": "POS Invoice · الدفع · المخزون",
+      "tag": "تطبيق مطلوب",
+      "pos": [886, 250],
+      "size": [172, 70],
+      "sources": [
+        {"path": "ury/hooks.py", "line": 23, "end_line": 26, "label": "اعتماد ERPNext"},
+        {"path": "ury/hooks.py", "line": 197, "end_line": 224, "label": "دورة POS Invoice"},
+        {"path": "ury/ury/doctype/ury_order/ury_order.py", "line": 7, "end_line": 13, "label": "تكامل الفاتورة"}
+      ]
+    },
+    {
+      "id": "records",
+      "type": "database",
+      "label": "سجلات Frappe / ERPNext",
+      "sublabel": "الطلبات والفواتير والطاولات وKOT",
+      "tag": "DocTypes",
+      "pos": [582, 470],
+      "size": [196, 78],
+      "sources": [
+        {"path": "ury/hooks.py", "line": 193, "end_line": 249, "label": "نماذج وأحداث"},
+        {"path": "ury/ury/doctype/ury_order/ury_order.py", "line": 16, "end_line": 45, "label": "مستند الطلب"},
+        {"path": "ury/ury/api/qz_printing.py", "line": 198, "end_line": 209, "label": "سجل مهمة الطباعة"}
+      ]
+    },
+    {
+      "id": "liveEvents",
+      "type": "messagebus",
+      "label": "التزامن اللحظي",
+      "sublabel": "ury_floor_update بعد نجاح المعاملة",
+      "tag": "Socket.IO",
+      "pos": [292, 575],
+      "size": [188, 78],
+      "sources": [
+        {"path": "ury/ury/api/floor_events.py", "line": 9, "end_line": 26, "label": "عقد الحدث"},
+        {"path": "ury/ury/api/floor_events.py", "line": 99, "end_line": 113, "label": "بعد commit"},
+        {"path": "ury/ury/api/floor_events.py", "line": 121, "end_line": 142, "label": "النشر"}
+      ]
+    },
+    {
+      "id": "kitchenDisplay",
+      "type": "frontend",
+      "label": "شاشة المطبخ KDS",
+      "sublabel": "Vue Mosaic · /mosaic",
+      "tag": "وحدات الإنتاج",
+      "pos": [40, 675],
+      "size": [172, 70],
+      "sources": [
+        {"path": "package.json", "line": 14, "end_line": 21, "label": "بناء Mosaic"},
+        {"path": "ury/hooks.py", "line": 77, "end_line": 84, "label": "مسار Mosaic"},
+        {"path": "mosaic/src/main.js", "line": 1, "end_line": 15, "label": "نقطة الدخول"}
+      ]
+    },
+    {
+      "id": "printQueue",
+      "type": "messagebus",
+      "label": "طابور الطباعة",
+      "sublabel": "URY Print Job · claim ذري · إعادة محاولة",
+      "tag": "بحد أقصى 3",
+      "pos": [886, 470],
+      "size": [190, 78],
+      "sources": [
+        {"path": "ury/ury/api/qz_printing.py", "line": 1, "end_line": 20, "label": "تصميم الطباعة"},
+        {"path": "ury/ury/api/qz_printing.py", "line": 198, "end_line": 232, "label": "إنشاء المهمة"},
+        {"path": "ury/ury/api/qz_printing.py", "line": 247, "end_line": 260, "label": "حجز المهمة"}
+      ]
+    },
+    {
+      "id": "qzStation",
+      "type": "external",
+      "label": "QZ Tray والطابعات",
+      "sublabel": "محطة محلية لكل فرع",
+      "tag": "طباعة موقعة",
+      "pos": [886, 675],
+      "size": [190, 70],
+      "sources": [
+        {"path": "ury/ury/api/qz_printing.py", "line": 1, "end_line": 20, "label": "وكيل المحطة"},
+        {"path": "ury/ury/api/qz_printing.py", "line": 103, "end_line": 118, "label": "شهادة QZ"},
+        {"path": "ury/ury/api/qz_printing.py", "line": 235, "end_line": 244, "label": "فاتورة الطباعة"}
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "واجهات Smart Restro",
+      "wraps": ["selfOrder", "staffPos", "managementUi", "kitchenDisplay"],
+      "pad": 20
+    },
+    {
+      "kind": "region",
+      "label": "موقع Frappe / ERPNext",
+      "wraps": ["access", "appServer", "erpnext", "records", "liveEvents", "printQueue"],
+      "pad": 24
+    }
+  ],
+  "connections": [
+    {"id": "selfOrderAuth", "from": "selfOrder", "to": "access", "label": "QR أو اعتماد الجهاز", "variant": "security", "fromSide": "right", "toSide": "top"},
+    {"id": "staffAuth", "from": "staffPos", "to": "access", "label": "جلسة + CSRF", "variant": "security"},
+    {"id": "managerAuth", "from": "managementUi", "to": "access", "label": "جلسة وصلاحيات", "variant": "security"},
+    {"id": "authorizedApi", "from": "access", "to": "appServer", "label": "API مصرح به", "variant": "emphasis"},
+    {"id": "businessDocs", "from": "appServer", "to": "erpnext", "label": "فاتورة ودفع ومخزون", "variant": "emphasis"},
+    {"id": "persistDocs", "from": "appServer", "to": "records", "label": "حفظ DocTypes", "fromSide": "bottom", "toSide": "top"},
+    {"id": "erpRecords", "from": "erpnext", "to": "records", "label": "سجلات ERP", "fromSide": "bottom", "toSide": "right"},
+    {"id": "afterCommit", "from": "appServer", "to": "liveEvents", "label": "نشر بعد commit", "variant": "dashed", "fromSide": "bottom", "toSide": "top"},
+    {"id": "syncPos", "from": "liveEvents", "to": "staffPos", "label": "إشعار ثم إعادة جلب", "variant": "dashed"},
+    {"id": "syncManagement", "from": "liveEvents", "to": "managementUi", "label": "تحديث الشاشة", "variant": "dashed"},
+    {"id": "syncKitchen", "from": "liveEvents", "to": "kitchenDisplay", "label": "تحديث KOT", "variant": "dashed"},
+    {"id": "enqueuePrint", "from": "appServer", "to": "printQueue", "label": "KOT أو فاتورة", "variant": "dashed"},
+    {"id": "claimPrint", "from": "printQueue", "to": "qzStation", "label": "حجز وطباعة وتقرير", "variant": "emphasis"}
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "المسار الأساسي",
+      "items": [
+        "واجهات العملاء والموظفين تمر عبر بوابة الثقة إلى قواعد العمل في Frappe.",
+        "الطلب يتحول إلى مستندات تشغيلية وفاتورة ERPNext بدل تخزين موازٍ غير متسق."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "التزامن",
+      "items": [
+        "حدث ury_floor_update يُنشر مرة واحدة بعد commit؛ لا نشر عند rollback.",
+        "الحدث يحمل المعرّفات فقط، ثم تعيد الشاشات الجلب عبر APIs الخاضعة للصلاحيات."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "الطباعة الموثوقة",
+      "items": [
+        "الخادم يسجل URY Print Job، ومحطة الفرع تحجز المهمة ذريًا قبل إرسالها إلى QZ Tray.",
+        "الفشل يبقى ظاهرًا وقابلًا لإعادة المحاولة، ومفتاح التوقيع الخاص يبقى على الخادم."
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "حدود الأمان",
+      "items": [
+        "واجهات الموظفين تعتمد جلسة Frappe وصلاحيات القراءة والكتابة.",
+        "الطلب الذاتي يتحقق من توقيع QR أو اعتماد الجهاز ومن تطابق الفرع قبل فتح الجلسة."
+      ]
+    }
+  ]
+}
