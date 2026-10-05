@@ -254,7 +254,12 @@ def getModeOfPayment():
     modeOfPayments = []
     for mop in mode_of_payments:
         modeOfPayments.append(
-            {"mode_of_payment": mop.mode_of_payment, "opening_amount": float(0)}
+            {
+                "mode_of_payment": mop.mode_of_payment,
+                "opening_amount": float(0),
+                # Cash, Bank, General, Phone: the POS offers note shortcuts for Cash.
+                "type": frappe.get_cached_value("Mode of Payment", mop.mode_of_payment, "type"),
+            }
         )
     return modeOfPayments
 
