@@ -695,7 +695,10 @@
     "build_an_order": "Build an order",
     "failed_load": "Failed to load POS",
     "service_counter": "Service counter",
-    "tap_item_hint": "Tap an item to add it"
+    "tap_item_hint": "Tap an item to add it",
+    "show_order": "Show order",
+    "hide_order": "Hide order",
+    "pin_order": "Keep beside the menu"
   },
   "settings": {
     "coming_soon": "Settings coming soon."
