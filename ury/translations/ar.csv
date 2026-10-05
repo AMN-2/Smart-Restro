@@ -304,3 +304,25 @@ Your workspace,مساحة عملك
 "Welcome, {0}",أهلاً بك، {0}
 Restaurant reports,تقارير المطعم
 Go back,رجوع
+Stock movement approval,اعتماد حركات المخزون
+"Raw-material deductions and transfers are kept as drafts so work never stops; a manager approves them later.",صرف وتحويل المواد الأولية ينحفظ مسودة حتى ما يوكف الشغل، والمدير يعتمده بعدين.
+Choose the warehouse the materials leave and the one they go to,اختر المخزن اللي تطلع منه المواد والمخزن اللي تروح إله
+The two warehouses must be different,لازم المخزنين يكونون مختلفين
+Both warehouses must belong to the same company,لازم المخزنين يتبعون نفس الشركة
+Add at least one material with a quantity,أضف مادة وحدة على الأقل مع الكمية
+{0} is not a stock item,{0} مو مادة مخزنية
+Raw-material transfer,تحويل مواد أولية
+Approve at most {0} at a time,تكدر تعتمد {0} كحد أقصى بالمرة الوحدة
+Not found,غير موجود
+Draft deduction {0} was deleted,انحذفت مسودة الصرف {0}
+{0} has no conversion for the unit {1},{0} ما عنده تحويل للوحدة {1}
+Choose a single warehouse to count,اختر مخزن واحد للجرد
+A count of {0} is already waiting for approval. Approve or reject it first.,اكو جرد لـ {0} بعده ينتظر الموافقة. اعتمده أو ارفضه أول.
+Stock count of {0},جرد {0}
+The count of {0} cannot be negative,جرد {0} ما يصير بالسالب
+Stock count of {0} waits for your approval ({1} corrections),جرد {0} ينتظر موافقتك ({1} تصحيح)
+{0} is no longer waiting for approval,{0} ما عاد ينتظر الموافقة
+Your stock count {0} was approved,انعتمد جردك {0}
+Your stock count of {0} was rejected,انرفض جردك لـ {0}
+You are not allowed to count stock,ما عندك صلاحية تجرد المخزن
+Warehouse {0} not found,المخزن {0} غير موجود
