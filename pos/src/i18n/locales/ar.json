@@ -704,7 +704,10 @@
     "build_an_order": "سجّل الطلب",
     "failed_load": "تعذّر تحميل الكاشير",
     "service_counter": "الكاشير",
-    "tap_item_hint": "اضغط على الصنف حتى يضاف للطلب"
+    "tap_item_hint": "اضغط على الصنف حتى يضاف للطلب",
+    "show_order": "عرض الطلب",
+    "hide_order": "إخفاء الطلب",
+    "pin_order": "تثبيت جنب القائمة"
   },
   "settings": {
     "coming_soon": "الإعدادات قريباً."
