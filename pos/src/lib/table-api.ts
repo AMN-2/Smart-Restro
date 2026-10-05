@@ -91,6 +91,21 @@ const TABLE_LIST_FIELDS = [
   'minimum_seating',
 ] as const;
 
+/** Every table of the branch, ordered room by room, for the "All rooms" tab. */
+export async function getTablesForBranch(branch: string): Promise<Table[]> {
+  const tables = await db.getDocList(DOCTYPES.URY_TABLE, {
+    fields: [...TABLE_LIST_FIELDS],
+    filters: [['branch', '=', branch]],
+    limit: 0,
+    asDict: true,
+  } as unknown as Parameters<typeof db.getDocList>[1]);
+
+  return (tables as Table[]).sort(
+    (a, b) =>
+      compareNatural(a.restaurant_room, b.restaurant_room) || compareNatural(a.name, b.name)
+  );
+}
+
 export async function getVacantTablesForBranch(
   branch: string,
   excludeTable?: string
