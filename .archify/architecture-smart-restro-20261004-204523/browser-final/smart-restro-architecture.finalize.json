@@ -1,0 +1,437 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "architecture",
+  "quality": "showcase",
+  "startedAt": "2026-10-04T20:49:41.740Z",
+  "specification": {
+    "path": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/candidate.json",
+    "sha256": "9d85bf9f6ffa368f330795c33cee53057a2d6567282a79d2c4048d91394a2d72",
+    "bytes": 15233
+  },
+  "artifact": {
+    "path": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+    "sha256": "d666d7d4e326bf833216ef46f6ff0e972d0abd6e505149c8e8d3c8e2726e1efc",
+    "bytes": 786794
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/home/frappe/.nvm/versions/node/v24.19.0/bin/node",
+        "/home/frappe/frappe-bench/apps/ury/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/candidate.json",
+        "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/frappe/frappe-bench/apps/ury",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "9d85bf9f6ffa368f330795c33cee53057a2d6567282a79d2c4048d91394a2d72",
+          "bytes": 15233
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 760,
+      "command": [
+        "/home/frappe/.nvm/versions/node/v24.19.0/bin/node",
+        "/home/frappe/frappe-bench/apps/ury/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/candidate.json",
+        "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/frappe/frappe-bench/apps/ury",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "48c4c494-4210-48fb-afdd-223ae9b970da",
+        "ok": true,
+        "command": "deliver",
+        "type": "architecture",
+        "input": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/candidate.json",
+        "output": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+        "specification": {
+          "sha256": "9d85bf9f6ffa368f330795c33cee53057a2d6567282a79d2c4048d91394a2d72",
+          "bytes": 15233
+        },
+        "artifact": {
+          "sha256": "d666d7d4e326bf833216ef46f6ff0e972d0abd6e505149c8e8d3c8e2726e1efc",
+          "bytes": 786794
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "evidence": {
+          "verified": true,
+          "repository": "https://github.com/AMN-2/Smart-Restro",
+          "revision": "6fb4be6a9c0b00ee484ec61beeef4b46f83fd7bb",
+          "references": 33
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "stderr": "archify: meta.translations for locale \"ar\" covers 58/438 renderer-owned messages (13%); uncovered keys fall back to English."
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 232,
+      "command": [
+        "/home/frappe/.nvm/versions/node/v24.19.0/bin/node",
+        "/home/frappe/frappe-bench/apps/ury/.agents/skills/archify/bin/archify.mjs",
+        "check",
+        "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+        "artifact": {
+          "sha256": "d666d7d4e326bf833216ef46f6ff0e972d0abd6e505149c8e8d3c8e2726e1efc",
+          "bytes": 786794
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 2,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 5,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 6.118421052631579,
+            "maxBends": 3,
+            "routesOverSuggestedBends": 1,
+            "maxStretch": 1,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 24,
+            "minInteriorSegmentPx": 89,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [
+              {
+                "left": {
+                  "id": "managerAuth",
+                  "from": "managementUi",
+                  "to": "access",
+                  "label": "جلسة وصلاحيات",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "right": {
+                  "id": "syncPos",
+                  "from": "liveEvents",
+                  "to": "staffPos",
+                  "label": "إشعار ثم إعادة جلب",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "point": [
+                  252,
+                  344
+                ]
+              },
+              {
+                "left": {
+                  "id": "erpRecords",
+                  "from": "erpnext",
+                  "to": "records",
+                  "label": "سجلات ERP",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "id": "enqueuePrint",
+                  "from": "appServer",
+                  "to": "printQueue",
+                  "label": "KOT أو فاتورة",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "point": [
+                  855.3999999999999,
+                  344
+                ]
+              }
+            ],
+            "detours": [
+              {
+                "relationship": {
+                  "id": "erpRecords",
+                  "from": "erpnext",
+                  "to": "records",
+                  "label": "سجلات ERP",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "bends": 3,
+                "stretch": 1
+              }
+            ]
+          },
+          "leadingSpace": {
+            "measured": true,
+            "emptyTopPx": 66,
+            "emptyTopRatio": 0.079,
+            "occupiedTop": 66,
+            "viewBoxTop": 0,
+            "canvasHeight": 833,
+            "typicalNodeHeight": 70,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": 7.5,
+            "requestedTargetMet": false,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "node",
+              "id": "printQueue"
+            },
+            "minimumSourceTextPx": 7.5,
+            "minimumProjectedTextPx": 6.118421052631579,
+            "semanticTextCount": 37
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "48c4c494-4210-48fb-afdd-223ae9b970da"
+      }
+    },
+    "browser-check": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 35,
+      "command": [
+        "/home/frappe/.nvm/versions/node/v24.19.0/bin/node",
+        "/home/frappe/frappe-bench/apps/ury/.agents/skills/archify/bin/archify.mjs",
+        "browser-check",
+        "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+        "--json",
+        "--require-provenance",
+        "--out-dir",
+        "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/browser-final"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "fail",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "48c4c494-4210-48fb-afdd-223ae9b970da",
+        "artifact": {
+          "path": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+          "sha256": "d666d7d4e326bf833216ef46f6ff0e972d0abd6e505149c8e8d3c8e2726e1efc",
+          "bytes": 786794
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome"
+        },
+        "diagnostics": [
+          {
+            "code": "viewer/browser-check-runtime",
+            "severity": "error",
+            "message": "browser-check could not complete its Chrome inspection.",
+            "subject": {
+              "artifact": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html"
+            },
+            "evidence": {
+              "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome stderr:\n[115733:115733:1004/204942.063736:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:129] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.\n[1004/204942.080754:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)\n[1004/204942.080846:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)\nReceived signal 6\n#0 0x5596f064bbc3 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6a9abc2)\n#1 0x5596f5311494 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb760493)\n#2 0x7b3fcc045330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)\n#3 0x7b3fcc04527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)\n#4 0x7b3fcc0288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)\n#5 0x5596f5308385 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb757384)\n#6 0x5596f52c814d (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb71714c)\n#7 0x5596f52c80de (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb7170dd)\n#8 0x5596f0412603 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6861602)\n#9 0x5596ef0ab1f9 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x54fa1f8)\n#10 0x5596f048e28b (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x68dd28a)\n#11 0x5596f4566d01 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xa9b5d00)\n#12 0x5596efb7f687 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fce686)\n#13 0x5596efb7eb00 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fcdaff)\n#14 0x7b3fcc02a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)\n#15 0x7b3fcc02a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)\n#16 0x5596f090e35a (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6d5d359)\n  r8: 00000600000c8267  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246\n r12: 0000000000000006 r13: 00000600000c8000 r14: 0000000000000016 r15: 00007ffcacc3cf58\n  di: 000000000001c415  si: 000000000001c415  bp: 00007ffcacc3c8d0  bx: 000000000001c415\n  dx: 0000000000000006  ax: 0000000000000000  cx: 00007b3fcc09ec0c  sp: 00007ffcacc3c890\n  ip: 00007b3fcc09ec0c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000\n trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000\n[end of stack trace]\nChrome transport: Node v24.19.0, libuv 1.52.1, linux; pid=115733, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+            },
+            "supportedFixes": [
+              "resolve the reported Chrome inspection error, then rerun browser-check"
+            ]
+          }
+        ],
+        "containment": {
+          "status": "fail",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": []
+        },
+        "themeStates": {
+          "status": "fail",
+          "viewports": []
+        },
+        "readability": {
+          "status": "fail",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": []
+        },
+        "viewerChrome": {
+          "status": "fail",
+          "viewports": []
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "directory": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/browser-final",
+          "receipt": "smart-restro-architecture.browser-check.json",
+          "files": []
+        },
+        "error": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome stderr:\n[115733:115733:1004/204942.063736:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:129] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.\n[1004/204942.080754:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)\n[1004/204942.080846:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)\nReceived signal 6\n#0 0x5596f064bbc3 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6a9abc2)\n#1 0x5596f5311494 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb760493)\n#2 0x7b3fcc045330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)\n#3 0x7b3fcc04527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)\n#4 0x7b3fcc0288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)\n#5 0x5596f5308385 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb757384)\n#6 0x5596f52c814d (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb71714c)\n#7 0x5596f52c80de (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb7170dd)\n#8 0x5596f0412603 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6861602)\n#9 0x5596ef0ab1f9 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x54fa1f8)\n#10 0x5596f048e28b (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x68dd28a)\n#11 0x5596f4566d01 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xa9b5d00)\n#12 0x5596efb7f687 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fce686)\n#13 0x5596efb7eb00 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fcdaff)\n#14 0x7b3fcc02a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)\n#15 0x7b3fcc02a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)\n#16 0x5596f090e35a (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6d5d359)\n  r8: 00000600000c8267  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246\n r12: 0000000000000006 r13: 00000600000c8000 r14: 0000000000000016 r15: 00007ffcacc3cf58\n  di: 000000000001c415  si: 000000000001c415  bp: 00007ffcacc3c8d0  bx: 000000000001c415\n  dx: 0000000000000006  ax: 0000000000000000  cx: 00007b3fcc09ec0c  sp: 00007ffcacc3c890\n  ip: 00007b3fcc09ec0c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000\n trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000\n[end of stack trace]\nChrome transport: Node v24.19.0, libuv 1.52.1, linux; pid=115733, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      }
+    }
+  },
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome stderr:\n[115733:115733:1004/204942.063736:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:129] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.\n[1004/204942.080754:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)\n[1004/204942.080846:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)\nReceived signal 6\n#0 0x5596f064bbc3 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6a9abc2)\n#1 0x5596f5311494 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb760493)\n#2 0x7b3fcc045330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)\n#3 0x7b3fcc04527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)\n#4 0x7b3fcc0288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)\n#5 0x5596f5308385 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb757384)\n#6 0x5596f52c814d (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb71714c)\n#7 0x5596f52c80de (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb7170dd)\n#8 0x5596f0412603 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6861602)\n#9 0x5596ef0ab1f9 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x54fa1f8)\n#10 0x5596f048e28b (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x68dd28a)\n#11 0x5596f4566d01 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xa9b5d00)\n#12 0x5596efb7f687 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fce686)\n#13 0x5596efb7eb00 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fcdaff)\n#14 0x7b3fcc02a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)\n#15 0x7b3fcc02a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)\n#16 0x5596f090e35a (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6d5d359)\n  r8: 00000600000c8267  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246\n r12: 0000000000000006 r13: 00000600000c8000 r14: 0000000000000016 r15: 00007ffcacc3cf58\n  di: 000000000001c415  si: 000000000001c415  bp: 00007ffcacc3c8d0  bx: 000000000001c415\n  dx: 0000000000000006  ax: 0000000000000000  cx: 00007b3fcc09ec0c  sp: 00007ffcacc3c890\n  ip: 00007b3fcc09ec0c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000\n trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000\n[end of stack trace]\nChrome transport: Node v24.19.0, libuv 1.52.1, linux; pid=115733, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/browser-final/smart-restro-architecture.finalize.json",
+    "summaryReceipt": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/browser-final/smart-restro-architecture.finalize-summary.json",
+    "browserCheckReceipt": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/browser-final/smart-restro-architecture.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "browser-check",
+  "finishedAt": "2026-10-04T20:49:42.960Z",
+  "durationMs": 1219,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.0.1",
+    "availableVersion": "3.0.1",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-04T20:47:29.579Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}
