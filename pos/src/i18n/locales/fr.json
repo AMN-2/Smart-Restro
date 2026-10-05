@@ -110,7 +110,12 @@
       "expired": "Ce code a expiré.",
       "exhausted": "Ce code a été entièrement utilisé.",
       "other_customer": "Ce code appartient à un autre client."
-    }
+    },
+    "cash_pad": "Raccourcis espèces",
+    "exact_amount": "Montant exact",
+    "add_notes": "Ajouter les billets reçus",
+    "add_note": "Ajouter {{amount}}",
+    "reset_cash": "Revenir au montant exact"
   },
   "pos": {
     "not_opened_title": "PDV non ouvert",
@@ -186,7 +191,13 @@
     "confirm_submit": "Oui, cloturer le PDV",
     "confirm_back": "Retour",
     "checklist_skip": "Ignorer pour l'instant",
-    "checklist_skip_hint": "La cloture PDV a deja ete soumise. Vous pourrez terminer cette liste de controle plus tard."
+    "checklist_skip_hint": "La cloture PDV a deja ete soumise. Vous pourrez terminer cette liste de controle plus tard.",
+    "count_notes": "Compter les billets",
+    "note_less": "Un billet de {{note}} en moins",
+    "note_more": "Un billet de {{note}} en plus",
+    "note_count": "Nombre de billets de {{note}}",
+    "clear_count": "Effacer le comptage",
+    "counted_total": "Total compté"
   },
   "customer": {
     "search_placeholder": "Rechercher un client...",
@@ -360,7 +371,12 @@
     "occupied_only": "Occupées uniquement",
     "show_all_tables": "Toutes les tables",
     "no_occupied_tables": "Aucune table occupée dans cette salle",
-    "seats_count": "{{count}} places"
+    "seats_count": "{{count}} places",
+    "all_rooms": "Toutes les salles",
+    "filter_all": "Toutes",
+    "status_filter": "Filtrer les tables par statut",
+    "no_available_tables": "Aucune table disponible pour le moment",
+    "room_summary": "{{occupied}} occupées sur {{total}}"
   },
   "bill_split": {
     "split_bill": "Diviser l'addition",
