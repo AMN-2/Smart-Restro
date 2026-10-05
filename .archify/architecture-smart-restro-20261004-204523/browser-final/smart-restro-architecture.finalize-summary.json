@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/candidate.json",
+    "sha256": "9d85bf9f6ffa368f330795c33cee53057a2d6567282a79d2c4048d91394a2d72",
+    "bytes": 15233
+  },
+  "artifact": {
+    "path": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+    "sha256": "d666d7d4e326bf833216ef46f6ff0e972d0abd6e505149c8e8d3c8e2726e1efc",
+    "bytes": 786794
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "fail"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome stderr:\n[115733:115733:1004/204942.063736:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:129] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.\n[1004/204942.080754:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)\n[1004/204942.080846:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)\nReceived signal 6\n#0 0x5596f064bbc3 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6a9abc2)\n#1 0x5596f5311494 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb760493)\n#2 0x7b3fcc045330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)\n#3 0x7b3fcc04527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)\n#4 0x7b3fcc0288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)\n#5 0x5596f5308385 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb757384)\n#6 0x5596f52c814d (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb71714c)\n#7 0x5596f52c80de (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb7170dd)\n#8 0x5596f0412603 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6861602)\n#9 0x5596ef0ab1f9 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x54fa1f8)\n#10 0x5596f048e28b (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x68dd28a)\n#11 0x5596f4566d01 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xa9b5d00)\n#12 0x5596efb7f687 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fce686)\n#13 0x5596efb7eb00 (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fcdaff)\n#14 0x7b3fcc02a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)\n#15 0x7b3fcc02a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)\n#16 0x5596f090e35a (/home/frappe/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6d5d359)\n  r8: 00000600000c8267  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246\n r12: 0000000000000006 r13: 00000600000c8000 r14: 0000000000000016 r15: 00007ffcacc3cf58\n  di: 000000000001c415  si: 000000000001c415  bp: 00007ffcacc3c8d0  bx: 000000000001c415\n  dx: 0000000000000006  ax: 0000000000000000  cx: 00007b3fcc09ec0c  sp: 00007ffcacc3c890\n  ip: 00007b3fcc09ec0c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000\n trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000\n[end of stack trace]\nChrome transport: Node v24.19.0, libuv 1.52.1, linux; pid=115733, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/browser-final/smart-restro-architecture.finalize.json",
+    "summaryReceipt": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/browser-final/smart-restro-architecture.finalize-summary.json",
+    "browserCheckReceipt": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/browser-final/smart-restro-architecture.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.0.1",
+    "availableVersion": "3.0.1",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-04T20:47:29.579Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 1219
+}
