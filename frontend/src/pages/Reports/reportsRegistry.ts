@@ -20,6 +20,7 @@ import {
   IndianRupee,
   ShieldAlert,
   ChefHat,
+  Boxes,
 } from 'lucide-react';
 
 export interface ReportEntry {
@@ -55,6 +56,8 @@ export const reportsRegistry: ReportEntry[] = [
   { id: 'daily-pnl', label: 'Daily P&L', group: 'Financial', path: 'daily-pnl', icon: IndianRupee },
   { id: 'audit-log', label: 'Audit Log', group: 'Financial', path: 'audit-log', icon: ShieldAlert },
   { id: 'food-cost', label: 'Food Cost & Waste', group: 'Financial', path: 'food-cost', icon: ChefHat },
+
+  { id: 'daily-stock', label: 'Daily Raw Materials', group: 'Inventory', path: 'daily-stock', icon: Boxes },
 ];
 
 /**
