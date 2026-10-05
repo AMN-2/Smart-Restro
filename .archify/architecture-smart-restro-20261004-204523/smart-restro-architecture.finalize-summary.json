@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "skipped",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/candidate.json",
+    "sha256": "9d85bf9f6ffa368f330795c33cee53057a2d6567282a79d2c4048d91394a2d72",
+    "bytes": 15233
+  },
+  "artifact": {
+    "path": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+    "sha256": "d666d7d4e326bf833216ef46f6ff0e972d0abd6e505149c8e8d3c8e2726e1efc",
+    "bytes": 786794
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "skipped"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "viewer/chrome-unavailable",
+      "severity": "warning",
+      "message": "Chrome or Chromium is unavailable. Set ARCHIFY_CHROME to its executable path.",
+      "subject": {
+        "artifact": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html"
+      },
+      "evidence": {
+        "executable": null
+      },
+      "supportedFixes": [
+        "set ARCHIFY_CHROME to a Chrome or Chromium executable and rerun browser-check"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.finalize.json",
+    "summaryReceipt": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.finalize-summary.json",
+    "browserCheckReceipt": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.0.1",
+    "availableVersion": "3.0.1",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-04T20:47:29.579Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 1299
+}
