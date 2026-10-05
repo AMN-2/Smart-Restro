@@ -115,7 +115,9 @@ const TableCard = ({
         />
       )}
 
-      <header className="pointer-events-none relative z-[2] flex items-start justify-between gap-1 pe-1 ps-4 pt-3">
+      {/* One layer above the body and footer: the actions menu drops down
+          from here, and a z-50 inside a z-[2] layer is still only z-[2]. */}
+      <header className="pointer-events-none relative z-[3] flex items-start justify-between gap-1 pe-1 ps-4 pt-3">
         <div className="flex min-w-0 flex-wrap items-center gap-1">
           <span
             className={cn(
