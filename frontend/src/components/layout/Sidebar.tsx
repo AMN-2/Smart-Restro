@@ -22,7 +22,7 @@ import {
   Store,
   BarChart3,
   Grid
-, CalendarClock, Hourglass, MessageSquareHeart, Tags, Bike, ShoppingCart, Warehouse, BookOpen, ShieldCheck } from 'lucide-react';
+, CalendarClock, Hourglass, MessageSquareHeart, Tags, Bike, ShoppingCart, Warehouse, BookOpen, ShieldCheck, Network, ClipboardCheck, ClipboardList } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 interface NavItem {
@@ -50,6 +50,8 @@ const NAV_ITEMS: NavItem[] = [
   { labelKey: 'nav.offers', label: 'Offers', path: '/offers', icon: Tags },
   { labelKey: 'nav.delivery', label: 'Dispatch', path: '/delivery', icon: Bike },
   { labelKey: 'nav.inventory', label: 'Warehouses', path: '/inventory', icon: Warehouse },
+  { labelKey: 'nav.stock_approvals', label: 'Stock approvals', path: '/stock-approvals', icon: ClipboardCheck },
+  { labelKey: 'nav.stock_count', label: 'Stock count', path: '/stock-count', icon: ClipboardList },
   { labelKey: 'nav.recipes', label: 'Recipes', path: '/recipes', icon: BookOpen },
   { labelKey: 'nav.purchases', label: 'Purchases', path: '/purchases', icon: ShoppingCart },
   { labelKey: 'nav.room', label: 'Room', path: '/room', icon: Map },
@@ -63,6 +65,7 @@ const SETTINGS_ITEMS: NavItem[] = [
   { labelKey: 'nav.daily_pnl_settings', label: 'Daily P&L Settings', path: '/report-settings', icon: FileText },
   { labelKey: 'nav.production_unit', label: 'Production Unit', path: '/production-unit', icon: Grid },
   { labelKey: 'nav.printers', label: 'Printers', path: '/printers', icon: Printer },
+  { labelKey: 'nav.architecture_viewer', label: 'Architecture Viewer', path: '/architecture-viewer', icon: Network },
 ];
 
 const reportGroups = groupReports(reportsRegistry);
@@ -113,7 +116,10 @@ const MainPanel: React.FC<{ isManager: boolean }> = ({ isManager }) => {
   const { access } = useAccess();
   // Switched-off features are left out of the menu; their routes are guarded too.
   const navItems = NAV_ITEMS.filter((item) => !isRouteHidden(access, item.path));
-  const isSettingsPath = SETTINGS_ITEMS.some((item) => location.pathname.startsWith(item.path));
+  const settingsItems = SETTINGS_ITEMS.filter(
+    (item) => item.path !== '/architecture-viewer' || access.can_manage,
+  );
+  const isSettingsPath = settingsItems.some((item) => location.pathname.startsWith(item.path));
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(isSettingsPath);
 
   useEffect(() => {
@@ -213,7 +219,7 @@ const MainPanel: React.FC<{ isManager: boolean }> = ({ isManager }) => {
 
         {isSettingsOpen && (
           <div className="mt-1 ps-4 space-y-1">
-            {SETTINGS_ITEMS.map((item) => {
+            {settingsItems.map((item) => {
               const Icon = item.icon;
               return (
                 <NavLink
