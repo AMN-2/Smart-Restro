@@ -11,6 +11,8 @@ import { useConnectivity } from '../lib/connectivity';
 import { getCustomerLoyalty, maxRedeemablePoints, type CustomerLoyalty } from '../lib/loyalty-api';
 import { promotionsApi, type CouponTotals } from '../lib/promotions-api';
 import { paymentDiscountPercentage } from '../lib/payment-amounts';
+import { useCashModes } from '../hooks/useCashModes';
+import CashQuickPad from './CashQuickPad';
 
 
 interface PaymentDialogProps {
@@ -53,7 +55,11 @@ const PaymentDialog: React.FC<PaymentDialogProps> = ({
   discountAmount,
   onPrintReceipt,
 }) => {
-  const { paymentModes, fetchPaymentModes, posProfile: storePosProfile } = usePOSStore();
+  const { paymentModes, fetchPaymentModes, posProfile: storePosProfile, currency } = usePOSStore();
+  const cashModes = useCashModes();
+  const firstCashMode = (paymentModes as Array<string | { id: string }>)
+    .map((m) => (typeof m === 'string' ? m : m.id))
+    .find((m) => cashModes.has(m));
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const paymentInFlight = useRef(false);
@@ -425,8 +431,11 @@ const PaymentDialog: React.FC<PaymentDialogProps> = ({
             <div className="grid grid-cols-1 gap-3">
               {paymentModes.map((mode: any) => {
                 const id = typeof mode === 'string' ? mode : mode.id;
+                // Note shortcuts under the first cash mode only: one drawer.
+                const showCashPad = id === firstCashMode;
                 return (
-                  <div key={id} className="flex items-center gap-3">
+                  <React.Fragment key={id}>
+                  <div className="flex items-center gap-3">
                     <label htmlFor={`payment-mode-${id}`} className="w-24 font-medium">{typeof mode === 'string' ? mode : mode.name}</label>
                     <Input
                       id={`payment-mode-${id}`}
@@ -442,6 +451,16 @@ const PaymentDialog: React.FC<PaymentDialogProps> = ({
                       disabled={isProcessing || isPreviewing}
                     />
                   </div>
+                  {showCashPad && (
+                    <CashQuickPad
+                      due={getRemainingBalance(id)}
+                      value={paymentInputs[id] || ''}
+                      onChange={(value) => setPaymentInputs((inputs) => ({ ...inputs, [id]: value }))}
+                      currency={storePosProfile?.currency || currency}
+                      disabled={isProcessing || isPreviewing}
+                    />
+                  )}
+                  </React.Fragment>
                 );
               })}
             </div>
