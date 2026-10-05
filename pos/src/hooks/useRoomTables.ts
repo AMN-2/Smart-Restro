@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getTables, type Table } from '../lib/table-api';
+import { getTables, getTablesForBranch, type Table } from '../lib/table-api';
 import { sortTablesByMergeGroups } from '../lib/table-utils';
 import { t } from '../i18n';
 import { useFloorUpdates } from '../lib/floor-sync';
+
+/** Pseudo-room: the whole branch floor, grouped by room on screen. */
+export const ALL_ROOMS = '__all_rooms__';
 
 /** A cache must not be an effect dependency: each response would fetch again. */
 export function useRoomTables(room: string | null, branch: string | null) {
@@ -33,7 +36,9 @@ export function useRoomTables(room: string | null, branch: string | null) {
     setLoading(!cached);
     setRefreshing(!!cached);
     try {
-      const rows = sortTablesByMergeGroups(await getTables(roomName));
+      const rows = sortTablesByMergeGroups(
+        await (roomName === ALL_ROOMS ? getTablesForBranch(branch) : getTables(roomName))
+      );
       if (activeBranch.current !== branch) return;
       // A slower response for the previous room must never replace this one.
       if (id !== request.current || activeRoom.current !== roomName) return;
