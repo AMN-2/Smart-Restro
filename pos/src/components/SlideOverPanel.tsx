@@ -10,6 +10,8 @@ interface SlideOverPanelProps {
   /** Anchors the sheet to the leading edge instead of the trailing one. */
   side?: 'start' | 'end';
   className?: string;
+  /** Extra controls beside the close button (e.g. "dock this panel"). */
+  actions?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -34,6 +36,7 @@ export default function SlideOverPanel({
   title,
   side = 'end',
   className,
+  actions,
   children,
 }: SlideOverPanelProps) {
   const panelRef = useRef<HTMLDivElement>(null);
@@ -123,6 +126,8 @@ export default function SlideOverPanel({
       >
         <div className="flex items-center justify-between gap-3 border-b border-[#eadfce] px-4 py-3">
           <h2 className="text-base font-bold text-[#3f2a20]">{title}</h2>
+          <div className="flex items-center gap-1">
+          {actions}
           <button
             type="button"
             onClick={onClose}
@@ -131,6 +136,7 @@ export default function SlideOverPanel({
           >
             <X className="h-5 w-5" />
           </button>
+          </div>
         </div>
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">{children}</div>
       </div>
