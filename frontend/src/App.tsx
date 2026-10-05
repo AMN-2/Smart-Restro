@@ -11,6 +11,7 @@ import DashboardLayout from './components/layout/DashboardLayout';
 import { DashboardPage } from './pages/Dashboard/DashboardPage';
 import { InvoiceDetailPage } from './pages/Dashboard/InvoiceDetailPage';
 import { PrintersPage } from './pages/Dashboard/PrintersPage';
+import { ArchitectureViewerPage } from './pages/Dashboard/ArchitectureViewerPage';
 import { MenuPage } from './pages/Dashboard/MenuPage';
 import { TablePage } from './pages/Dashboard/TablePage';
 import ReservationPage from './pages/Dashboard/ReservationPage';
@@ -29,6 +30,9 @@ import AggregatorPage from './pages/Dashboard/AggregatorPage';
 import { PurchasesPage } from './pages/Purchases/PurchasesPage';
 import { PurchaseFormPage } from './pages/Purchases/PurchaseFormPage';
 import { PurchaseDetailPage } from './pages/Purchases/PurchaseDetailPage';
+import { StockApprovalsPage } from './pages/Inventory/StockApprovalsPage';
+import { StockCountPage } from './pages/Inventory/StockCountPage';
+import { DailyStockReport } from './pages/Reports/DailyStockReport';
 import { InventoryPage } from './pages/Inventory/InventoryPage';
 import { RecipesPage } from './pages/Recipes/RecipesPage';
 import { RecipeEditorPage } from './pages/Recipes/RecipeEditorPage';
@@ -171,8 +175,11 @@ function App() {
           <Route path="report-settings" element={<ReportSettingsPage />} />
           <Route path="production-unit" element={<ProductionUnitPage />} />
           <Route path="printers" element={<PrintersPage />} />
+          <Route path="architecture-viewer" element={<ArchitectureViewerPage />} />
           <Route path="aggregator" element={<AggregatorPage />} />
           <Route path="inventory" element={<FeatureRoute><InventoryPage /></FeatureRoute>} />
+          <Route path="stock-approvals" element={<FeatureRoute><StockApprovalsPage /></FeatureRoute>} />
+          <Route path="stock-count" element={<FeatureRoute><StockCountPage /></FeatureRoute>} />
           <Route path="recipes" element={<FeatureRoute><RecipesPage /></FeatureRoute>} />
           <Route path="recipes/:item" element={<FeatureRoute><RecipeEditorPage /></FeatureRoute>} />
           <Route path="purchases" element={<FeatureRoute><PurchasesPage /></FeatureRoute>} />
@@ -222,6 +229,7 @@ function App() {
             <Route path="daily-pnl" element={<DailyPnl />} />
             <Route path="audit-log" element={<AuditLog />} />
             <Route path="food-cost" element={<FoodCost />} />
+            <Route path="daily-stock" element={<FeatureRoute><DailyStockReport /></FeatureRoute>} />
           </Route>
         </Route>
       </Route>
