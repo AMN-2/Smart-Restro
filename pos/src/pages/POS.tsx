@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { t } from '../i18n';
-import { LayoutGrid, Star, TrendingUp, Zap } from 'lucide-react';
+import { LayoutGrid, PanelRightClose, PanelRightOpen, Pin, ShoppingBasket, Star, TrendingUp, Zap } from 'lucide-react';
+import { formatCurrency } from '@ury/core';
 import Sidebar from '../components/Sidebar';
 import OrderPanel from '../components/OrderPanel';
 import OrderSummaryBar from '../components/OrderSummaryBar';
+import { useOrderTotal } from '../hooks/useOrderTotal';
 import SlideOverPanel from '../components/SlideOverPanel';
 import { useDockedPanels } from '../hooks/useViewport';
 import ProductDialog from '../components/ProductDialog';
@@ -13,6 +15,17 @@ import { cn, ErrorState } from '@ury/ui';
 import { Spinner } from '@ury/ui';
 import InitialLoader from '../components/InitialLoader';
 import LiveOrderSync from '../components/LiveOrderSync';
+
+const ORDER_PANEL_KEY = 'ury_pos_order_panel';
+
+/** Per-device convenience: storage can be blocked, and that is fine. */
+function readOrderDocked(): boolean {
+  try {
+    return localStorage.getItem(ORDER_PANEL_KEY) === 'docked';
+  } catch {
+    return false;
+  }
+}
 
 export default function POS() {
   const {
@@ -38,6 +51,27 @@ export default function POS() {
   const docked = useDockedPanels();
   const [showCategories, setShowCategories] = useState(false);
   const [showOrder, setShowOrder] = useState(false);
+
+  /**
+   * On a wide screen the order can sit beside the menu or wait behind a
+   * button. A docked panel squeezes the menu into what is left of the
+   * screen, so by default the menu gets the whole width and the order slides
+   * in from the trailing edge when asked for — wider than the docked column,
+   * so its lines are readable, and fully editable. Pinning it back is one
+   * tap, remembered per device.
+   */
+  const [orderDocked, setOrderDockedState] = useState<boolean>(readOrderDocked);
+  const setOrderDocked = (next: boolean) => {
+    setOrderDockedState(next);
+    setShowOrder(false);
+    try {
+      localStorage.setItem(ORDER_PANEL_KEY, next ? 'docked' : 'sheet');
+    } catch {
+      /* blocked storage: the choice still holds for this visit */
+    }
+  };
+  const orderInSheet = !docked || !orderDocked;
+  const { count: orderCount, total: orderTotal } = useOrderTotal();
 
   useEffect(() => {
     if (docked) {
@@ -146,8 +180,44 @@ export default function POS() {
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">{t('pos_page.service_counter')}</p>
                 <h1 className="text-xl font-bold tracking-tight text-[#3f2a20]">{t('pos_page.build_an_order')}</h1>
               </div>
-              <div className="hidden sm:flex items-center gap-2 rounded-xl bg-[#fff2d7] px-3 py-2 text-xs font-medium text-[#8f6b55]">
-                <Zap className="w-3.5 h-3.5 text-[#d89917]" />{t('pos_page.tap_item_hint')}</div>
+              <div className="flex items-center gap-2">
+                <div className="hidden lg:flex items-center gap-2 rounded-xl bg-[#fff2d7] px-3 py-2 text-xs font-medium text-[#8f6b55]">
+                  <Zap className="w-3.5 h-3.5 text-[#d89917]" />{t('pos_page.tap_item_hint')}</div>
+                {docked && orderInSheet && (
+                  <button
+                    type="button"
+                    onClick={() => setShowOrder(true)}
+                    aria-haspopup="dialog"
+                    aria-expanded={showOrder}
+                    className="flex items-center gap-3 rounded-xl bg-[#f05b42] px-4 py-2 text-white shadow-[0_5px_14px_rgba(240,91,66,0.25)] transition-colors hover:bg-[#e04a31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    <span className="relative">
+                      <ShoppingBasket className="h-5 w-5" />
+                      {orderCount > 0 && (
+                        <span className="absolute -end-2.5 -top-2.5 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-white px-1 text-[11px] font-bold tabular-nums text-[#f05b42]">
+                          {orderCount}
+                        </span>
+                      )}
+                    </span>
+                    <span className="flex flex-col items-start leading-tight">
+                      <span className="text-xs font-semibold opacity-90">{t('pos_page.show_order')}</span>
+                      <span className="text-sm font-bold tabular-nums">{formatCurrency(orderTotal)}</span>
+                    </span>
+                    <PanelRightOpen className="h-4 w-4 opacity-80 rtl:-scale-x-100" />
+                  </button>
+                )}
+                {docked && !orderInSheet && (
+                  <button
+                    type="button"
+                    onClick={() => setOrderDocked(false)}
+                    title={t('pos_page.hide_order')}
+                    className="flex items-center gap-2 rounded-xl border border-[#eadfce] bg-white px-3 py-2 text-sm font-semibold text-[#735d4e] transition-colors hover:border-[#f0b83e] hover:bg-[#fff8e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <PanelRightClose className="h-4 w-4 text-primary rtl:-scale-x-100" />
+                    {t('pos_page.hide_order')}
+                  </button>
+                )}
+              </div>
             </div>
             <div className="flex items-center gap-2 overflow-x-auto overflow-y-hidden">
               {!docked && (
@@ -183,7 +253,30 @@ export default function POS() {
         {!docked && <OrderSummaryBar onOpen={() => setShowOrder(true)} />}
       </div>
 
-      {docked && <OrderPanel />}
+      {docked && !orderInSheet && <OrderPanel />}
+
+      {docked && orderInSheet && (
+        <SlideOverPanel
+          isOpen={showOrder}
+          onClose={() => setShowOrder(false)}
+          title={t('order_panel.your_order')}
+          className="max-w-xl"
+          actions={
+            <button
+              type="button"
+              onClick={() => setOrderDocked(true)}
+              title={t('pos_page.pin_order')}
+              aria-label={t('pos_page.pin_order')}
+              className="flex h-10 items-center gap-1.5 rounded-lg px-2.5 text-sm font-semibold text-[#8f6b55] transition-colors hover:bg-[#fff0cb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <Pin className="h-4 w-4" />
+              <span className="hidden sm:inline">{t('pos_page.pin_order')}</span>
+            </button>
+          }
+        >
+          <OrderPanel docked={false} />
+        </SlideOverPanel>
+      )}
 
       {!docked && (
         <>
