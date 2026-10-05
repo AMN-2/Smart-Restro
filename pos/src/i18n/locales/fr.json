@@ -528,6 +528,15 @@
       "carry": "Déplacer les nouveaux articles vers {{to}}"
     }
   },
+  "dashboard": {
+    "quick_actions": "Actions rapides",
+    "new_order": "Nouvelle commande",
+    "open_orders": "Commandes ouvertes",
+    "view_tables": "Voir les tables",
+    "floor_status": "État de la salle",
+    "occupied": "Occupé",
+    "available_tables": "Tables disponibles"
+  },
   "live": {
     "order_left_list": "La commande {{order}} a été payée, annulée ou déplacée depuis un autre appareil.",
     "order_refreshed": "Cette commande a été mise à jour depuis un autre appareil.",
