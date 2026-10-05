@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "9d3d6891-a851-4745-a1f6-c938ecefac74",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/candidate.json",
+  "output": "/home/frappe/frappe-bench/apps/ury/.archify/architecture-smart-restro-20261004-204523/smart-restro-architecture.html",
+  "specification": {
+    "sha256": "9d85bf9f6ffa368f330795c33cee53057a2d6567282a79d2c4048d91394a2d72",
+    "bytes": 15233
+  },
+  "artifact": {
+    "sha256": "d666d7d4e326bf833216ef46f6ff0e972d0abd6e505149c8e8d3c8e2726e1efc",
+    "bytes": 786794
+  }
+}
