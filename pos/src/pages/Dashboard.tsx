@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import {
   TrendingUp, ShoppingCart, Clock, Users, AlertTriangle, Bell,
-  RefreshCw, Package, UserCheck, Activity, Sparkles,
+  RefreshCw, Package, UserCheck, Activity, Sparkles, Utensils,
+  ReceiptText, LayoutGrid, ArrowUpRight,
 } from 'lucide-react';
 import { Button, StatCard, cn } from '@ury/ui';
 import { formatCurrency } from '@ury/core';
 import { usePOSStore } from '../store/pos-store';
-import HufLogo from '../components/HufLogo';
 import { t, tPlural } from '../i18n';
 import { useDashboardData } from './dashboard/use-dashboard-data';
 import { Panel } from './dashboard/Panel';
@@ -60,6 +61,16 @@ function Meter({ pct, tone }: { pct: number; tone: 'primary' | 'warning' }) {
   );
 }
 
+function QuickAction({ to, icon, label }: { to: string; icon: React.ReactNode; label: string }) {
+  return (
+    <Link to={to} className="group flex min-h-20 items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-ring">
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary [&_svg]:h-5 [&_svg]:w-5">{icon}</span>
+      <span className="min-w-0 flex-1 text-sm font-semibold text-foreground">{label}</span>
+      <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground rtl:rotate-180" aria-hidden="true" />
+    </Link>
+  );
+}
+
 export default function Dashboard() {
   const { posProfile } = usePOSStore();
   const branch = posProfile?.branch;
@@ -67,6 +78,7 @@ export default function Dashboard() {
 
   const stats = d.stats.data;
   const overTime = d.serviceLine.data.filter((r) => r.stage === 'over').length;
+  const occupancy = stats?.total_tables ? Math.round((stats.active_tables / stats.total_tables) * 100) : 0;
 
   // Bars are scaled against a 90-minute floor so a quiet service does not make
   // a 5-minute table look alarming by filling the whole chart.
@@ -89,10 +101,10 @@ export default function Dashboard() {
 
   return (
     <div className="h-full overflow-y-auto bg-background">
-      <div className="mx-auto max-w-screen-2xl space-y-6 p-6 pb-24">
+      <div className="mx-auto max-w-screen-2xl space-y-5 p-4 sm:p-6 pb-24">
 
         {/* ---- header ---------------------------------------------------- */}
-        <header className="flex flex-wrap items-end justify-between gap-3">
+        <header className="flex flex-wrap items-end justify-between gap-3 overflow-hidden rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/10 via-card to-card p-5 shadow-sm sm:p-6">
           <div>
             <h1 className="text-xl font-bold tracking-tight text-foreground">
               {t('dashboard.title')}
@@ -123,8 +135,14 @@ export default function Dashboard() {
           </div>
         </header>
 
+        <section aria-label={t('dashboard.quick_actions')} className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <QuickAction to="/pos" icon={<Utensils />} label={t('dashboard.new_order')} />
+          <QuickAction to="/orders" icon={<ReceiptText />} label={t('dashboard.open_orders')} />
+          <QuickAction to="/tables" icon={<LayoutGrid />} label={t('dashboard.view_tables')} />
+        </section>
+
         {/* ---- headline figures ----------------------------------------- */}
-        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
             label={t('dashboard.todays_sales')}
             value={stats ? formatCurrency(stats.todays_sales) : '—'}
@@ -218,7 +236,7 @@ export default function Dashboard() {
         </Panel>
 
         {/* ---- two columns ---------------------------------------------- */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px]">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
           <div className="space-y-6">
 
             <Panel
@@ -370,16 +388,24 @@ export default function Dashboard() {
             </Panel>
 
             <Panel
-              title={t('dashboard.shift_brief')}
-              aside={
-                <span className="inline-flex items-center justify-center rounded border border-purple-200 bg-purple-50 px-2 py-1">
-                  <HufLogo className="h-3.5 w-auto" />
-                </span>
-              }
+              title={t('dashboard.floor_status')}
+              icon={<LayoutGrid />}
+              loading={d.stats.loading}
+              error={d.stats.error}
             >
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {t('dashboard.shift_brief_pending')}
-              </p>
+              <div className="flex items-center gap-5">
+                <div className="relative grid h-28 w-28 shrink-0 place-items-center">
+                  <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90" aria-hidden="true">
+                    <circle cx="18" cy="18" r="15.5" fill="none" className="stroke-muted" strokeWidth="5" />
+                    <circle cx="18" cy="18" r="15.5" fill="none" className="stroke-primary transition-all duration-slow" strokeWidth="5" strokeLinecap="round" pathLength="100" strokeDasharray={[occupancy, 100 - occupancy].join(" ")} />
+                  </svg>
+                  <div className="absolute text-center"><p className="text-2xl font-bold tabular-nums">{occupancy}%</p><p className="text-[11px] text-muted-foreground">{t('dashboard.occupied')}</p></div>
+                </div>
+                <div className="space-y-3">
+                  <div><p className="text-xs text-muted-foreground">{t('dashboard.active_tables')}</p><p className="text-lg font-bold tabular-nums">{stats?.active_tables ?? '—'}</p></div>
+                  <div><p className="text-xs text-muted-foreground">{t('dashboard.available_tables')}</p><p className="text-lg font-bold tabular-nums">{stats ? Math.max(0, stats.total_tables - stats.active_tables) : '—'}</p></div>
+                </div>
+              </div>
             </Panel>
 
             <Panel
