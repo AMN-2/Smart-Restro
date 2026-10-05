@@ -636,6 +636,13 @@
     "menu_items_placeholder": "Search menu items..."
   },
   "dashboard": {
+    "quick_actions": "Quick actions",
+    "new_order": "New order",
+    "open_orders": "Open orders",
+    "view_tables": "View tables",
+    "floor_status": "Floor status",
+    "occupied": "Occupied",
+    "available_tables": "Available tables",
     "avg_ticket_time": "Avg Ticket Time",
     "avg_per_cover": "Avg per Cover",
     "covers": "Covers",
