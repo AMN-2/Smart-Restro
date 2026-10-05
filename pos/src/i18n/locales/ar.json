@@ -645,6 +645,13 @@
     "menu_items_placeholder": "ابحث بأصناف المنيو..."
   },
   "dashboard": {
+    "quick_actions": "إجراءات سريعة",
+    "new_order": "طلب جديد",
+    "open_orders": "الطلبات المفتوحة",
+    "view_tables": "عرض الطاولات",
+    "floor_status": "حالة الصالة",
+    "occupied": "مشغول",
+    "available_tables": "الطاولات المتاحة",
     "avg_ticket_time": "معدل زمن الطلب",
     "avg_per_cover": "المعدل لكل شخص",
     "covers": "عدد الأشخاص",
