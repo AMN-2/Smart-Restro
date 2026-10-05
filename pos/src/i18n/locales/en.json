@@ -128,7 +128,12 @@
     },
     "settled_title": "Bill settled",
     "print_receipt": "Print receipt",
-    "done": "Done"
+    "done": "Done",
+    "cash_pad": "Cash shortcuts",
+    "exact_amount": "Exact",
+    "add_notes": "Add the notes received",
+    "add_note": "Add {{amount}}",
+    "reset_cash": "Back to exact amount"
   },
   "pos": {
     "not_opened_title": "POS Not Opened",
@@ -223,7 +228,13 @@
     "col_closing": "Closing",
     "col_difference": "Difference",
     "col_expected": "Expected",
-    "col_opening": "Opening"
+    "col_opening": "Opening",
+    "count_notes": "Count notes",
+    "note_less": "One less {{note}}",
+    "note_more": "One more {{note}}",
+    "note_count": "Number of {{note}} notes",
+    "clear_count": "Clear count",
+    "counted_total": "Counted"
   },
   "checklist": {
     "title_opening": "Opening Checklist",
@@ -422,7 +433,12 @@
     "occupied_only": "Occupied only",
     "show_all_tables": "Show all tables",
     "no_occupied_tables": "No occupied tables in this room",
-    "seats_count": "{{count}} seats"
+    "seats_count": "{{count}} seats",
+    "all_rooms": "All rooms",
+    "filter_all": "All",
+    "status_filter": "Filter tables by status",
+    "no_available_tables": "No available tables right now",
+    "room_summary": "{{occupied}} of {{total}} occupied"
   },
   "bill_split": {
     "split_bill": "Split bill",
