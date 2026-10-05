@@ -234,6 +234,11 @@ doc_events = {
         "on_update":"ury.ury.hooks.ury_sales_invoice.on_update",
         },
     "Item": {"validate": "ury.ury.hooks.ury_item.validate"},
+    # Approvals: keep a sale's consumption log in step with its draft deduction.
+    "Stock Entry": {
+        "on_submit": "ury.ury.api.stock_approvals.on_stock_entry_submit",
+        "on_trash": "ury.ury.api.stock_approvals.on_stock_entry_trash",
+    },
     "POS Opening Entry": {
         "validate":"ury.ury.hooks.ury_pos_opening_entry.set_cashier_room",
         "before_save": "ury.ury.hooks.ury_pos_opening_entry.before_save",
