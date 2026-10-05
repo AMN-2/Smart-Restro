@@ -78,12 +78,18 @@ FEATURES = [
 	{
 		"key": "inventory", "group": "back_office", "icon": "warehouse",
 		"label": "Warehouses dashboard", "description": "Stock across warehouses, with the 3D warehouse map.",
-		"api": ("ury.ury.api.inventory",), "www": (), "nav": ("/inventory",),
+		"api": ("ury.ury.api.inventory", "ury.ury.api.stock_reports"), "www": (), "nav": ("/inventory", "/reports/daily-stock"),
 	},
 	{
 		"key": "recipes", "group": "back_office", "icon": "book-open",
 		"label": "Recipes & consumption", "description": "Ingredients per product, deducted from stock on every sale and costed from purchases.",
 		"api": ("ury.ury.api.recipes", "ury.ury.api.consumption"), "www": (), "nav": ("/recipes",),
+	},
+	{
+		"key": "stock_approval", "group": "back_office", "icon": "clipboard-check",
+		"label": "Stock movement approval",
+		"description": "Raw-material deductions and transfers are kept as drafts so work never stops; a manager approves them later.",
+		"api": ("ury.ury.api.stock_approvals", "ury.ury.api.stock_counts"), "www": (), "nav": ("/stock-approvals", "/stock-count"),
 	},
 	# System
 	{
