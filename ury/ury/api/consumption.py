@@ -17,6 +17,10 @@ The rules:
   * A return does not put ingredients back: the juice was squeezed. Cancelling
     an invoice (a mistake) reverses its deduction.
   * One log per invoice, whatever is retried or resubmitted.
+  * With the "stock_approval" feature on, the stock entry is only saved as a
+    draft (log status "Draft"): a draft never fails for missing stock, so the
+    floor keeps working, and a manager posts the day's drafts later from the
+    approvals screen (ury.ury.api.stock_approvals).
 """
 
 import math
@@ -64,10 +68,17 @@ def on_pos_invoice_cancel(doc, method=None):
 	if not name:
 		return
 	log = frappe.get_doc("URY Consumption Log", name)
-	if log.stock_entry and frappe.db.get_value("Stock Entry", log.stock_entry, "docstatus") == 1:
+	docstatus = log.stock_entry and frappe.db.get_value("Stock Entry", log.stock_entry, "docstatus")
+	if docstatus == 1:
 		se = frappe.get_doc("Stock Entry", log.stock_entry)
 		se.flags.ignore_permissions = True
 		se.cancel()
+	elif docstatus == 0:
+		# Still awaiting approval: there is nothing to reverse, only to withdraw.
+		# Unlinked first, or the log's link would block the delete.
+		stock_entry = log.stock_entry
+		log.db_set("stock_entry", None)
+		frappe.delete_doc("Stock Entry", stock_entry, ignore_permissions=True)
 	log.status = "Cancelled"
 	log.error = None
 	log.save(ignore_permissions=True)
@@ -143,6 +154,12 @@ def _stock_qty(item_code, qty):
 # --------------------------------------------------------------------------- process
 
 
+def needs_approval():
+	from ury.ury import features
+
+	return features.is_enabled("stock_approval")
+
+
 def process_log(log_name, retry=False):
 	"""Make (or retry) the Material Issue for one log. Safe to run twice."""
 	log = frappe.get_doc("URY Consumption Log", log_name, for_update=True)
@@ -156,7 +173,8 @@ def process_log(log_name, retry=False):
 	# whatever else the surrounding request or job has done.
 	frappe.db.savepoint("ury_consumption_entry")
 	try:
-		se = _make_stock_entry(log, retry)
+		draft = needs_approval()
+		se = _make_stock_entry(log, retry, submit=not draft)
 	except Exception as e:
 		frappe.db.rollback(save_point="ury_consumption_entry")
 		message = _clean_error(e)
@@ -168,23 +186,29 @@ def process_log(log_name, retry=False):
 		frappe.db.commit()
 		return "Failed"
 
-	rates = {(r.item_code, r.s_warehouse): flt(r.valuation_rate) for r in se.items}
+	log.stock_entry = se.name
+	log.status = "Draft" if draft else "Done"
+	log.error = None
+	log.attempts = cint(log.attempts) + 1
+	# A draft's rates are today's estimate; they are taken again on approval.
+	apply_rates(log, se)
+	log.save(ignore_permissions=True)
+	frappe.db.commit()
+	return log.status
+
+
+def apply_rates(log, se):
+	"""Cost each ingredient row of a log at the rates its stock entry carries."""
+	rates = {(r.item_code, r.s_warehouse): flt(r.valuation_rate or r.basic_rate) for r in se.items}
 	total = 0.0
 	for row in log.items:
 		row.rate = rates.get((row.item_code, row.warehouse), 0)
 		row.amount = flt(row.rate) * flt(row.qty)
 		total += row.amount
 	log.total_cost = total
-	log.stock_entry = se.name
-	log.status = "Done"
-	log.error = None
-	log.attempts = cint(log.attempts) + 1
-	log.save(ignore_permissions=True)
-	frappe.db.commit()
-	return "Done"
 
 
-def _make_stock_entry(log, retry):
+def _make_stock_entry(log, retry, submit=True):
 	company = log.company
 	expense = frappe.get_cached_value("Company", company, "default_expense_account")
 	profile = frappe.db.get_value("POS Invoice", log.pos_invoice, "pos_profile")
@@ -201,9 +225,10 @@ def _make_stock_entry(log, retry):
 	se.stock_entry_type = "Material Issue"
 	se.purpose = "Material Issue"
 	se.company = company
-	if not retry:
+	if not retry or not submit:
 		# At the moment of sale; a retry is recorded when it happens, since the
-		# stock that makes it possible arrived later.
+		# stock that makes it possible arrived later. A draft is always pinned,
+		# or it would post on the day the manager approves it.
 		se.set_posting_time = 1
 		se.posting_date = log.posting_date
 		se.posting_time = log.posting_time
@@ -222,7 +247,8 @@ def _make_stock_entry(log, retry):
 		})
 	se.flags.ignore_permissions = True
 	se.insert(ignore_permissions=True)
-	se.submit()
+	if submit:
+		se.submit()
 	return se
 
 
@@ -249,7 +275,7 @@ def retry(names=None, branch=None):
 		if branch and branch != "all":
 			filters["branch"] = branch
 		names = frappe.get_all("URY Consumption Log", filters=filters, pluck="name", limit_page_length=200)
-	results = {"Done": 0, "Failed": 0, "Cancelled": 0}
+	results = {"Done": 0, "Draft": 0, "Failed": 0, "Cancelled": 0}
 	for name in names:
 		status = process_log(name, retry=True)
 		results[status] = results.get(status, 0) + 1
@@ -320,7 +346,7 @@ def get_consumption(branch=None, from_date=None, to_date=None):
 		"from_date": from_date,
 		"to_date": to_date,
 		"cost": flt((status.get("Done") or {}).get("cost")),
-		"counts": {s: cint((status.get(s) or {}).get("count")) for s in ("Done", "Failed", "Pending", "Cancelled")},
+		"counts": {s: cint((status.get(s) or {}).get("count")) for s in ("Done", "Draft", "Failed", "Pending", "Cancelled")},
 		"ingredients": ingredients,
 		"products": products,
 		"problems": problems,
