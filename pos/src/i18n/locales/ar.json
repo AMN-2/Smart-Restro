@@ -133,7 +133,12 @@
     },
     "settled_title": "تم الحساب",
     "print_receipt": "طباعة الوصل",
-    "done": "تم"
+    "done": "تم",
+    "cash_pad": "اختصارات النقد",
+    "exact_amount": "المبلغ بالضبط",
+    "add_notes": "أضف الفئات المستلمة",
+    "add_note": "أضف {{amount}}",
+    "reset_cash": "رجّع للمبلغ بالضبط"
   },
   "pos": {
     "not_opened_title": "الشفت غير مفتوح",
@@ -228,7 +233,13 @@
     "col_closing": "عند الإغلاق",
     "col_difference": "الفرق",
     "col_expected": "المفروض",
-    "col_opening": "عند الفتح"
+    "col_opening": "عند الفتح",
+    "count_notes": "عدّ الفئات",
+    "note_less": "نقّص ورقة {{note}}",
+    "note_more": "زيد ورقة {{note}}",
+    "note_count": "عدد أوراق {{note}}",
+    "clear_count": "مسح العد",
+    "counted_total": "المجموع المعدود"
   },
   "checklist": {
     "title_opening": "فحص فتح الشفت",
@@ -427,7 +438,12 @@
     "occupied_only": "المشغولة فقط",
     "show_all_tables": "عرض كل الطاولات",
     "no_occupied_tables": "ماكو طاولات مشغولة بهذي الصالة",
-    "seats_count": "{{count}} كراسي"
+    "seats_count": "{{count}} كراسي",
+    "all_rooms": "كل الصالات",
+    "filter_all": "الكل",
+    "status_filter": "فلترة الطاولات حسب الحالة",
+    "no_available_tables": "ماكو طاولات فارغة حالياً",
+    "room_summary": "{{occupied}} مشغولة من {{total}}"
   },
   "bill_split": {
     "split_bill": "تقسيم الفاتورة",
