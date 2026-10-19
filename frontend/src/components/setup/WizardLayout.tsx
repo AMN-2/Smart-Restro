@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Button } from '@ury/ui';
 import { Check } from 'lucide-react';
-import uryLogo from '../../../Public/photo_2026-08-19_13-24-09.jpg';
+import smartLogo from '../../../../smart_logo.png';
 import { t } from '../../i18n';
 
 interface WizardLayoutProps {
@@ -36,7 +36,7 @@ export function WizardLayout({
       <header className="w-full border-b border-border bg-card">
         <div className={`${SHELL_WIDTH} h-16 flex items-center justify-between gap-4`}>
           <div className="flex items-center gap-3">
-            <img src={uryLogo} alt="URY Logo" className="h-7 w-auto" />
+            <img src={smartLogo} alt="Smart Restro" className="h-9 w-auto object-contain" />
             <span className="text-sm font-semibold text-foreground leading-none">{t('dash.wizard_layout.let_s_get_your_restaurant_ready')}</span>
           </div>
 
