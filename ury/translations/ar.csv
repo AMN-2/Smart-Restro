@@ -326,3 +326,4 @@ Your stock count {0} was approved,انعتمد جردك {0}
 Your stock count of {0} was rejected,انرفض جردك لـ {0}
 You are not allowed to count stock,ما عندك صلاحية تجرد المخزن
 Warehouse {0} not found,المخزن {0} غير موجود
+"Features turned off here are hidden from the dashboard and POS and refused by the server. The URY Control Center shows the same settings with each user's resulting access.","الخصائص المطفأة هنا تختفي من لوحة التحكم ونقطة البيع ويرفضها السيرفر. مركز التحكم بالمطعم يعرض نفس الإعدادات مع صلاحية كل مستخدم."
