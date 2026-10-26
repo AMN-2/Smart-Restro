@@ -239,7 +239,9 @@
     "note_more": "زيد ورقة {{note}}",
     "note_count": "عدد أوراق {{note}}",
     "clear_count": "مسح العد",
-    "counted_total": "المجموع المعدود"
+    "counted_total": "المجموع المعدود",
+    "validation_open_bills": "باقي {{count}} فاتورة مفتوحة بهذا الشفت: {{invoices}}. سدّدها أو ألغيها قبل الإغلاق.",
+    "invoices_changed": "انتسدّت فواتير جديدة وانت دتعدّ. تحدّثت المبالغ المتوقعة: راجعها وسكّر الشفت مرة ثانية."
   },
   "checklist": {
     "title_opening": "فحص فتح الشفت",
