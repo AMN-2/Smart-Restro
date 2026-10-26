@@ -478,7 +478,9 @@ export const usePOSStore = create<POSStore>((set, get) => ({
         selectedCategory: categories.some((c) => c.name === selectedCategory) ? selectedCategory : '',
       });
     } catch (error) {
-      set({ error: 'Failed to load menu items' });
+      // Show the server's reason (e.g. no active menu set for the
+      // restaurant) so the cashier knows what to fix, not just that it failed.
+      set({ error: error instanceof Error && error.message ? error.message : 'Failed to load menu items' });
       console.error('Error loading menu items:', error);
     } finally {
       set({ menuLoading: false });
