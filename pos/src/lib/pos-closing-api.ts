@@ -262,6 +262,83 @@ export async function getMainCashierPosInvoices(
 }
 
 /**
+ * One POS Invoice the shift close will attach to the POS Closing Entry.
+ */
+export interface ShiftClosingInvoice {
+  name: string;
+  customer: string;
+  posting_date: string;
+  grand_total: number;
+}
+
+/**
+ * What closing a shift attaches, as computed by the server.
+ * Wraps ury.ury.api.pos_closing.get_shift_closing_summary(pos_opening_entry).
+ *
+ * The server picks the shift's invoices by `cashier` (falling back to
+ * `owner`), so bills a captain created are counted too -- ERPNext's own
+ * get_pos_invoices only sees invoices the cashier created themselves.
+ */
+export interface ShiftClosingSummary {
+  invoices: ShiftClosingInvoice[];
+  grand_total: number;
+  net_total: number;
+  total_quantity: number;
+  /** Sales per payment mode, change already taken out. */
+  sales_by_mode: Record<string, number>;
+  period_end_date: string;
+  /** Bills opened in the shift and not settled; closing is refused while any remain. */
+  draft_invoices: string[];
+}
+
+export type CloseShiftResult =
+  | {
+      status: 'closed';
+      name: string;
+      /** 'Queued' while ERPNext consolidates in the background, else 'Submitted'. */
+      closing_status: string;
+      invoice_count: number;
+    }
+  | {
+      /** Bills were paid since the summary was loaded; nothing was closed. */
+      status: 'invoices_changed';
+      summary: ShiftClosingSummary;
+    };
+
+export async function getShiftClosingSummary(
+  posOpeningEntry: string
+): Promise<ShiftClosingSummary> {
+  const response = await call.get<{ message: ShiftClosingSummary }>(
+    'ury.ury.api.pos_closing.get_shift_closing_summary',
+    { pos_opening_entry: posOpeningEntry }
+  );
+  return response.message;
+}
+
+/**
+ * Main-cashier / single-cashier path: creates and submits the POS Closing
+ * Entry on the server in one request, with every invoice of the shift in
+ * `pos_transactions`. `invoiceNames` is the list the cashier counted
+ * against; if it no longer matches, the shift is left open and the fresh
+ * summary comes back instead.
+ */
+export async function closeShift(
+  posOpeningEntry: string,
+  closingAmounts: { mode_of_payment: string; closing_amount: number }[],
+  invoiceNames: string[]
+): Promise<CloseShiftResult> {
+  const response = await call.post<{ message: CloseShiftResult }>(
+    'ury.ury.api.pos_closing.close_shift',
+    {
+      pos_opening_entry: posOpeningEntry,
+      closing_amounts: closingAmounts,
+      invoice_names: invoiceNames,
+    }
+  );
+  return response.message;
+}
+
+/**
  * Creates a new Sub POS Closing document as a draft (docstatus: 0).
  */
 export async function createSubPosClosing(
