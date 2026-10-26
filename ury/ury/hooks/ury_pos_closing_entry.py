@@ -37,18 +37,26 @@ def sub_pos_close_check(doc,method):
 def calculate_closing_amount(doc, method):
     multiple_cashier = frappe.db.get_value("POS Profile",doc.pos_profile,"custom_enable_multiple_cashier")
     if multiple_cashier:  
+        # Only this profile's sub closings: another branch's counts must not
+        # land in this drawer. Every one of them in the shift is added, in
+        # case the sub cashier closed more than once.
         sub_pos_closing = frappe.get_all(
             "Sub POS Closing",
             filters=[
+                ["pos_profile", "=", doc.pos_profile],
                 ["posting_date", "<=", doc.posting_date],
                 ["period_start_date", ">=", doc.period_start_date],
                 ["docstatus", "=", 1]
             ],
-            fields=["name"] 
+            pluck="name",
         )
         if sub_pos_closing:
             for closing_details in doc.payment_reconciliation:
-                sub_closing_amount = frappe.db.get_value("Sub POS Closing Payment",{"parent":sub_pos_closing[0].name,"mode_of_payment":closing_details.mode_of_payment},"closing_amount") or 0
+                sub_closing_amount = sum(frappe.get_all(
+                    "Sub POS Closing Payment",
+                    filters={"parent": ["in", sub_pos_closing], "mode_of_payment": closing_details.mode_of_payment},
+                    pluck="closing_amount",
+                ))
                 main_closing_amount = closing_details.custom_closing_amount or 0
                 total_closing_amount = sub_closing_amount + main_closing_amount
                 closing_details.closing_amount = total_closing_amount
