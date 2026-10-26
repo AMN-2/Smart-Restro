@@ -234,7 +234,9 @@
     "note_more": "One more {{note}}",
     "note_count": "Number of {{note}} notes",
     "clear_count": "Clear count",
-    "counted_total": "Counted"
+    "counted_total": "Counted",
+    "validation_open_bills": "{{count}} bill(s) are still open in this shift: {{invoices}}. Settle or cancel them before closing.",
+    "invoices_changed": "Bills were paid while you were counting. The expected amounts have been updated: review them and close again."
   },
   "checklist": {
     "title_opening": "Opening Checklist",

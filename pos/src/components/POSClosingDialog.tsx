@@ -20,14 +20,14 @@ import { guardOnline } from '../lib/offline-guard';
 import {
   getOpenPosOpeningEntries,
   getSubCashierPosInvoices,
-  getMainCashierPosInvoices,
+  getShiftClosingSummary,
+  closeShift,
   createSubPosClosing,
   submitSubPosClosing,
-  createPosClosingEntry,
-  submitPosClosingEntry,
   type OpenPosOpeningEntry,
   type POSClosingInvoice,
   type ClosingPaymentSummary,
+  type ShiftClosingSummary,
 } from '../lib/pos-closing-api';
 
 interface POSClosingDialogProps {
@@ -59,14 +59,6 @@ function formatDateTime(date: Date): string {
     `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ` +
     `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
   );
-}
-
-function formatDate(date: Date): string {
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-}
-
-function formatTime(date: Date): string {
-  return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
 }
 
 /**
@@ -133,7 +125,8 @@ function aggregateInvoices(invoices: POSClosingInvoice[]): {
 
 function buildRows(
   openingBalances: OpeningBalanceDetail[],
-  expectedByMode: Record<string, number>
+  expectedByMode: Record<string, number>,
+  counted: ClosingPaymentSummary[] = []
 ): ClosingPaymentSummary[] {
   const rows = new Map<string, ClosingPaymentSummary>();
 
@@ -162,6 +155,13 @@ function buildRows(
     }
   });
 
+  // Keep what the cashier already counted when the expected figures are
+  // refreshed under them.
+  counted.forEach((row) => {
+    const existing = rows.get(row.mode_of_payment);
+    if (existing) existing.closing_amount = row.closing_amount;
+  });
+
   return Array.from(rows.values());
 }
 
@@ -177,6 +177,15 @@ const POSClosingDialog = ({ open, onOpenChange, onClosingSubmitted }: POSClosing
   const [invoiceCount, setInvoiceCount] = useState(0);
   const [totals, setTotals] = useState<AggregatedTotals>({ grandTotal: 0, netTotal: 0, totalQty: 0 });
   const [rows, setRows] = useState<ClosingPaymentSummary[]>([]);
+  const [openingBalances, setOpeningBalances] = useState<OpeningBalanceDetail[]>([]);
+  // Main / single-cashier close: the invoices the server will attach to the
+  // POS Closing Entry, sent back on submit so a bill paid in the meantime is
+  // caught instead of closing on stale figures.
+  const [invoiceNames, setInvoiceNames] = useState<string[]>([]);
+  // Bills opened in the shift and still unpaid. The server refuses to close
+  // over them, so the dialog says so up front.
+  const [draftInvoices, setDraftInvoices] = useState<string[]>([]);
+  const [notice, setNotice] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   // Set once the close submission (Sub POS Closing / POS Closing Entry) has
@@ -187,17 +196,35 @@ const POSClosingDialog = ({ open, onOpenChange, onClosingSubmitted }: POSClosing
   // Modes the cashier has explicitly entered a closing amount for (Fix 2:
   // a blank input must not silently count as "reviewed and zero").
   const [touchedModes, setTouchedModes] = useState<Set<string>>(new Set());
-  // Tracks a create-but-not-yet-submitted Sub POS Closing / POS Closing
-  // Entry doc name so a retry after a failed submit re-submits the same
-  // doc instead of creating a duplicate draft (Fix 3). Cleared only on
-  // final success or explicit cancel/dismiss of the dialog.
-  const [pendingCloseDoc, setPendingCloseDoc] = useState<{
-    name: string;
-    kind: 'sub' | 'main';
-  } | null>(null);
+  // Tracks a create-but-not-yet-submitted Sub POS Closing doc name so a
+  // retry after a failed submit re-submits the same doc instead of creating
+  // a duplicate draft (Fix 3). Cleared only on final success or explicit
+  // cancel/dismiss of the dialog. The main close needs none of this: it is
+  // a single server call that creates and submits together.
+  const [pendingCloseDoc, setPendingCloseDoc] = useState<{ name: string } | null>(null);
   // Lightweight "Are you sure?" step before the irreversible submit call
   // actually fires (Fix 6).
   const [showConfirm, setShowConfirm] = useState(false);
+
+  const applyShiftSummary = useCallback(
+    (
+      summary: ShiftClosingSummary,
+      balances: OpeningBalanceDetail[],
+      counted: ClosingPaymentSummary[] = []
+    ) => {
+      setPeriodEndDate(new Date(summary.period_end_date.slice(0, 19).replace(' ', 'T')));
+      setInvoiceCount(summary.invoices.length);
+      setInvoiceNames(summary.invoices.map((invoice) => invoice.name));
+      setDraftInvoices(summary.draft_invoices);
+      setTotals({
+        grandTotal: summary.grand_total,
+        netTotal: summary.net_total,
+        totalQty: summary.total_quantity,
+      });
+      setRows(buildRows(balances, summary.sales_by_mode, counted));
+    },
+    []
+  );
 
   const loadClosingDetails = useCallback(async () => {
     if (!posProfile || !user) return;
@@ -205,6 +232,7 @@ const POSClosingDialog = ({ open, onOpenChange, onClosingSubmitted }: POSClosing
     setIsLoading(true);
     setLoadError(null);
     setSubmitError(null);
+    setNotice(null);
 
     try {
       const openEntries = await getOpenPosOpeningEntries(posProfile.name);
@@ -246,21 +274,28 @@ const POSClosingDialog = ({ open, onOpenChange, onClosingSubmitted }: POSClosing
       }
       setIsSubCashier(subCashier);
 
-      const now = new Date();
-      setPeriodEndDate(now);
-      const end = formatDateTime(now);
+      const openingDoc = await db.getDoc<OpeningEntryDoc>('POS Opening Entry', ownEntry.name);
+      const balances = openingDoc?.balance_details ?? [];
+      setOpeningBalances(balances);
 
-      const [invoices, openingDoc] = await Promise.all([
-        subCashier
-          ? getSubCashierPosInvoices(ownEntry.period_start_date, end, posProfile.name, user.name)
-          : getMainCashierPosInvoices(ownEntry.period_start_date, end, posProfile.name, user.name),
-        db.getDoc<OpeningEntryDoc>('POS Opening Entry', ownEntry.name),
-      ]);
-
-      setInvoiceCount(invoices.length);
-      const { totals: aggregatedTotals, expectedByMode } = aggregateInvoices(invoices);
-      setTotals(aggregatedTotals);
-      setRows(buildRows(openingDoc?.balance_details ?? [], expectedByMode));
+      if (subCashier) {
+        const now = new Date();
+        setPeriodEndDate(now);
+        const invoices = await getSubCashierPosInvoices(
+          ownEntry.period_start_date,
+          formatDateTime(now),
+          posProfile.name,
+          user.name
+        );
+        setInvoiceCount(invoices.length);
+        setInvoiceNames([]);
+        setDraftInvoices([]);
+        const { totals: aggregatedTotals, expectedByMode } = aggregateInvoices(invoices);
+        setTotals(aggregatedTotals);
+        setRows(buildRows(balances, expectedByMode));
+      } else {
+        applyShiftSummary(await getShiftClosingSummary(ownEntry.name), balances);
+      }
       setTouchedModes(new Set());
     } catch (error) {
       console.error('Failed to load POS closing details:', error);
@@ -268,7 +303,7 @@ const POSClosingDialog = ({ open, onOpenChange, onClosingSubmitted }: POSClosing
     } finally {
       setIsLoading(false);
     }
-  }, [posProfile, user]);
+  }, [posProfile, user, applyShiftSummary]);
 
   useEffect(() => {
     if (!open) return;
@@ -322,7 +357,12 @@ const POSClosingDialog = ({ open, onOpenChange, onClosingSubmitted }: POSClosing
     );
 
     let blockingMessage: string | null = null;
-    if (untouchedCount > 0) {
+    if (draftInvoices.length > 0) {
+      blockingMessage = t('pos_closing.validation_open_bills', {
+        count: draftInvoices.length,
+        invoices: draftInvoices.join(', '),
+      });
+    } else if (untouchedCount > 0) {
       blockingMessage = t('pos_closing.validation_missing_rows');
     } else if (totalClosing === 0) {
       blockingMessage = t('pos_closing.validation_all_zero');
@@ -334,7 +374,7 @@ const POSClosingDialog = ({ open, onOpenChange, onClosingSubmitted }: POSClosing
         : null;
 
     return { isValid: !blockingMessage, blockingMessage, warningMessage };
-  }, [rows, touchedModes]);
+  }, [rows, touchedModes, draftInvoices]);
 
   const handleRequestSubmit = () => {
     // Closing a shift writes the day's cash position; half of it is worse
@@ -351,27 +391,42 @@ const POSClosingDialog = ({ open, onOpenChange, onClosingSubmitted }: POSClosing
     setShowConfirm(false);
     setIsSubmitting(true);
     setSubmitError(null);
-
-    const paymentReconciliation = rows.map((row) => ({
-      mode_of_payment: row.mode_of_payment,
-      opening_amount: row.opening_amount,
-      expected_amount: row.expected_amount,
-      closing_amount: row.closing_amount,
-      // Positive = overage, negative = shortage. Must match the display
-      // convention in ClosingPaymentTable (Fix 1).
-      difference: row.closing_amount - row.expected_amount,
-    }));
-
-    // Fix 3: if a previous attempt already created the draft doc but the
-    // submit call then failed, reuse that doc instead of creating another
-    // draft on retry.
-    const kind: 'sub' | 'main' = pendingCloseDoc?.kind ?? (isSubCashier ? 'sub' : 'main');
+    setNotice(null);
 
     try {
-      let docName = pendingCloseDoc?.name;
+      if (!isSubCashier) {
+        // Main / single-cashier close: the server builds the POS Closing
+        // Entry with every invoice of the shift attached and submits it in
+        // the same request, so there is no draft to retry or leave behind.
+        const result = await closeShift(
+          openingEntry.name,
+          rows.map((row) => ({
+            mode_of_payment: row.mode_of_payment,
+            closing_amount: row.closing_amount,
+          })),
+          invoiceNames
+        );
+        if (result.status === 'invoices_changed') {
+          applyShiftSummary(result.summary, openingBalances, rows);
+          setNotice(t('pos_closing.invoices_changed'));
+          return;
+        }
+      } else {
+        // Fix 3: if a previous attempt already created the draft doc but
+        // the submit call then failed, reuse that doc instead of creating
+        // another draft on retry.
+        let docName = pendingCloseDoc?.name;
 
-      if (!docName) {
-        if (kind === 'sub') {
+        if (!docName) {
+          const paymentReconciliation = rows.map((row) => ({
+            mode_of_payment: row.mode_of_payment,
+            opening_amount: row.opening_amount,
+            expected_amount: row.expected_amount,
+            closing_amount: row.closing_amount,
+            // Positive = overage, negative = shortage. Must match the
+            // display convention in ClosingPaymentTable (Fix 1).
+            difference: row.closing_amount - row.expected_amount,
+          }));
           const doc = await createSubPosClosing({
             pos_profile: posProfile.name,
             pos_opening_entry: openingEntry.name,
@@ -384,33 +439,13 @@ const POSClosingDialog = ({ open, onOpenChange, onClosingSubmitted }: POSClosing
             total_quantity: totals.totalQty,
           });
           docName = doc.name;
-        } else {
-          const doc = await createPosClosingEntry({
-            pos_profile: posProfile.name,
-            pos_opening_entry: openingEntry.name,
-            user: user.name,
-            company: posProfile.company,
-            period_start_date: openingEntry.period_start_date,
-            period_end_date: formatDateTime(periodEndDate),
-            posting_date: formatDate(periodEndDate),
-            posting_time: formatTime(periodEndDate),
-            payment_reconciliation: paymentReconciliation,
-            grand_total: totals.grandTotal,
-            net_total: totals.netTotal,
-            total_quantity: totals.totalQty,
-          });
-          docName = doc.name;
+          // Persist immediately -- if the submit call below throws, a
+          // retry must skip straight to submitting this doc rather than
+          // creating a second draft.
+          setPendingCloseDoc({ name: docName });
         }
-        // Persist immediately -- if the submit call below throws, a retry
-        // must skip straight to submitting this doc rather than creating
-        // a second draft.
-        setPendingCloseDoc({ name: docName, kind });
-      }
 
-      if (kind === 'sub') {
         await submitSubPosClosing(docName);
-      } else {
-        await submitPosClosingEntry(docName);
       }
 
       // Final success -- stop tracking the draft.
@@ -559,6 +594,9 @@ const POSClosingDialog = ({ open, onOpenChange, onClosingSubmitted }: POSClosing
           )}
         </div>
 
+        {notice && (
+          <p className="px-6 pb-2 text-sm font-medium text-amber-700">{notice}</p>
+        )}
         {submitError && (
           <p className="px-6 pb-2 text-sm font-medium text-red-600">{submitError}</p>
         )}

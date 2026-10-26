@@ -197,7 +197,9 @@
     "note_more": "Un billet de {{note}} en plus",
     "note_count": "Nombre de billets de {{note}}",
     "clear_count": "Effacer le comptage",
-    "counted_total": "Total compté"
+    "counted_total": "Total compté",
+    "validation_open_bills": "{{count}} addition(s) encore ouverte(s) dans ce service : {{invoices}}. Réglez-les ou annulez-les avant la clôture.",
+    "invoices_changed": "Des additions ont été réglées pendant le comptage. Les montants attendus ont été mis à jour : vérifiez-les puis clôturez à nouveau."
   },
   "customer": {
     "search_placeholder": "Rechercher un client...",

@@ -45,7 +45,11 @@ def process_invoice(invoice):
     # Determine the owner based on the restaurant table
     owner = waiter if not invoice.restaurant_table else waiter
 
-    kot_naming_series = pos_profile.kot_naming_series
+    kot_naming_series = pos_profile.get("custom_kot_naming_series")
+    if not kot_naming_series:
+        # Nothing to name the KOT with; ury_kot_generate reports this to the
+        # cashier when the order is taken, so the background check just skips.
+        return
     kot_list = frappe.get_list(
         "URY KOT",
         filters={"creation": (">", posInvoice.creation), "invoice": posInvoice.name},
@@ -87,7 +91,7 @@ def process_invoice(invoice):
 # Function to fetch production units for a branch
 def get_productions_for_branch(branch):
     return frappe.get_all(
-        "URY Production Unit", filters={"branch": branch}, fields=["name", "item_groups"]
+        "URY Production Unit", filters={"branch": branch}, fields=["name"]
     )
 
 

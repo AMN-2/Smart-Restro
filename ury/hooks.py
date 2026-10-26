@@ -182,9 +182,9 @@ before_uninstall = "ury.uninstall.uninstall"
 # ---------------
 # Override standard doctype classes
 
-# override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
-# }
+override_doctype_class = {
+	"POS Closing Entry": "ury.ury.overrides.pos_closing_entry.URYPOSClosingEntry"
+}
 
 # Document Events
 # ---------------
