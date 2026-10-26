@@ -1179,15 +1179,17 @@ def create_customer(customer_name, mobile_number=None, customer_group=None, terr
     except Exception:
         frappe.throw("Invalid mobile number format")
 
-    customer_group = customer_group or frappe.db.get_default("Customer Group")
-    if not customer_group or not frappe.db.exists("Customer Group", customer_group):
-        customer_group = frappe.db.get_value("Customer Group", {}, "name", order_by="name asc")
+    # A customer can only belong to a leaf group or territory; the tree roots
+    # ("All Customer Groups", "All Territories") sort first and are refused.
+    customer_group = customer_group or frappe.db.get_single_value("Selling Settings", "customer_group") \
+        or frappe.db.get_default("Customer Group")
+    if not customer_group or frappe.db.get_value("Customer Group", customer_group, "is_group") in (None, 1):
+        customer_group = frappe.db.get_value("Customer Group", {"is_group": 0}, "name", order_by="name asc")
 
-    territory = territory or frappe.db.get_default("Territory")
-    if territory and not frappe.db.exists("Territory", territory):
-        territory = None
-    if not territory:
-        territory = frappe.db.get_value("Territory", {}, "name", order_by="name asc")
+    territory = territory or frappe.db.get_single_value("Selling Settings", "territory") \
+        or frappe.db.get_default("Territory")
+    if not territory or frappe.db.get_value("Territory", territory, "is_group") in (None, 1):
+        territory = frappe.db.get_value("Territory", {"is_group": 0}, "name", order_by="name asc")
 
     if not customer_group:
         frappe.throw("No Customer Group is configured")
